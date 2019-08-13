@@ -30,13 +30,12 @@
 
     <script src="/socketcluster.js"></script>
     <script src="/sc-codec-min-bin.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
 
     <script>debugMode = true;</script>
 
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery-ui.js"></script>
     <script src="/js/loadjs.min.js"></script>
-    <script src="/js/DeviceDetector.js"></script>
 
 </head>
 
@@ -87,16 +86,52 @@
 <script src="/js/hammer.js"></script>
 
 
+<script>
 
+    socket = socketCluster.create({
+        //  port:443,
+        hostname: "anywhere3d.com",
+        codecEngine: scCodecMinBin,
+    });
 
+    socket.on("connect", function (status) {
+        debugMode && console.log("status:", status);
+        //  debugMode && console.log( "authToken:", authToken );
+        }
+    });
 
+    socket.on("authenticate", function( signedAuthToken ){
+        debugMode && console.log("signedAuthToken:", signedAuthToken );
+    });
 
+    socket.on("deauthenticate", function( signedAuthToken ){
+        debugMode && console.log("signedAuthToken:", signedAuthToken );
+    });
 
+    socket.on("authStateChange", function( state ){
+        debugMode && console.log("state:", state);
+    });
 
+    socket.on("kickOut", function(message, channelName){
+        debugMode && console.log("kickOut message:", message);
+        debugMode && console.log("kickOut channel:", channelName);
+    });
 
+    socket.on("raw", function(){});
+    socket.on("close", function(){});
+    socket.on("disconnect", function(){});
+    socket.on("connectAbort", function(){});
 
+    socket.on("error", function (err) {
+        console.error( "scc-error:", err );
+        if (err) bootboxErrorAlert( err.message, function(){});
+    });
 
+    socket.on("message", function(data){
+    //  debugMode && console.log( "scc-message:", data );
+    });
 
+</script>
 
 </body>
 </html>
