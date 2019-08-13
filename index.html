@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" contents="Select your avatar">
+
+    <title>avatar (v1.0)</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
+    <link rel="stylesheet" href="/css/side-panels.css">
+    <link rel="stylesheet" href="/css/meter.css">
+    <link rel="stylesheet" href="/css/messg.css" >
+    <link rel="stylesheet" href="/css/spectrum.css">
+    <link rel="stylesheet" href="/css/colorpicker.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/alerts.css">
+    <link rel="stylesheet" href="/css/panel-ui.css">
+    <link rel="stylesheet" href="/css/anywhere3d.css">
+    <link rel="stylesheet" href="/css/jquery.Jcrop.css">
+    <link rel="stylesheet" href="/css/menu-menubar.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="/socketcluster.js"></script>
+    <script src="/sc-codec-min-bin.js"></script>
+
+    <script>debugMode = true;</script>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/loadjs.min.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
+
+</head>
+
+<body>
+
+<style>
+
+    #content div ul li {
+        cursor: pointer;
+        margin-left:15px;
+    }
+
+    #right-side-content {
+        position:absolute; left:25px; top:60px; right:10px; bottom:40px; 
+        padding: 0px 20px 0px 20px; overflow:auto; 
+    }
+
+    a.none-deco:focus,
+    a.none-deco:hover, 
+    a.none-deco:active, 
+    a.none-deco:visited {
+        color:#55a5ec;
+        text-decoration:none;
+    }
+
+</style>
+
+<div id="panel" class="collapsed">
+    <h1><a href="/" class="none-deco">Sloothes</a></h1>
+    <a id="expandButton" href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+    <div class="filterBlock" >
+        <input type="text" id="filterInput" placeholder="Type to filter"/>
+        <a href="#" id="clearFilterButton" >x</a>
+    </div>
+    <div id="content"></div>
+</div>
+
+<section class="mbr-section" id="body-section">
+
+    <iframe id="viewer" src="/scene/"></iframe>
+
+</section>
+
+<script src="/js/hammer.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
