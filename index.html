@@ -96,6 +96,7 @@
 
     socket.on("connect", function (status) {
         debugMode && console.log("status:", status);
+        if (status.isAuthenticated) {
         //  debugMode && console.log( "authToken:", authToken );
         }
     });
