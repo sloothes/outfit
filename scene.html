@@ -92,6 +92,7 @@
 <script src="/js/system.min.js"></script>
 <script src="/js/signals.min.js"></script>
 <script src="/js/command.js"></script>
+<!-- script src="/js/AW3D.db.js"></script -->
 <script src="/three/three.js"></script>
 <script src="/three/EditorControls.js"></script>
 <script src="/three/Detector.js"></script>
@@ -116,8 +117,78 @@
 <script src="/js/JoystickControls.js"></script>
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
-<script src="/scene/runtime.js"></script>
-<script src="/js/animationsLoader.js"></script>
+
+<script>
+
+//  runtime.js
+
+    var $renders = $("input[type=hidden].render");
+    var $updates = $("input[type=hidden].update");
+
+    var clock = new THREE.Clock();
+
+    function animate(){
+
+        windowAnimationFrameRequestID = requestAnimationFrame( animate );
+
+        for (var i = 0; i < $renders.length; i++){
+            $renders[i].render();
+        }
+
+    }
+
+    function updates(){
+
+        windowAnimationFrameRequestID = requestAnimationFrame( updates );
+        
+        var dt = clock.getDelta();
+        var time = clock.getElapsedTime();
+
+        for ( var i = 0; i < $updates.length; i++ ){
+            $updates[i].update( dt );
+        }
+
+    }
+
+//  Settings.
+
+    keyInputControls.On();
+
+    if (isMobile) {
+        cameraControls.radius = 15;
+        cameraControls.offset.y = 19;
+    }
+
+//  Runtime.
+
+    updates();
+    animate();
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
