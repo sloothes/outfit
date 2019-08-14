@@ -196,13 +196,12 @@
 //  Socketcluster.
 
     var socket = socketCluster.create({
-    //  port:443,
         hostname: "anywhere3d.com",
         codecEngine: scCodecMinBin,
     });
 
     socket.on("connect", function(status){
-        debugMode && console.log({"scene socket status": status});
+        debugMode && console.log({"outfit scene socket status": status});
     });
 
     socket.on("error", function (err) {
@@ -210,7 +209,7 @@
     });
 
     socket.on("authStateChange", function( state ){
-        debugMode && console.log({"scene authStateChange": state});
+        debugMode && console.log({"outfit scene authStateChange": state});
     });
 
     socket.on("subscribe", function( name, object ){
