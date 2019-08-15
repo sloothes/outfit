@@ -197,8 +197,9 @@
                     console.log(count);
                     resolve(count);
                 });
+            });
 
-        ]).then(function(count){
+        }).then(function(count){
 
             socket.emit("mongo findOne", {
                 collection:"outfits",
