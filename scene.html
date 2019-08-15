@@ -211,7 +211,7 @@
         .then(function(response){
             return response.json();
         }).then(function(data){
-            debugMode && console.log(data); // array.
+            debugMode && console.log({"animations":data}); // array.
 
             Promise.all([
                 new Promise(function(resolve, reject){
@@ -224,7 +224,7 @@
                             Animations[name] = json[name];
                     }
 
-                    debugMode && console.log({"Animations":Animations});
+                    resolve({"Animations":Animations});
 
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
@@ -241,7 +241,7 @@
                             MaleAnimations[name] = json[name];
                     }
 
-                    debugMode && console.log({"MaleAnimations":MaleAnimations});
+                    resolve({"MaleAnimations":MaleAnimations});
 
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
@@ -258,13 +258,16 @@
                             FemaleAnimations[name] = json[name];
                     }
 
-                    debugMode && console.log({"FemaleAnimations":FemaleAnimations});
+                    resolve({"FemaleAnimations":FemaleAnimations});
 
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
                     }
                 }),
-            ]);
+
+            ]).then(function(results){
+                debugMode && console.log(results);
+            });
 
         });
     });
