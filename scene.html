@@ -117,7 +117,41 @@
 <script src="/js/JoystickControls.js"></script>
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
-<script src="/js/animationsLoader.js"></script>
+
+<script>
+
+//  animationsLoader.js
+
+    var Animations; // object.
+    var MaleAnimations; // object.
+    var FemaleAnimations; // object.
+
+    caches.open("collections").then(function(cache){
+
+        cache.match("/AW3D_db/animations.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+
+            delete json.male._id;   // important!
+            delete json.basic._id;  // important!
+            delete json.female._id; // important!
+
+            Animations = json["basic"];
+            MaleAnimations = json["male"];
+            FemaleAnimations = json["female"];
+
+            if ( !!localPlayer && !!localPlayer.outfit ) {
+                localPlayer.outfit.AnimationsHandler.refresh();
+            }
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    });
+
+</script>
 
 <script>
 
