@@ -284,7 +284,10 @@
 //  skinnedMeshLoader.js (v6.3)
 
     var male, female, skeleton;
-    var Animations, MaleAnimations, FemaleAnimations;
+
+    var Animations;       // important!
+    var MaleAnimations;   // important!
+    var FemaleAnimations; // important!
 
     socket.on("connect", function(){
         Promise.all([
