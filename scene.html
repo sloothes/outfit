@@ -295,6 +295,7 @@
                     selectors:{_id:"male"},
                 }, function(err, data){
                     console.log(data);
+                    delete data._id; // important!
                     MaleAnimations = data;
                     resolve();
                 });
@@ -306,6 +307,7 @@
                     selectors:{_id:"female"},
                 }, function(err, data){
                     console.log(data);
+                    delete data._id; // important!
                     FemaleAnimations = data;
                     resolve();
                 });
@@ -317,6 +319,7 @@
                     selectors:{_id:"basic"},
                 }, function(err, data){
                     console.log(data);
+                    delete data._id; // important!
                     Animations = data;
                     resolve();
                 });
