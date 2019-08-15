@@ -147,61 +147,6 @@
 
 <script>
 
-//  animationsLoader.js
-
-    var Animations; // object.
-    var MaleAnimations; // object.
-    var FemaleAnimations; // object.
-
-    caches.open("collections").then(function(cache){
-
-        cache.match("/AW3D_db/animations.json")
-        .then(function(response){
-            return response.json();
-        }).then(function(json){
-            debugMode && console.log(json); // array.
-
-            Animations = json.find(function(item){
-                return item._id = "basic";
-            });
-
-            delete Animations._id;   // important!
-
-            return json;
-        }).then(function(json){
-
-            MaleAnimations = json.find(function(item){
-                return item._id = "male";
-            });
-
-            delete MaleAnimations._id;  // important!
-
-            return json;
-        }).then(function(json){
-
-            FemaleAnimations = json.find(function(item){
-                return item._id = "female";
-            });
-
-            delete FemaleAnimations._id; // important!
-
-            return json;
-        }).then(function(json){
-
-            if ( !!localPlayer && !!localPlayer.outfit ) {
-                localPlayer.outfit.AnimationsHandler.refresh();
-            }
-
-        }).catch(function(err){
-            console.error(err);
-        });
-
-    });
-
-</script>
-
-<script>
-
 //  runtime.js
 
     var $renders = $("input[type=hidden].render");
@@ -251,13 +196,88 @@
 
 <script>
 
-    
+//  animationsLoader.js
 
+    var Animations; // object.
+    var MaleAnimations; // object.
+    var FemaleAnimations; // object.
 
+    caches.open("collections").then(function(cache){
 
+        cache.match("/AW3D_db/animations.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(data){
+            debugMode && console.log(data); // array.
 
+            var json = data.find(function(item){
+                return item._id = "basic";
+            });
 
+            for (var name in json){
+                Animations[name] = json[name];
+            }
 
+            delete Animations._id;   // important!
+
+            return data;
+        }).then(function(data){
+
+            var json = data.find(function(item){
+                return item._id = "male";
+            });
+
+            for (var name in json){
+                MaleAnimations[name] = json[name];
+            }
+
+            delete MaleAnimations._id;  // important!
+
+            return data;
+        }).then(function(data){
+
+            var json = data.find(function(item){
+                return item._id = "female";
+            });
+
+            for (var name in json){
+                FemaleAnimations[name] = json[name];
+            }
+
+            delete FemaleAnimations._id; // important!
+
+        }).then(function(){
+
+            if ( !!localPlayer && !!localPlayer.outfit ) {
+                localPlayer.outfit.AnimationsHandler.refresh();
+            }
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    });
+
+</script>
+
+<script>
+
+//  skinnedMeshLoader.js (v6.3)
+
+    var male, female, skeleton;
+
+    socket.on("connect", function(){
+
+        socket.emit("mongo findOne", {
+            collection:"outfits",
+            options:{skip:0},
+            selectors:{gender:"female"},
+        }, function(err, data){
+            console.log(data);
+            Female = data;
+        });
+
+    });
 
 
 
