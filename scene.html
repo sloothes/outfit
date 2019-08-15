@@ -296,7 +296,7 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"male"},
-                    options:{fields:_id:0}}, // important!
+                    options:{fields:{_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
                 //  delete data._id; // important!
@@ -309,7 +309,7 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"female"},
-                    options:{fields:_id:0}}, // important!
+                    options:{fields:{_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
                 //  delete data._id; // important!
@@ -322,7 +322,7 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"basic"},
-                    options:{fields:_id:0}}, // important!
+                    options:{fields:{_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
                 //  delete data._id; // important!
