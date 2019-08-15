@@ -165,12 +165,16 @@
                 return item._id = "basic";
             });
 
+            delete Animations._id;   // important!
+
             return json;
         }).then(function(json){
 
             MaleAnimations = json.find(function(item){
                 return item._id = "male";
             });
+
+            delete MaleAnimations._id;  // important!
 
             return json;
         }).then(function(json){
@@ -179,11 +183,7 @@
                 return item._id = "female";
             });
 
-        }).then(function(json){
-
-            //delete Animations._id;   // important!
-            //delete MaleAnimations._id;  // important!
-            //delete FemaleAnimations._id; // important!
+            delete FemaleAnimations._id; // important!
 
             return json;
         }).then(function(json){
