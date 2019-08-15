@@ -213,7 +213,7 @@
         }).then(function(data){
             debugMode && console.log(data); // array.
 
-            Promise.add([
+            Promise.all([
                 new Promise(function(resolve, reject){
                     var json = data.find(function(item){
                         return item._id = "basic";
@@ -223,6 +223,8 @@
                         if (name != "_id") 
                             Animations[name] = json[name];
                     }
+
+                    debugMode && console.log({"Animations":Animations});
 
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
@@ -239,6 +241,8 @@
                             MaleAnimations[name] = json[name];
                     }
 
+                    debugMode && console.log({"MaleAnimations":MaleAnimations});
+
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
                     }
@@ -253,6 +257,8 @@
                         if (name != "_id") 
                             FemaleAnimations[name] = json[name];
                     }
+
+                    debugMode && console.log({"FemaleAnimations":FemaleAnimations});
 
                     if ( !!localPlayer && !!localPlayer.outfit ) {
                         localPlayer.outfit.AnimationsHandler.refresh();
