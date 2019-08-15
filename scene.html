@@ -143,6 +143,8 @@
 /*
         Promise.all([
 
+        //  animationsLoader.js
+
             new Promise(function(resolve, reject){
                 socket.emit("mongo findOne", {
                     collection:"animations",
@@ -183,6 +185,8 @@
             }),
 
         ]).then(function(){
+
+        //  skinnedMeshLoader.js
 
             socket.emit("mongo findOne", {
                 collection:"outfits",
