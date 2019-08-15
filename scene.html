@@ -201,13 +201,17 @@
 
         }).then(function(count){
 
-            socket.emit("mongo findOne", {
+            var data = {
                 collection:"outfits",
                 selectors:{gender:"female"},
                 options:{skip: parseInt( count * Math.random() )},
-            }, function(err, data){
-                console.log(data);
-                localPlayer.outfit.fromJSON(data)
+            };
+
+            debugMode && console.log( data );
+
+            socket.emit("mongo findOne", data, function(err, json){
+                console.log(json);
+                localPlayer.outfit.fromJSON(json)
                 .then(function(outfit){
                     female = outfit;
                 });
