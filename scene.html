@@ -280,25 +280,63 @@
 <!-- script src="/scene/skinnedMeshLoader.js"></script -->
 
 <script>
-/*
+
 //  skinnedMeshLoader.js (v6.3)
 
     var male, female, skeleton;
+    var Animations, MaleAnimations, FemaleAnimations;
 
     socket.on("connect", function(){
+        Promise.all([
 
-        socket.emit("mongo findOne", {
-            collection:"outfits",
-            options:{skip:0},
-            selectors:{gender:"female"},
-        }, function(err, data){
-            console.log(data);
-            localPlayer.outfit.fromJSON(data)
-            .then(function(outfit){
-                female = outfit;
+            new Promise(function(resolve, reject){
+                socket.emit("mongo findOne", {
+                    collection:"animations",
+                    selectors:{_id:"male"},
+                }, function(err, data){
+                    console.log(data);
+                    MaleAnimations = data;
+                    resolve(MaleAnimations);
+                });
+            }),
+
+            new Promise(function(resolve, reject){
+                socket.emit("mongo findOne", {
+                    collection:"animations",
+                    selectors:{_id:"female"},
+                }, function(err, data){
+                    console.log(data);
+                    FemaleAnimations = data;
+                    resolve(FemaleAnimations);
+                });
+            }),
+
+            new Promise(function(resolve, reject){
+                socket.emit("mongo findOne", {
+                    collection:"animations",
+                    selectors:{_id:"basic"},
+                }, function(err, data){
+                    console.log(data);
+                    Animations = data;
+                    resolve(Animations);
+                });
+            }),
+
+        ]).then(function(results){
+
+            socket.emit("mongo findOne", {
+                collection:"outfits",
+                options:{skip:0},
+                selectors:{gender:"female"},
+            }, function(err, data){
+                console.log(data);
+                localPlayer.outfit.fromJSON(data)
+                .then(function(outfit){
+                    female = outfit;
+                });
             });
-        });
 
+        });
     });
 */
 </script>
