@@ -274,7 +274,10 @@
             selectors:{gender:"female"},
         }, function(err, data){
             console.log(data);
-            Female = data;
+            localPlayer.outfit.fromJSON(data)
+            .then(function(outfit){
+                female = outfit;
+            });
         });
 
     });
