@@ -213,52 +213,54 @@
         }).then(function(data){
             debugMode && console.log(data); // array.
 
-            var json = data.find(function(item){
-                return item._id = "basic";
-            });
+            Promise.add([
+                new Promise(function(resolve, reject){
+                    var json = data.find(function(item){
+                        return item._id = "basic";
+                    });
 
-            for (var name in json){
-                if (name != "_id") Animations[name] = json[name];
-            }
+                    for (var name in json){
+                        if (name != "_id") 
+                            Animations[name] = json[name];
+                    }
 
-            if ( !!localPlayer && !!localPlayer.outfit ) {
-                localPlayer.outfit.AnimationsHandler.refresh();
-            }
+                    if ( !!localPlayer && !!localPlayer.outfit ) {
+                        localPlayer.outfit.AnimationsHandler.refresh();
+                    }
+                }),
 
-            return data;
-        }).then(function(data){
+                new Promise(function(resolve, reject){
+                    var json = data.find(function(item){
+                        return item._id = "male";
+                    });
 
-            var json = data.find(function(item){
-                return item._id = "male";
-            });
+                    for (var name in json){
+                        if (name != "_id") 
+                            MaleAnimations[name] = json[name];
+                    }
 
-            for (var name in json){
-                if (name != "_id") MaleAnimations[name] = json[name];
-            }
+                    if ( !!localPlayer && !!localPlayer.outfit ) {
+                        localPlayer.outfit.AnimationsHandler.refresh();
+                    }
+                }),
 
-            if ( !!localPlayer && !!localPlayer.outfit ) {
-                localPlayer.outfit.AnimationsHandler.refresh();
-            }
+                new Promise(function(resolve, reject){
+                    var json = data.find(function(item){
+                        return item._id = "female";
+                    });
 
-            return data;
-        }).then(function(data){
+                    for (var name in json){
+                        if (name != "_id") 
+                            FemaleAnimations[name] = json[name];
+                    }
 
-            var json = data.find(function(item){
-                return item._id = "female";
-            });
+                    if ( !!localPlayer && !!localPlayer.outfit ) {
+                        localPlayer.outfit.AnimationsHandler.refresh();
+                    }
+                }),
+            ]);
 
-            for (var name in json){
-                if (name != "_id") FemaleAnimations[name] = json[name];
-            }
-
-            if ( !!localPlayer && !!localPlayer.outfit ) {
-                localPlayer.outfit.AnimationsHandler.refresh();
-            }
-
-        }).catch(function(err){
-            console.error(err);
         });
-
     });
 
 </script>
