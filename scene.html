@@ -165,17 +165,28 @@
                 return item._id = "basic";
             });
 
+            return json;
+        }).then(function(json){
+
             MaleAnimations = json.find(function(item){
                 return item._id = "male";
             });
+
+            return json;
+        }).then(function(json){
 
             FemaleAnimations = json.find(function(item){
                 return item._id = "female";
             });
 
+        }).then(function(json){
+
             delete Animations._id;   // important!
             delete MaleAnimations._id;  // important!
             delete FemaleAnimations._id; // important!
+
+            return json;
+        }).then(function(json){
 
             if ( !!localPlayer && !!localPlayer.outfit ) {
                 localPlayer.outfit.AnimationsHandler.refresh();
