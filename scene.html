@@ -296,7 +296,7 @@
                 }, function(err, data){
                     console.log(data);
                     MaleAnimations = data;
-                    resolve(data);
+                    resolve();
                 });
             }),
 
@@ -307,7 +307,7 @@
                 }, function(err, data){
                     console.log(data);
                     FemaleAnimations = data;
-                    resolve(data);
+                    resolve();
                 });
             }),
 
@@ -318,11 +318,11 @@
                 }, function(err, data){
                     console.log(data);
                     Animations = data;
-                    resolve(data);
+                    resolve();
                 });
             }),
 
-        ]).then(function(results){
+        ]).then(function(){
 
             socket.emit("mongo findOne", {
                 collection:"outfits",
