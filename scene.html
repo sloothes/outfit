@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description" contents="Slutty Ladies Observing Outgoing Trying Have Expressive Sex">
 
-    <title>outfit scene (scc v4.0)</title>
+    <title>outfits scene (scc v4.0)</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootbox-dialoges.css">
@@ -118,10 +118,10 @@
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
 <script src="/scene/runtime.js"></script>
-<!-- script src="/js/animationsLoader.js"></script -->
 <script src="/scene/action-helpers.js"></script>
 <script src="/scene/sceneHandler.js"></script>
 <script src="/scene/localPlayerHandler.js"></script>
+<!-- script src="/js/animationsLoader.js"></script -->
 <!-- script src="/scene/skinnedMeshLoader.js"></script -->
 
 <script>
@@ -140,6 +140,8 @@
 
     socket.on("connect", function(status){
         debugMode && console.log({"status": status});
+
+        localPlayerHandler("/turn/back");
 
         Promise.all([
 
@@ -187,11 +189,21 @@
         ]).then(function(){
 
         //  skinnedMeshLoader.js
+            new Promise(function(resolve, reject){
+                socket.emit("mongo count", {
+                    collection:"outfits",
+                    selectors:{gender:"female"},
+                }, function(err, count){
+                    console.log(count);
+                    resolve(count);
+                });
+
+        ]).then(function(count){
 
             socket.emit("mongo findOne", {
                 collection:"outfits",
-                options:{skip:0},
                 selectors:{gender:"female"},
+                options:{skip: parseInt( count * Math.random() )},
             }, function(err, data){
                 console.log(data);
                 localPlayer.outfit.fromJSON(data)
