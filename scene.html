@@ -132,14 +132,23 @@
         .then(function(response){
             return response.json();
         }).then(function(json){
+            debugMode && console.log(json); // array.
 
-            delete json.male._id;   // important!
-            delete json.basic._id;  // important!
-            delete json.female._id; // important!
+            Animations = json.find(function(item){
+                return item._id = "basic";
+            });
 
-            Animations = json["basic"];
-            MaleAnimations = json["male"];
-            FemaleAnimations = json["female"];
+            MaleAnimations = json.find(function(item){
+                return item._id = "male";
+            });
+
+            FemaleAnimations = json.find(function(item){
+                return item._id = "female";
+            });
+
+            delete Animations._id;   // important!
+            delete MaleAnimations._id;  // important!
+            delete FemaleAnimations._id; // important!
 
             if ( !!localPlayer && !!localPlayer.outfit ) {
                 localPlayer.outfit.AnimationsHandler.refresh();
