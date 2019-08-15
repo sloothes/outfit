@@ -195,10 +195,10 @@
 */
 </script>
 
-<script src="/js/animationsLoader.js"></script>
+<!-- script src="/js/animationsLoader.js"></script -->
 
 <script>
-/*
+
 //  animationsLoader.js
 
     var Animations = {}; // object.
@@ -221,7 +221,9 @@
                 if (name != "_id") Animations[name] = json[name];
             }
 
-            //delete Animations._id;   // important!
+            if ( !!localPlayer && !!localPlayer.outfit ) {
+                localPlayer.outfit.AnimationsHandler.refresh();
+            }
 
             return data;
         }).then(function(data){
@@ -234,7 +236,9 @@
                 if (name != "_id") MaleAnimations[name] = json[name];
             }
 
-            //delete MaleAnimations._id;  // important!
+            if ( !!localPlayer && !!localPlayer.outfit ) {
+                localPlayer.outfit.AnimationsHandler.refresh();
+            }
 
             return data;
         }).then(function(data){
@@ -246,10 +250,6 @@
             for (var name in json){
                 if (name != "_id") FemaleAnimations[name] = json[name];
             }
-
-            //delete FemaleAnimations._id; // important!
-
-        }).then(function(){
 
             if ( !!localPlayer && !!localPlayer.outfit ) {
                 localPlayer.outfit.AnimationsHandler.refresh();
