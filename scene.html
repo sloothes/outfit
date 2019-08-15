@@ -198,9 +198,9 @@
 
 //  animationsLoader.js
 
-    var Animations; // object.
-    var MaleAnimations; // object.
-    var FemaleAnimations; // object.
+    var Animations = {}; // object.
+    var MaleAnimations = {}; // object.
+    var FemaleAnimations = {}; // object.
 
     caches.open("collections").then(function(cache){
 
@@ -215,10 +215,10 @@
             });
 
             for (var name in json){
-                Animations[name] = json[name];
+                if (name != "_id") Animations[name] = json[name];
             }
 
-            delete Animations._id;   // important!
+            //delete Animations._id;   // important!
 
             return data;
         }).then(function(data){
@@ -228,10 +228,10 @@
             });
 
             for (var name in json){
-                MaleAnimations[name] = json[name];
+                if (name != "_id") MaleAnimations[name] = json[name];
             }
 
-            delete MaleAnimations._id;  // important!
+            //delete MaleAnimations._id;  // important!
 
             return data;
         }).then(function(data){
@@ -241,10 +241,10 @@
             });
 
             for (var name in json){
-                FemaleAnimations[name] = json[name];
+                if (name != "_id") FemaleAnimations[name] = json[name];
             }
 
-            delete FemaleAnimations._id; // important!
+            //delete FemaleAnimations._id; // important!
 
         }).then(function(){
 
