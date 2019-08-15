@@ -296,9 +296,10 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"male"},
+                    options:{fields:_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
-                    delete data._id; // important!
+                //  delete data._id; // important!
                     MaleAnimations = data;
                     resolve();
                 });
@@ -308,9 +309,10 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"female"},
+                    options:{fields:_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
-                    delete data._id; // important!
+                //  delete data._id; // important!
                     FemaleAnimations = data;
                     resolve();
                 });
@@ -320,9 +322,10 @@
                 socket.emit("mongo findOne", {
                     collection:"animations",
                     selectors:{_id:"basic"},
+                    options:{fields:_id:0}}, // important!
                 }, function(err, data){
                     console.log(data);
-                    delete data._id; // important!
+                //  delete data._id; // important!
                     Animations = data;
                     resolve();
                 });
