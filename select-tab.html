@@ -117,7 +117,9 @@
 
 socket.on("connect", function (status) {
 
-    const outfitPreview = $("img#outfit-preview").get(0);
+    const tab = document.getElementById("outfits-tab");
+    const outfitPreview = $(tab).find("img#outfit-preview").get(0);
+    const outfitSnapshots = $(tab).find("#outfits-snapshots").get(0);
 
     var data = {
         collection:"onsite-outfits",
@@ -148,6 +150,8 @@ socket.on("connect", function (status) {
             //  var objectURL = URL.createObjectURL(url);
                 outfitPreview.src = URL.createObjectURL(url);
             });
+
+            $(outfitSnapshots).append(snapshot);
 
         });
 
