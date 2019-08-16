@@ -1480,7 +1480,7 @@ $(viewer.contentWindow).on("load", function(){
             return bootbox.dialog( errorDialogOptions(err) );
         }
 
-        var snapshot = $(snapshotItemSelector + ".selected").get(0);
+        var snapshot = $(snapshotItemSelector + ".selected" + ".preview").get(0);
 
         if ( !snapshot ) {
             var err = `There is not selected snapshot for upload!`;
@@ -1532,7 +1532,7 @@ $(viewer.contentWindow).on("load", function(){
             className: "middle",
         });
 
-        caches.open("products").then(function(cache){
+        caches.open("snapshots").then(function(cache){
 
             new Promise(function(resolve, reject){
 
@@ -1607,14 +1607,15 @@ $(viewer.contentWindow).on("load", function(){
 
                 debugMode && console.log({"entry":entry});
 
-            //  Add to collection.
+            //  Insert to collection.
 
-                var collection = PRODUCTS.collection("snapshots");
+                var collection = "snapshots"; // PRODUCTS.collection("snapshots");
 
-                collection.insert(entry, function(err){
-                    if (err) throw err;
-                }).catch(function(err){
-                    console.error(err);
+                socket.emit("mongo insert", {
+                    collection: "snapshots";
+                }, function(err, results){
+                    if (err) console.error(err);
+                    debugMode && console.log(results);
                 });
 
                 return data;
@@ -1970,6 +1971,7 @@ $(viewer.contentWindow).on("load", function(){
 
         }
 
+    /*
         if ( !user || !user.username ) {
 
             var msg = "Please type an owner for <br>"
@@ -2014,6 +2016,7 @@ $(viewer.contentWindow).on("load", function(){
             }
 
         };
+    */
 
     /*
         if ( !outfitDroplist.value ) {
@@ -2026,6 +2029,7 @@ $(viewer.contentWindow).on("load", function(){
 
     //  SNAPSHOTS.
 
+    /*
         var snapshots = [];                      // [ imgur ids ].
 
         $(snapshotItemSelector).toArray().forEach(function(item){
@@ -2033,12 +2037,11 @@ $(viewer.contentWindow).on("load", function(){
         });
 
         if ( snapshots.length == 0 ) {
-
             var msg = "You don't have any snapshots uploaded.<br>"
             + "Please upload at least one snapshot and try again.";
             return bootbox.dialog( cancelDialogOptions(msg) );
-
         }
+    */
 
         if ( !masterSnapshot ) {
 
@@ -2055,157 +2058,282 @@ $(viewer.contentWindow).on("load", function(){
 
     productSaveButtonClicked.add(function(){
 
-        var owner = contentWindow.socket.authToken; // important!
         var kind = $(collectionDroplist).val();          // kind.
         var title = $(productTitle).val();               // name.
-        var value = round( productValue.value, 2) || null;  // price.
         var gender = contentWindow.localPlayer.outfit.getGender();
-        var outfit = $(outfitDroplist).val();            // slot.
         var preview = masterSnapshot.id;                 // imgur id.
-        var publish = Boolean( $(productState).val() );  // boolean.
         var description = $(productDescription).val();   // text.
 
         if (!kind) return;    // required.
         if (!title) return;   // required.
-        if (!owner) return;   // required.
         if (!gender) return;  // required.
         if (!preview) return; // required.
-    //  if (!outfit) return;  // not require.
 
-    //  SNAPSHOTS.
 
-        var uploads = [];
-        var snapshots = [];                      // [ imgur ids ].
+    //  PREVIEW SNAPSHOT.
 
-        $(snapshotItemSelector).toArray().forEach(function(item){
-            if (item.id) snapshots.push( item.id );
-        });
+        var snapshot = $(snapshotItemSelector + ".selected" + ".preview").get(0);
 
-        if (!snapshots.length) return;
-
-    //  Disable save button.
-        $(saveProductButton).off();  // important!
-
-        //  var entry = {
-        //      _id: ObjectId(),
-        //      demo: true,
-        //      kind: kind,
-        //      name: title,
-        //      slot: outfit,
-        //      price: value,
-        //      owner: objectId,
-        //      gender: gender,
-        //      preview: preview,
-        //      publish: publish,
-        //      designer: username,
-        //      snapshots: snapshots,
-        //      uuid: generateUUID(),
-        //  };
-
-        //  if (kind) entry.kind = kind;
-        //  if (title) entry.name = title;
-        //  if (value) entry.price = value;
-        //  if (outfit) entry.slot = outfit;    // slot.
-        //  if (gender) entry.gender = gender;
-        //  if (preview) entry.preview = preview;
-        //  if (snapshots.length) entry.snapshots = snapshots;
-        //  entry.publish = publish;
-
-        var entry = {};
-        entry.kind = kind;
-        entry.name = title;
-        entry.gender = gender;
-        entry.preview = preview;
-        entry.publish = publish;
-        entry.snapshots = snapshots;
-        entry.price = value || null;
-        entry._id = ObjectId();
-        entry.uuid = generateUUID();
-
-        if (owner) {
-            entry.owner = owner.objectId;
-            entry.designer = owner.username;
+        if ( !snapshot ) {
+            var err = `There is not selected snapshot for upload!`;
+            return bootbox.dialog( errorDialogOptions(err) );
         }
 
-        if (outfit) entry.slot = outfit; // important!
-        if (description) entry.description = description;
+        if (snapshot.uploaded) {
+            var msg = `Selected snapshot has been already uploaded.`;
+            return userNotificationDialogMessage(msg);
+        }
 
-        debugMode && console.log(entry);
+        debugMode && console.dir(snapshot); 
 
-    //  To connect a product with an outfit we  
-    //  use a pair of [product_UUID, item_UUID].
+        if (snapshot.data.startsWith("data:image/png;base64,") ) {
 
-        var selector = ".collection-item.selected";
-        var selected = $(selector).get(0);
+            var type = "image/png";
+            var name = `product snapshot #${store("SnapshotCount")}.png`;
+            var data =  snapshot.data.replace("data:image/png;base64,", "");   // important!
 
-        if ( !selected ) throw "There is none item selected!";
+        } else if (snapshot.data.startsWith("data:image/gif;base64,") ) {
 
-        var item_UUID = selected.uuid;
-        var product_UUID = entry.uuid;
+            var type = "image/gif";
+            var name = `product snapshot #${store("SnapshotCount")}.gif`;
+            var data =  snapshot.data.replace("data:image/gif;base64,", "");   // important!
 
-    //  We use a separate "multiplex" collection  
-    //  to keep these pair of UUIDs. When we want 
-    //  to get the item of the product, we go
-    //  to that collection with the product_UUID,
-    //  we get the item_UUID, and then we search,
-    //  the item of the product to deliver.
+        } else if (snapshot.data.startsWith("data:image/jpeg;base64,") ) {
 
-        var connector = {
-            _id: ObjectId(),
-            database: "USER",
-            collection: kind,
-            item_UUID: item_UUID,
-            product_UUID: product_UUID,
-        };
+            var type = "image/jpeg";
+            var name = `product snapshot #${store("SnapshotCount")}.jpg`;
+            var data =  snapshot.data.replace("data:image/jpeg;base64,", "");  // important!
 
-        debugMode && console.log(connector);
+        } else {
 
-    //  Enable save button.
-        $(saveProductButton).on( "click", validateProductForm ); // important!
+            var err = `Unsupported image type!<br>`
+            +  `Please replace image and try again.`;
+            return bootbox.dialog( errorDialogOptions(err) );
 
-    });
+        }
 
-/*
-        Promise.all([
+    //  Start uploading.
 
-            PRODUCTS.collection("products")
-            .insert(entry, function(err){
-                if (err) throw err;
+        var dialog = bootbox.dialog({
+            message: `<div class="text-center meter">`
+            + `<span style="width:100%;">Uploading...`
+            + `</span></div>`,
+            buttons: false,
+            closeButton: false,
+            className: "middle",
+        });
+
+        caches.open("snapshots").then(function(cache){
+
+            new Promise(function(resolve, reject){
+
+            //  Disable upload button.
+                $(snapshotUploadBtnSelector).off(); // important!
+                debugMode && console.log(`uploading ${name}...`);
+
+                var formdata = new FormData();
+                formdata.append("image", data);
+                formdata.append("type",  type);
+                formdata.append("name",  name);
+                formdata.append("title", name);
+
+                var xhttp = new XMLHttpRequest();
+                var clientid = "1812ad6d78faf36";  // product app Client-ID.
+                var endpoint = "https://api.imgur.com/3/image";
+                xhttp.open("POST", endpoint, true);
+                xhttp.setRequestHeader("Authorization", "Client-ID " + clientid);
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        var response = "";
+                        if (this.status >= 200 && this.status < 300) {
+                            response = JSON.parse(this.responseText);
+                            resolve( response ); // resolve promise.
+                        } else {
+                            var err = JSON.parse(this.responseText).data.error;
+                            console.error( err.type, err );
+                            throw err;
+                        }
+                    }
+                };
+
+                xhttp.send(formdata);
+                xhttp = null;
+
+            }).then( function( response ){
+
+                var data = response.data;
+                debugMode && console.log({"data": data});
+
+                snapshot.data = null;      // important!
+                snapshot.id = data.id;     // important!
+                snapshot.link = data.link; // important!
+                snapshot.uploaded = true;  // important!
+                snapshot.name = data.name; //  optional!
+
+                snapshot.clientID = "1812ad6d78faf36";// product app Client-ID.
+                snapshot.endpoint = "https://api.imgur.com/3/image/" + data.id;         // important!
+                snapshot.delpoint = "https://api.imgur.com/3/image/" + data.deletehash; // important!
+                snapshot.thumbnail = data.link.replace(data.id, data.id + "s");
+
+                return data;
+
+            }).then( function( data ){
+
+            //  Add to collection.
+
+                var entry = {};
+
+                entry._id = data.id;
+                entry.url = data.link;
+                entry.size = data.size;
+                entry.type = data.type;
+                entry.name = data.name || data.title;
+                entry.width = data.width;
+                entry.height = data.height;
+                entry.datetime = data.datetime;
+                entry.deletehash = data.deletehash;
+                entry.thumbnail = data.link.replace(data.id, data.id + "s");
+                entry.clientID = "1812ad6d78faf36";// product app Client-ID.
+                entry.endpoint = "https://api.imgur.com/3/image/" + data.id;
+
+                debugMode && console.log({"entry":entry});
+
+            //  Insert to collection.
+
+                var collection = "snapshots"; // PRODUCTS.collection("snapshots");
+
+                socket.emit("mongo insert", {
+                    collection: "snapshots";
+                }, function(err, results){
+                    if (err) console.error(err);
+                    debugMode && console.log(results);
+                });
+
+                return data;
+
+            }).then( function( data ){
+
+            //  Add to cache.
+                return cache.add( data.link ).then(function(){
+                    return caches.open("thumbnails").then(function(thumbnails){
+                        return thumbnails.add( data.link.replace(data.id, data.id + "s") )
+                        .then(function(){ return data.link; });
+                    });
+                });
+
+            }).then( function( url ){
+
+            //  Preview snapshot.
+                cache.match( url ).then(function(response){
+                    return response.blob();
+                }).then(function(blob){
+                    productPreviewImage.src = window.URL.createObjectURL(blob);
+                });
+
+            }).then( function(){
+
+            //  Snapshot counter.
+                var count = store("SnapshotCount");
+                store( "SnapshotCount",  ++count ); 
+
+            }).then( function(){
+
+            //  Disable save button.
+                $(saveProductButton).off();  // important!
+
+                var entry = {};
+                entry.kind = kind;
+                entry.name = title;
+                entry.gender = gender;
+                entry.preview = preview;
+                entry._id = ObjectId();
+                entry.uuid = generateUUID();
+
+                if (outfit) entry.slot = outfit; // important!
+                if (description) entry.description = description;
+
+                debugMode && console.log(entry);
+
+            //  To connect a product with an outfit we  
+            //  use a pair of [product_UUID, item_UUID].
+
+                var selector = ".collection-item.selected";
+                var selected = $(selector).get(0);
+
+                if ( !selected ) throw "There is none item selected!";
+
+                var item_UUID = selected.uuid;
+                var product_UUID = entry.uuid;
+
+                var plexer = {
+                    _id: ObjectId(),
+                    collection: kind,
+                    item_UUID: item_UUID,
+                    product_UUID: product_UUID,
+                };
+
+                debugMode && console.log({
+                    "entry":entry,
+                    "plexer":plexer,
+                });
+
+                return Promise.all([
+                    new Promise(function(resolve, reject){
+                        socket.emit("mongo insert", {
+                            documents: entry,
+                            collection: "onsite-avatars";
+                        }, function(err, result){
+                            if (err) console.error(err);
+                            resolve(result);
+                        });
+                    }),
+
+                    new Promise(function(resolve, reject){
+                        socket.emit("mongo insert", {
+                            documents: plexer,
+                            collection: "multiplexer";
+                        }, function(err, result){
+                            if (err) console.error(err);
+                            resolve(result);
+                        });
+                    }),
+
+                ]).then(function(results){
+                    return results;
+                });
+
+            }).then(function(results){
+                debugMode && console.log(results);
+
+                var msg = `Outfit ${title} saved!`;
+                userNotificationDialogMessage( msg );
+
             }).catch(function(err){
+
+                bootbox.hideAll();
                 console.error(err);
-            }),
+                bootbox.dialog( errorDialogOptions(err) );
 
-            PRODUCTS.collection("multiplex")
-            .insert(connector, function(err){
-                if (err) throw err;
-            }).catch(function(err){
-                console.error(err);
-            }),
+            }).then(function(){
 
-        ]).then(function(){
+            //  Enable upload button. // important!
+                $(snapshotUploadBtnSelector).on("click", uploadSelectedSnapshot );
+                debugMode && console.log( `Upload button is enabled and ready to upload.` );
 
-            var msg = `Product ${title} saved!`;
-            userNotificationDialogMessage( msg );
+            //  Reset form.
+                resetProductForm();
 
-            debugMode && console.log({
-                "entry":entry,
-                "connector":connector,
+            //  Enable save button.
+                $(saveProductButton).on( "click", validateProductForm ); // important!
+                debugMode && console.log( `Save button is enabled and ready to upload.` );
+
+                dialog.modal("hide"); // important!
+
             });
 
-        }).catch(function(err){
-            debugMode && console.error(err);
-            bootbox.dialog( errorDialogOptions(err) );
-
-        }).then(function(){
-
-        //  Reset form.
-            resetProductForm();
-
-        //  Enable save button.
-            $(saveProductButton).on( "click", validateProductForm ); // important!
-
         });
-*/
+
+    });
 
     contentWindow.localPlayer.outfit.changed.add(function(){
         outfitProductDroplistUpdate.dispatch(); // important!
