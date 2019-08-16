@@ -666,7 +666,6 @@ $(viewer.contentWindow).on("load", function(){
     var currentindex = 0;
 
     var Signal = signals.Signal;
-//  var outfitDroplistChanged = new Signal();
     var collectionItemSelected = new Signal();
     var collectionDroplistChanged = new Signal();
 
@@ -681,6 +680,25 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function count(){
+        return new Promise(function(resolve, reject){
+
+            socket.emit("mongo count", {
+                selectors: selectors,
+                collection: collectionDroplist.value,
+            }, function(err, result){
+                if (err) throw err;
+                resolve(result);
+            });
+
+        }).then(function(result){
+            return result;
+        }).catch(function(err){
+            console.error(err);
+        });
+    }
+
+/*
+    function count(){
         var k = skip;
         return collection.find(selectors)
             .skip(skip).forEach( 
@@ -692,6 +710,7 @@ $(viewer.contentWindow).on("load", function(){
             return k;
         });
     }
+*/
 
     function init(){
 
@@ -711,6 +730,52 @@ $(viewer.contentWindow).on("load", function(){
 
     }
 
+    function get_items(){
+        new Promise(function(resolve, reject){
+
+            socket.emit("mongo find", {
+                selectors: selectors,
+                collection: collectionDroplist.value,
+            }, function(err, results){
+                if (err) throw err;
+                resolve(results);
+            });
+
+        }).then(function(docs){
+
+            $(displayObjects).children().remove();
+            debugMode && console.log({"docs":docs});
+
+            docs.forEach(function(doc){
+
+                var element = document.createElement("input");
+                element.value = element.title = doc.name;
+                element.data = doc;         // important!
+                element.readOnly = true;    // important!
+                element.uuid = doc.uuid;    // important! (TODO: encapsulate)
+                element.id = doc._id; element.type = "text"; 
+                element.classList.add("collection-item");
+
+                $(element).on("click", function(){
+                    clearTimeout(this.interval);
+                    this.interval = setTimeout( function(){
+                        $(".collection-item").removeClass("selected");
+                        $(element).addClass("selected");
+                        collectionItemSelected.dispatch(doc);
+                    }, delay );
+                });
+
+                $(displayObjects).append( element );
+
+            });
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    }
+
+/*
     function get_items(){
         collection.find(selectors).skip(skip)
         .limit(limit).toArray(function(err){
@@ -748,7 +813,7 @@ $(viewer.contentWindow).on("load", function(){
         });
 
     }
-
+*/
     const droplistSelector = ".selector-droplist";
 
     $(droplistSelector).on("change", function(){
