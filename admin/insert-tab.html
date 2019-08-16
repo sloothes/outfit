@@ -829,7 +829,7 @@ $(viewer.contentWindow).on("load", function(){
         socket.emit("mongo find", {
             selectors: selectors,
             collection: collection,
-            options:{skip:skip, limit:limit},
+            options:{skip:0, limit:limit},
         }, function(err, docs){
             if (err) throw err;
 
