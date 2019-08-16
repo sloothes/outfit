@@ -1,6 +1,8 @@
+//  /outfits/index.js
+
 (function(){
 
-//  /outfits/menu-list.js
+//  menu-list.js
 
     var list = {
 
@@ -60,7 +62,7 @@
     }
 
     
-//  /outfits/menu-panel.js
+//  menu-panel.js
 
     var panel = document.getElementById( "panel" );
     var viewer = document.getElementById( "viewer" );
@@ -245,7 +247,7 @@
 
     panel.appendChild( content );
 
-//  /outfits/index.js
+//  index.js
 
     var viewer = document.getElementById( "viewer" );
 
