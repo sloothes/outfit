@@ -18,6 +18,11 @@
 
     .helpers-header h3 { cursor:pointer; }
 
+    .selected {
+        color:#fff;
+        background-color:#73b8f3;
+    }
+
     .snapshot-item {
         width:85px;
         height:85px;
@@ -149,9 +154,12 @@ socket.on("connect", function (status) {
             snapshot.style["background-image"] = `url(//i.imgur.com/${item.preview}s.jpg)`;
 
             $(snapshot).on("click", function(){
-            //  var url = `//i.imgur.com/${item.preview}.jpg`;
+                const selector = ".snapshot-item.outfit-snapshot-item";
             //  var objectURL = URL.createObjectURL(blob); // TODO.
                 outfitPreview.src = `//i.imgur.com/${item.preview}.jpg`;
+                $(selector).removeClass("selected");
+                $(snapshot).addClass("selected");         // this.
+
             });
 
             $(outfitSnapshots).append(snapshot);
@@ -160,23 +168,6 @@ socket.on("connect", function (status) {
 
     });
 
-/*
-//  demo.
-    socket.emit("mongo count", data, function(err, count){
-
-        debugMode && console.log(count);
-
-        $("#outfits-snapshots").children().remove();
-
-        for (var i=0; i < count; i++) {
-            var snapshot = document.createElement("li");
-            snapshot.skip = i;
-            snapshot.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
-            $("#outfits-snapshots").append(snapshot);
-        }
-
-    });
-*/
     if (status.isAuthenticated) {
     //  debugMode && console.log( "authToken:", authToken );
     }
