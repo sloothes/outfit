@@ -1858,13 +1858,15 @@ $(viewer.contentWindow).on("load", function(){
             $(snapshot).addClass("selected");
             selectedSnapshot = snapshot;
 
-        //  Set as main the first snapshot.
-            if (!masterSnapshot) {
-                $(selector).removeClass("preview");
-                $(snapshot).addClass("preview");
-                masterSnapshot = snapshot;
-            }
+        //  Set as main.
+            $(selector).removeClass("preview");
+            $(snapshot).addClass("preview");
+            masterSnapshot = snapshot; // important!
 
+        //  Remove previous snapshots.
+            $(selector).remove(); // important!
+
+        //  Add snapshot.
             debugMode && console.dir(snapshot);
             $(productSnapshots).append(snapshot);
 
