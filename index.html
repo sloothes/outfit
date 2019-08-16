@@ -57,7 +57,7 @@
         min-height:250px;;
     }
 
-    #product-title {
+    #outfit-title {
         outline:0;
         color:#999;
         border: none;
@@ -71,7 +71,7 @@
 
     }
 
-    #product-value {
+    #outfit-value {
         outline:0;
         color:#fff;
         border:none;
@@ -85,7 +85,7 @@
         cursor:context-menu;
     }
 
-    #product-preview-pane {
+    #outfit-preview-pane {
         width:49%;
         height:600px;
         min-width:49%;
@@ -101,14 +101,14 @@
         overflow:auto;
     }
 
-    img#product-preview {
+    img#outfit-preview {
         width:auto;
         margin:auto;
         min-height:350px;
         max-height:450px;
     }
 
-    #product-purcashe-pane {
+    #outfit-purcashe-pane {
         width:49%;
         height:600px;
         float:right;
@@ -119,7 +119,7 @@
     /*  border:thin solid #ccc; */
     }
 
-    #product-purcashe {
+    #outfit-purcashe {
         width:100%;
         margin:auto;
         height:600px;
@@ -130,11 +130,11 @@
 
     @media all and ( max-width: 640px ) {
 
-        #product-preview-pane {
+        #outfit-preview-pane {
             width:100%;
         }
 
-        #product-purcashe-pane {
+        #outfit-purcashe-pane {
             width:100%;
             float:unset;
             height:400px;
@@ -144,11 +144,11 @@
 
         }
 
-        #product-purcashe {
+        #outfit-purcashe {
             height:100%;
         }
 
-        #product-value {
+        #outfit-value {
             max-width:100%;
         }
 
@@ -168,8 +168,8 @@
         padding:30px;
     }
 
-    #product-preview,
-    #product-snapshots {
+    #outfit-preview,
+    #outfit-snapshots {
         transition:transform 250ms ease-out;
     }
 
@@ -183,6 +183,150 @@
 
 </style>
 
+<section class="mbr-section" id="details-section">
+
+<div class="container well" style="background-color:#fff;">
+
+    <div id="product-title-pane" style="margin-bottom:20px;">
+        <input type="text" id="product-title" class="form-control text-center x-large product-title-field" placeholder="untitled product" readOnly>
+    </div>
+
+    <div id="outfit-preview-pane">
+
+        <div id="preview-container" style="max-width:100%;text-align:center;">
+            <img id="outfit-preview" src="/img/no-image-avaliable-200x200.png">
+        </div>
+
+        <script>
+
+            (function (){
+                $("img#outfit-preview").on("load", function(){
+                    $(this).fadeIn(500);
+                    if ( this.src.startsWith("blob:") ) {
+                        window.URL.revokeObjectURL(this.src); // important!
+                    }
+                });
+            })();
+
+            (function (){
+                if ( !window.Hammer ) return;
+                if ( window.isMobile ) return;
+                const parent = $("#preview-container").get(0);
+                const element = $("img#outfit-preview").get(0);
+                parent.style["scroll-behavior"] = "smooth";
+                var manager = new Hammer(element);
+                manager.on("swipe", function(e) {
+                    if ( e.offsetDirection === 4 || e.offsetDirection === 2 ) {
+                        parent.scrollLeft -= e.deltaX;
+                    }
+                });
+            })();
+
+        </script>
+
+        <div id="outfit-snapshots-pane" style="max-width:100%;display:inline-block;">
+            <div id="outfit-snapshots-container" style="margin:20px 0px;overflow-y:hidden;max-width:100%;text-align:center;">
+                <div id="outfit-snapshots" class="product-snapshots" style="display:inline-block;width:max-content;text-align:center;">
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                    <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="outfit-purcashe-pane">
+        <div id="product-purcashe">
+            <div><span style="font-weight:bold;">PID: </span><span id="product-uuid"></span></div>
+            <hr/>
+            <input type="text" id="product-value" class="form-control text-center x-large product-value-field" placeholder="0.00" value="0.00" readOnly>
+            <hr/>
+            <div style="text-align:center;">
+                <div id="purcash-button" class="btn btn-info btn-white-outline">Instant Purcashe</div>
+            </div>
+            <hr/>
+            <p class="product-description" style="max-height:10rem;padding:0px 20px;overflow:hidden;text-overflow:ellipsis;"></p>
+            <hr/>
+            <div style="text-align:center;">
+                <h4 style="font-weight:bold;">Designer:</h4>
+                <div id="product-design"></div>
+            </div>
+            <hr/>
+            <div style="text-align:center;">
+                <a id="live-test-button" href="//sloothes.com/scene" class="btn btn-default btn-white-outline">Try it!</a>
+            </div>
+            <hr/>
+            <div style="text-align:center;">
+                <div id="shopping-cart" class="btn btn-default btn-white-outline" style="display:inline-block;font-size:2rem;background-color:#4285f4;">
+                    <span style="font-weight:bold;">+ </span>Add to shopping cart
+                </div>
+                <div id="wishlist-button" class="btn btn-default btn-white-outline" style="display:inline-block;font-size:2rem;background-color:#cb4437;">
+                    <span style="font-weight:bold;">+ </span>Add to wishlist
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <div id="outfit-tabs-pane">
+
+        <div style="width:100%;margin-bottom:20px;">
+            <ul class="nav nav-tabs nav-pills" style="width:100%;overflow-x:auto;overflow-y:hidden;">
+
+                <li class="active" role="presentation"><a href="#description-tab" data-toggle="pill" class="pills right-pill right-pill-description">Description</a></li>
+                <li class role="presentation"><a href="#outfits-tab" data-toggle="pill" class="pills right-pill right-pill-outfits">Outfit</a></li>
+                <li class role="presentation"><a href="#texture-tab" data-toggle="pill" class="pills right-pill right-pill-outfits">Texture</a></li>
+                <li class role="presentation"><a href="#product-tab" data-toggle="pill" class="pills right-pill right-pill-product">Product</a></li>
+                <li class role="presentation"><a href="#reviews-tab" data-toggle="pill" class="pills right-pill right-pill-info">Reviews</a></li>
+                <li class role="presentation"><a href="#informs-tab" data-toggle="pill" class="pills right-pill right-pill-info">Info</a></li>
+                <!-- li class role="presentation"><a href="#edit-tab" data-toggle="pill" class="pills right-pill right-pill-edit">Edit</a></li -->
+
+            </ul>
+        </div>
+
+        <div class="tab-content">
+
+            <div id="description-tab" class="product-description component-pane tab-pane fade in active"></div>
+            <div id="outfits-tab" class="component-pane tab-pane fade"></div>
+            <div id="texture-tab" class="component-pane tab-pane fade"></div>
+            <div id="product-tab" class="component-pane tab-pane fade"></div>
+            <div id="reviews-tab" class="component-pane tab-pane fade"></div>
+            <div id="informs-tab" class="component-pane tab-pane fade"></div>
+            <!--div id="edit-tab" class="component-pane tab-pane fade"></div -->
+
+        </div>
+
+    </div>
+
+    <div id="additional-tab-pane">
+
+        <div style="width:100%;margin-bottom:20px;">
+            <ul class="nav nav-tabs nav-pills" style="width:100%;overflow:hidden;">
+                <li class="active" role="presentation" style="width:100%"><a href="#additional-options-tab" data-toggle="pill" class="pills right-pill right-pill-options">Additional options</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <div id="additional-options-tab" class="component-pane tab-pane fade in active"></div>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
 
 
 
