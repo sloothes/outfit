@@ -86,52 +86,47 @@
         <div id="right-side-content" style="overflow-x:hidden;">
 
             <div id="rightside-navpill-bar" class="side-holder" style="margin-bottom:20px;">
-                <ul id="nav-pill-tabs" class="nav nav-tabs nav-pills" style="overflow-y:hidden;max-width:300px;">
-                    <li class role="presentation"><a href="#outfit-tab"   data-toggle="pill" class="pills right-pill right-pill-outfit">Outfit</a></li>
+                <ul id="nav-pill-tabs" class="nav nav-tabs nav-pills" style="overflow-y:hidden;max-width:300px;width:100%;">
+                    <li class role="presentation"><a href="#select-outfit-tab" data-toggle="pill" class="pills right-pill right-pill-outfit">Outfit</a></li>
                 </ul>
             </div>
 
             <div id="right-side-panel" class="tab-content">
-                <div id="outfit-tab"   class="component-pane tab-pane fade in active"></div>
+                <div id="select-outfit-tab" class="component-pane tab-pane fade in active"></div>
             </div>
 
         </div>
 
     </div>
 
-    <script>
-        (function (){
-
-            if ( !window.Hammer ) return;
-            if ( window.isMobile ) return;
-
-            const element = $("#nav-pill-tabs").get(0);
-            //  Smoother scroll.
-            element.style["scroll-behavior"] = "smooth";
-
-            $("#nav-pill-tabs").find("a.pills.right-pill")
-                .toArray().forEach(function(pill){
-
-                //  Create a manager to manager the element.
-                var manager = new Hammer(pill);
-                //  Subscribe to a desired event.
-                manager.on("swipe", function(e) {
-                    if ( e.offsetDirection === 4 || e.offsetDirection === 2 ) {
-                        element.scrollLeft -= e.deltaX;
-                    }
-                });
-
-            });
-
-        })();
-    </script>
-
 </section>
 
 <script src="/js/hammer.js"></script>
 <script src="/js/store2.js"></script>
 <script src="/js/signals.min.js"></script>
+<script src="/js/side-panels.js"></script>
 <script src="/outfits/index.js"></script>
+
+<script>
+(function (){
+    if ( !window.Hammer ) return;
+    if ( window.isMobile ) return;
+    const element = $("#nav-pill-tabs").get(0);
+//  Smoother scroll.
+    element.style["scroll-behavior"] = "smooth";
+    $("#nav-pill-tabs").find("a.pills.right-pill")
+    .toArray().forEach(function(pill){
+    //  Create a manager to manager the element.
+        var manager = new Hammer(pill);
+    //  Subscribe to a desired event.
+        manager.on("swipe", function(e) {
+            if ( e.offsetDirection === 4 || e.offsetDirection === 2 ) {
+                element.scrollLeft -= e.deltaX;
+            }
+        });
+    });
+})();
+</script>
 
 <script>
 
