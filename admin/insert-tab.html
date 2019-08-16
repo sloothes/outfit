@@ -680,8 +680,9 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function count(){
-        debugMode && console.log(socket);
-        return; // debugging!
+
+        return 104; // debugging!
+
         socket.emit("mongo count", {
             selectors: selectors,
             collection: collection,
@@ -692,21 +693,6 @@ $(viewer.contentWindow).on("load", function(){
             $(counter).find(".count").text(max);
         });
     }
-
-/*
-    function count(){
-        var k = skip;
-        return collection.find(selectors)
-            .skip(skip).forEach( 
-            function(doc){ ++k; }, 
-            function(err){ if (err) throw err; }
-        ).catch(function(err){
-            console.error(err);
-        }).then(function(){
-            return k;
-        });
-    }
-*/
 
     function init(){
 
@@ -727,7 +713,9 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function get_items(){
+
         return; // debugging!
+
         socket.emit("mongo find", {
             selectors: selectors,
             collection: collection,
@@ -764,45 +752,6 @@ $(viewer.contentWindow).on("load", function(){
 
     }
 
-/*
-    function get_items(){
-        collection.find(selectors).skip(skip)
-        .limit(limit).toArray(function(err){
-            if (err) throw err;
-        }).then(function(docs){
-
-            $(displayObjects).children().remove();
-            debugMode && console.log({"docs":docs});
-
-            docs.forEach(function(doc){
-
-                var element = document.createElement("input");
-                element.value = element.title = doc.name;
-            //  element.data = doc;         // important!
-                element.readOnly = true;    // important!
-                element.uuid = doc.uuid;    // important! (TODO: encapsulate)
-                element.id = doc._id; element.type = "text"; 
-                element.classList.add("collection-item");
-
-                $(element).on("click", function(){
-                    clearTimeout(this.interval);
-                    this.interval = setTimeout( function(){
-                        $(".collection-item").removeClass("selected");
-                        $(element).addClass("selected");
-                        collectionItemSelected.dispatch(doc);
-                    }, delay );
-                });
-
-                $(displayObjects).append( element );
-
-            });
-
-        }).catch(function(err){
-            console.error(err);
-        });
-
-    }
-*/
     const droplistSelector = ".selector-droplist";
 
     $(droplistSelector).on("change", function(){
@@ -880,6 +829,7 @@ $(viewer.contentWindow).on("load", function(){
         socket.emit("mongo find", {
             selectors: selectors,
             collection: collection,
+            options:{skip:skip, limit:limit},
         }, function(err, docs){
             if (err) throw err;
 
@@ -2283,6 +2233,61 @@ $(viewer.contentWindow).on("load", function(){
 
 
 <script>
+
+/*
+    function count(){
+        var k = skip;
+        return collection.find(selectors)
+            .skip(skip).forEach( 
+            function(doc){ ++k; }, 
+            function(err){ if (err) throw err; }
+        ).catch(function(err){
+            console.error(err);
+        }).then(function(){
+            return k;
+        });
+    }
+*/
+
+/*
+    function get_items(){
+        collection.find(selectors).skip(skip)
+        .limit(limit).toArray(function(err){
+            if (err) throw err;
+        }).then(function(docs){
+
+            $(displayObjects).children().remove();
+            debugMode && console.log({"docs":docs});
+
+            docs.forEach(function(doc){
+
+                var element = document.createElement("input");
+                element.value = element.title = doc.name;
+            //  element.data = doc;         // important!
+                element.readOnly = true;    // important!
+                element.uuid = doc.uuid;    // important! (TODO: encapsulate)
+                element.id = doc._id; element.type = "text"; 
+                element.classList.add("collection-item");
+
+                $(element).on("click", function(){
+                    clearTimeout(this.interval);
+                    this.interval = setTimeout( function(){
+                        $(".collection-item").removeClass("selected");
+                        $(element).addClass("selected");
+                        collectionItemSelected.dispatch(doc);
+                    }, delay );
+                });
+
+                $(displayObjects).append( element );
+
+            });
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    }
+*/
 
 /*
     const LoremIpsum = "Sed ac metus fermentum nisi lacinia sodales. "
