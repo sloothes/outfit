@@ -146,9 +146,9 @@ socket.on("connect", function (status) {
             snapshot.style["background-image"] = `url(//i.imgur.com/${item.preview}s.jpg)`;
 
             $(snapshot).on("click", function(){
-                var url = `//i.imgur.com/${item.preview}.jpg`;
-            //  var objectURL = URL.createObjectURL(url);
-                outfitPreview.src = URL.createObjectURL(url);
+            //  var url = `//i.imgur.com/${item.preview}.jpg`;
+            //  var objectURL = URL.createObjectURL(blob); // TODO.
+                outfitPreview.src = `//i.imgur.com/${item.preview}.jpg`;
             });
 
             $(outfitSnapshots).append(snapshot);
