@@ -108,7 +108,7 @@
         max-height:450px;
     }
 
-    #outfit-purcashe-pane {
+    #outfit-select-pane {
         width:49%;
         height:600px;
         float:right;
@@ -134,7 +134,7 @@
             width:100%;
         }
 
-        #outfit-purcashe-pane {
+        #outfit-select-pane {
             width:100%;
             float:unset;
             height:400px;
@@ -154,7 +154,7 @@
 
     }
 
-    #purcash-button {
+    #select-button {
         color:#fff;
         min-width:50%;
         font-size:2rem;
@@ -247,31 +247,28 @@
         </div>
     </div>
 
-    <div id="outfit-purcashe-pane">
-        <div id="product-purcashe">
+    <div id="outfit-select-pane">
+        <div id="outfit-purcashe">
             <div><span style="font-weight:bold;">PID: </span><span id="product-uuid"></span></div>
             <hr/>
-            <input type="text" id="product-value" class="form-control text-center x-large product-value-field" placeholder="0.00" value="0.00" readOnly>
+            <input type="text" id="outift-value" class="form-control text-center x-large product-value-field" placeholder="0.00" value="0.00" readOnly>
             <hr/>
             <div style="text-align:center;">
-                <div id="purcash-button" class="btn btn-info btn-white-outline">Instant Purcashe</div>
+                <div id="select-button" class="btn btn-info btn-white-outline">Select</div>
             </div>
             <hr/>
-            <p class="product-description" style="max-height:10rem;padding:0px 20px;overflow:hidden;text-overflow:ellipsis;"></p>
+            <p class="outfit-description" style="max-height:10rem;padding:0px 20px;overflow:hidden;text-overflow:ellipsis;"></p>
             <hr/>
             <div style="text-align:center;">
                 <h4 style="font-weight:bold;">Designer:</h4>
-                <div id="product-design"></div>
+                <div id="outfit-designer"></div>
             </div>
             <hr/>
             <div style="text-align:center;">
-                <a id="live-test-button" href="//sloothes.com/scene" class="btn btn-default btn-white-outline">Try it!</a>
+                <a id="live-test-button" href="//:0" class="btn btn-default btn-white-outline">Try it!</a>
             </div>
             <hr/>
             <div style="text-align:center;">
-                <div id="shopping-cart" class="btn btn-default btn-white-outline" style="display:inline-block;font-size:2rem;background-color:#4285f4;">
-                    <span style="font-weight:bold;">+ </span>Add to shopping cart
-                </div>
                 <div id="wishlist-button" class="btn btn-default btn-white-outline" style="display:inline-block;font-size:2rem;background-color:#cb4437;">
                     <span style="font-weight:bold;">+ </span>Add to wishlist
                 </div>
@@ -291,7 +288,6 @@
                 <li class role="presentation"><a href="#product-tab" data-toggle="pill" class="pills right-pill right-pill-product">Product</a></li>
                 <li class role="presentation"><a href="#reviews-tab" data-toggle="pill" class="pills right-pill right-pill-info">Reviews</a></li>
                 <li class role="presentation"><a href="#informs-tab" data-toggle="pill" class="pills right-pill right-pill-info">Info</a></li>
-                <!-- li class role="presentation"><a href="#edit-tab" data-toggle="pill" class="pills right-pill right-pill-edit">Edit</a></li -->
 
             </ul>
         </div>
@@ -304,7 +300,6 @@
             <div id="product-tab" class="component-pane tab-pane fade"></div>
             <div id="reviews-tab" class="component-pane tab-pane fade"></div>
             <div id="informs-tab" class="component-pane tab-pane fade"></div>
-            <!--div id="edit-tab" class="component-pane tab-pane fade"></div -->
 
         </div>
 
