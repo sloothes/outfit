@@ -1,0 +1,49 @@
+<script>
+
+    (function(){
+        var component_ID = {
+            type: "tab",
+            beta: true,
+            version: 1.0,
+            kind: "component",
+            name: "select-tab.html",
+            path: "/outfits/select-tab.html",
+            description: "Select avatar outfit.",
+        };
+    })();
+
+</script>
+
+<h3>Select outfit:</h3>
+
+<div id="outfit-preview-panel" style="margin-bottom:20px;">
+
+    <div style="text-align:center;margin-bottom:10px;border:1px solid;">
+        <img id="outfit-preview" style="max-width:100%;min-height:287px;max-height:300px;margin:auto;">
+    </div>
+
+    <script>
+        (function(){
+            const outfitPreview = $("img#outfit-preview").get(0);
+            $(outfitPreview).on("load", function(){
+                if ( this.src.startsWith("blob:") ) {
+                    window.URL.revokeObjectURL(this.src); // important!
+                    debugMode && console.log("revoked", this.src);
+                }
+            });
+        })();
+    </script>
+
+    <div style="margin-bottom:10px;">
+        <div id="outfit-select-button" class="form-control btn btn-success btn-white-outline gradient-btn" style="width:32%;">Select</div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
