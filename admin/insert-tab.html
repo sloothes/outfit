@@ -680,14 +680,11 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function count(){
-
-        return 104; // debugging!
-
         socket.emit("mongo count", {
             selectors: selectors,
             collection: collection,
         }, function(err, result){
-            if (err) throw err;
+            if (err) console.error(err);
             max = result; 
             debugMode && console.log("max:", max);
             $(counter).find(".count").text(max);
@@ -713,14 +710,12 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function get_items(){
-
-        return; // debugging!
-
         socket.emit("mongo find", {
             selectors: selectors,
             collection: collection,
+            options: {skip:skip, limit:limit},
         }, function(err, docs){
-            if (err) throw err;
+            if (err) console.error(err);
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
@@ -816,14 +811,6 @@ $(viewer.contentWindow).on("load", function(){
 
         reset(); init(); count();
 
-    //  Count.
-
-    //  count().then(function(k){
-    //      max = k; debugMode && console.log("max:", max);
-    //  }).then(function(){
-    //      $(counter).find(".count").text(max);
-    //  });
-
     //  get_items();
 
         socket.emit("mongo find", {
@@ -831,7 +818,7 @@ $(viewer.contentWindow).on("load", function(){
             collection: collection,
             options:{skip:0, limit:limit},
         }, function(err, docs){
-            if (err) throw err;
+            if (err) console.error(err);
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
