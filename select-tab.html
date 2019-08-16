@@ -118,9 +118,17 @@
 socket.on("connect", function (status) {
 
     var data = {
-        collection:"outfits",
+        collection:"onsite-outfits",
     };
 
+    socket.emit("mongo find", data, function(err, results){
+
+        debugMode && console.log(results);
+
+    });
+
+/*
+//  demo.
     socket.emit("mongo count", data, function(err, count){
 
         debugMode && console.log(count);
@@ -135,9 +143,9 @@ socket.on("connect", function (status) {
         }
 
     });
-
+*/
     if (status.isAuthenticated) {
-        //  debugMode && console.log( "authToken:", authToken );
+    //  debugMode && console.log( "authToken:", authToken );
     }
 
 });
