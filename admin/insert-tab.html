@@ -2201,6 +2201,7 @@ $(viewer.contentWindow).on("load", function(){
             //  Insert to collection.
 
                 var collection = "snapshots";
+
                 socket.emit("mongo insert", {
                     collection: collection,
                 }, function(err, results){
