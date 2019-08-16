@@ -2163,6 +2163,14 @@ $(viewer.contentWindow).on("load", function(){
             product_UUID: product_UUID,
         };
 
+        debugMode && console.log(connector);
+
+    //  Enable save button.
+        $(saveProductButton).on( "click", validateProductForm ); // important!
+
+    });
+
+/*
         Promise.all([
 
             PRODUCTS.collection("products")
@@ -2202,9 +2210,7 @@ $(viewer.contentWindow).on("load", function(){
             $(saveProductButton).on( "click", validateProductForm ); // important!
 
         });
-
-    });
-
+*/
 
     contentWindow.localPlayer.outfit.changed.add(function(){
         outfitProductDroplistUpdate.dispatch(); // important!
