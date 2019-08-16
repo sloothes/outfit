@@ -1203,8 +1203,10 @@ $(viewer.contentWindow).on("load", function(){
 $(viewer.contentWindow).on("load", function(){
 
     var user;
-
     const contentWindow = this;
+
+    contentWindow.cameraControls.radius = 34;
+    contentWindow.cameraControls.offset.y = 18;
 
 //  const viewer = document.getElementById("viewer");
     const tab = document.getElementById("admin-tab");
