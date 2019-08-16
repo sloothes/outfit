@@ -225,7 +225,7 @@
         </script>
 
         <div id="outfit-snapshots-pane" style="max-width:100%;display:inline-block;">
-            <div id="outfit-snapshots-container" style="margin:20px 0px;overflow-y:hidden;max-width:100%;text-align:center;">
+            <div id="snapshots-container" style="margin:20px 0px;overflow-y:hidden;max-width:100%;text-align:center;">
                 <div id="outfit-snapshots" class="product-snapshots" style="display:inline-block;width:max-content;text-align:center;">
                     <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
                     <li class="btn btn-default btn-white-outline snapshot-item outfit-snapshot-item"></li>
@@ -324,7 +324,49 @@
 
 </section>
 
+<script>
 
+    function SwipeMouseScrolling(element){
+
+        if ( !window.Hammer ) return;
+        if ( window.isMobile ) return;
+
+    //  For horizontal scrolling 
+    //  overflow-y must be "hidden".
+
+        element.style["overflow-y"] = "hidden";
+
+    //  Smoother scroll.
+
+        element.style["scroll-behavior"] = "smooth";
+
+    //  Create a manager to manager the element.
+
+        var manager = new Hammer(element);
+
+    //  Subscribe to a desired event.
+
+        manager.on("swipe", function(e) {
+
+            if ( e.offsetDirection === 4 || e.offsetDirection === 2 ) {
+
+                element.scrollLeft -= e.deltaX;
+
+            }
+
+        });
+
+    }
+
+(function(){
+
+    const snapshotsContainer = document.getElementById("snapshots-container");
+
+    SwipeMouseScrolling( snapshotsContainer );
+
+})();
+
+</script>
 
 
 
