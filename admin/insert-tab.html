@@ -683,13 +683,11 @@ $(viewer.contentWindow).on("load", function(){
         socket.emit("mongo count", {
             selectors: selectors,
             collection: collection,
-        }, new Promise(function(err, result){
+        }, function(err, result){
             if (err) throw err;
-            resolve(result);
-        }).then(function(result){
-            return result;
-        }).catch(function(err){
-            console.error(err);
+            max = result; 
+            debugMode && console.log("max:", max);
+            $(counter).find(".count").text(max);
         });
     }
 
@@ -879,15 +877,15 @@ $(viewer.contentWindow).on("load", function(){
 
     //  Reset.
 
-        reset(); init();
+        reset(); init(); count();
 
     //  Count.
 
-        count().then(function(k){
-            max = k; debugMode && console.log("max:", max);
-        }).then(function(){
-            $(counter).find(".count").text(max);
-        });
+    //  count().then(function(k){
+    //      max = k; debugMode && console.log("max:", max);
+    //  }).then(function(){
+    //      $(counter).find(".count").text(max);
+    //  });
 
     //  get_items();
 
@@ -1135,9 +1133,7 @@ $(viewer.contentWindow).on("load", function(){
 
     //  Update count. (optional)
 
-        count().then(function(k){
-            max = k; debugMode && console.log("max:", max);
-        });
+        count();
 
     });
 
