@@ -320,45 +320,21 @@
             actionClicked.dispatch("/action/jump");
         }
 
-        $(viewer.contentWindow).on("load", function(){
-            this.localPlayer.controller.addEventListener("endJumping", function(){
-                $(Jump.element).on("click", dispatchJumpAction);
-            });
-        });
-
-        actionClicked.add(function(data){
-
-            if (window.socket){
-
-                $(Run.element).off("click", dispatchRunAction);  
-                $(Walk.element).off("click", dispatchWalkAction);  
-                $(Idle.element).off("click", dispatchIdleAction);
-
-                socket.publish(localPlayerChannel, data, function(err){
-                    if (err) console.error(err);
-                    $(Run.element).on("click", dispatchRunAction);
-                    $(Walk.element).on("click", dispatchWalkAction);
-                    $(Idle.element).on("click", dispatchIdleAction);
-                });
-
-            } else {
-
-                viewer.contentWindow.localPlayerHandler(data);
-
-            }
-
-        });
-
         $(Run.element).on("click", dispatchRunAction);
         $(Walk.element).on("click", dispatchWalkAction);
         $(Idle.element).on("click", dispatchIdleAction);
         $(Jump.element).on("click", dispatchJumpAction);
 
+        this.localPlayer.controller.addEventListener("endJumping", function(){
+            $(Jump.element).on("click", dispatchJumpAction);
+        });
+
+        actionClicked.add(function(data){
+            viewer.contentWindow.localPlayerHandler(data);
+        });
+
         menuItemClicked.add(function(data){
-            if ( window.socket ) 
-                socket.publish(localPlayerChannel, data);
-            else 
-                viewer.contentWindow.localPlayerHandler(data);
+            viewer.contentWindow.localPlayerHandler(data);
         });
 
         $(Male.element).on("click", function(){
