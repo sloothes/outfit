@@ -725,17 +725,12 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function get_items(){
-        new Promise(function(resolve, reject){
 
-            socket.emit("mongo find", {
-                selectors: selectors,
-                collection: collection,
-            }, function(err, results){
-                if (err) throw err;
-                resolve(results);
-            });
-
-        }).then(function(docs){
+        socket.emit("mongo find", {
+            selectors: selectors,
+            collection: collection,
+        }, function(err, docs){
+            if (err) throw err;
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
@@ -763,8 +758,6 @@ $(viewer.contentWindow).on("load", function(){
 
             });
 
-        }).catch(function(err){
-            console.error(err);
         });
 
     }
