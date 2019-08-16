@@ -632,6 +632,7 @@ $(viewer.contentWindow).on("load", function(){
     const contentWindow = this;
 
 //  const viewer = document.getElementById("viewer");
+    const productTitle = document.getElementById("product-title");
     const genderDroplist = document.getElementById("product-gender");
     const outfitDroplist = document.getElementById("product-outfit");
     const collectionPanel = document.getElementById("collection-panel");
@@ -657,7 +658,7 @@ $(viewer.contentWindow).on("load", function(){
     var selectors;
     var delay = 200;
 
-    const limit = 10;
+    const limit = 5;
 
     var max = 0;
     var skip = 0;
@@ -684,6 +685,8 @@ $(viewer.contentWindow).on("load", function(){
             selectors: selectors,
             collection: collection,
         }, function(err, result){
+        //  Callback must return before 
+        //  Client pong timed out. // danger!
             if (err) console.error(err);
             max = result; 
             debugMode && console.log("max:", max);
@@ -715,6 +718,8 @@ $(viewer.contentWindow).on("load", function(){
             collection: collection,
             options: {skip:skip, limit:limit},
         }, function(err, docs){
+        //  Callback must return before 
+        //  Client pong timed out. // danger!
             if (err) console.error(err);
 
             $(displayObjects).children().remove();
@@ -729,6 +734,9 @@ $(viewer.contentWindow).on("load", function(){
                 element.uuid = doc.uuid;    // important! (TODO: encapsulate)
                 element.id = doc._id; element.type = "text"; 
                 element.classList.add("collection-item");
+
+                // Element "click" event has encapsulated the doc
+                // data and so can dispacth the "doc" on "click".
 
                 $(element).on("click", function(){
                     clearTimeout(this.interval);
@@ -807,7 +815,7 @@ $(viewer.contentWindow).on("load", function(){
 
         debugMode && console.log({"selectors":selectors});
 
-    //  Reset.
+    //  Reset - Count.
 
         reset(); init(); count();
 
@@ -818,6 +826,8 @@ $(viewer.contentWindow).on("load", function(){
             collection: collection,
             options:{skip:0, limit:limit},
         }, function(err, docs){
+        //  Callback must return before 
+        //  Client pong timed out. // danger!
             if (err) console.error(err);
 
             $(displayObjects).children().remove();
@@ -886,6 +896,24 @@ $(viewer.contentWindow).on("load", function(){
 
     collectionItemSelected.add(function(json){
 
+        if ( collectionDroplist.value != "outfits") return;
+
+        if (json.name) productTitle.value = json.name;
+
+        if ( !outfitDroplist.value ) {
+
+            contentWindow.localPlayer.outfit.fromJSON( json );
+
+        } else if ( outfitDroplist.value ) {
+
+        //  Apply this slot to outfit...
+
+        }
+
+    });
+
+    collectionItemSelected.add(function(json){
+
         if ( collectionDroplist.value != "materials") return;
 
         if ( !json ) throw "Material json data is undefined!";
@@ -904,25 +932,6 @@ $(viewer.contentWindow).on("load", function(){
         data.material = json;
 
         contentWindow.localPlayerApplyMaterial(data);
-
-    });
-
-    collectionItemSelected.add(function(json){
-
-        if ( collectionDroplist.value != "outfits") return;
-
-        if ( !outfitDroplist.value ) {
-
-            contentWindow.localPlayer.outfit.fromJSON( json );
-
-            return;
-
-        } else if ( outfitDroplist.value ) {
-
-        //  Apply this slot to outfit...
-
-            return;
-        }
 
     });
 
