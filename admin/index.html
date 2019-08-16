@@ -284,7 +284,13 @@
 
 <script>
 
-    $("#control-tab").load("/control-tab/");
+    $("#control-tab").load("/control-tab/", function(){
+        const viewer = document.getElementById("viewer");
+        viewer.contentWindow.cameraControls.radius = 34;
+        viewer.contentWindow.cameraControls.offset.y = 18;
+
+    });
+
     $("#admin-tab").load("/outfits/admin/insert-tab.html");
 
 //  $("#download-uv").load("/uvs-tab/");
