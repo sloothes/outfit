@@ -684,7 +684,7 @@ $(viewer.contentWindow).on("load", function(){
 
             socket.emit("mongo count", {
                 selectors: selectors,
-                collection: collectionDroplist.value,
+                collection: collection,
             }, function(err, result){
                 if (err) throw err;
                 resolve(result);
@@ -735,7 +735,7 @@ $(viewer.contentWindow).on("load", function(){
 
             socket.emit("mongo find", {
                 selectors: selectors,
-                collection: collectionDroplist.value,
+                collection: collection,
             }, function(err, results){
                 if (err) throw err;
                 resolve(results);
@@ -895,9 +895,16 @@ $(viewer.contentWindow).on("load", function(){
 
     //  get_items();
 
-        collection.find(selectors).skip(skip)
-        .limit(limit).toArray(function(err){
-            if (err) throw err;
+        new Promise(function(resolve, reject){
+
+            socket.emit("mongo find", {
+                selectors: selectors,
+                collection: collection,
+            }, function(err, results){
+                if (err) throw err;
+                resolve(results);
+            });
+
         }).then(function(docs){
 
             $(displayObjects).children().remove();
