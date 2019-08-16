@@ -326,6 +326,10 @@
 
 <script>
 
+(function(){
+
+    const snapshotsContainer = document.getElementById("snapshots-container");
+
     function SwipeMouseScrolling(element){
 
         if ( !window.Hammer ) return;
@@ -357,10 +361,6 @@
         });
 
     }
-
-(function(){
-
-    const snapshotsContainer = document.getElementById("snapshots-container");
 
     SwipeMouseScrolling( snapshotsContainer );
 
