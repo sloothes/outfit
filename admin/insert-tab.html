@@ -831,15 +831,8 @@ $(viewer.contentWindow).on("load", function(){
             return;
         }
 
-        if ( !db.collection( value ) ) {
-            selectors = undefined;
-            throw `Collection "${value}" couldn't be found in ${db.name} database`;
-            return;
-        }
-
-        selectors = {};   // important!
-
-        collection = db.collection( value );
+        selectors = {}; // important!
+        collection = collectionDroplist.value;
 
         var slot = outfitDroplist.value;
         var gender = contentWindow.localPlayer.outfit.getGender();
@@ -884,17 +877,11 @@ $(viewer.contentWindow).on("load", function(){
 
     //  get_items();
 
-        new Promise(function(resolve, reject){
-
-            socket.emit("mongo find", {
-                selectors: selectors,
-                collection: collection,
-            }, function(err, results){
-                if (err) throw err;
-                resolve(results);
-            });
-
-        }).then(function(docs){
+        socket.emit("mongo find", {
+            selectors: selectors,
+            collection: collection,
+        }, function(err, docs){
+            if (err) throw err;
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
@@ -949,8 +936,6 @@ $(viewer.contentWindow).on("load", function(){
 
             });
 
-        }).catch(function(err){
-            console.error(err);
         });
 
     });
