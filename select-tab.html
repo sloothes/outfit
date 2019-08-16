@@ -34,8 +34,44 @@
         })();
     </script>
 
-    <div style="margin-bottom:10px;">
-        <div id="outfit-select-button" class="form-control btn btn-success btn-white-outline gradient-btn" style="width:32%;">Select</div>
+</div>
+
+<div id="collection-panel" class="tab-content">
+
+    <div id="collection-items-panel" class="well">
+
+        <hr />
+
+        <h4>Choose outfit:
+            <div class="counter small pull-right" style="margin-top:4px;color:#ddd;">
+                <span class="from">zero</span>
+                to <span class="upto">zero</span>
+                of <span class="count">none</span>
+            </div>
+        </h4>
+
+        <div id="collection-pager" class="pager">
+            <div style="margin:10px 0px 10px;height:35px;">
+                <li class="btn btn-primary get-prev-btn pull-left">&#9668;</li>
+                <div class="pager-buttons-holder" style="display:inline;">
+                    <a class="btn btn-default page-btn">1</a>
+                    <a class="btn btn-default page-btn">2</a>
+                    <a class="btn btn-default page-btn">3</a>
+                    <a class="btn btn-default page-btn">4</a>
+                </div>
+                <li class="btn btn-primary get-next-btn pull-right">&#9658;</li>
+            </div>
+
+            <div id="documents-display" class="well"></div>
+
+            <div style="margin:10px 0px 10px;height:35px;">
+                <li class="btn btn-primary btn-white-outline first-page-btn pull-left" style="margin-right:5px;">First</li>
+                <li class="btn btn-primary btn-white-outline get-prev-group-btn pull-left">&#9668;&#9668;</li>
+                <li class="btn btn-primary btn-white-outline last-page-btn pull-right" style="margin-left:5px;">Last</li>
+                <li class="btn btn-primary btn-white-outline get-next-group-btn pull-right">&#9658;&#9658;</li>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -46,4 +82,7 @@
 
 
 
+<div style="margin-bottom:10px;">
+    <div id="outfit-select-button" class="form-control btn btn-success btn-white-outline gradient-btn" style="width:100%;">Select</div>
+</div>
 
