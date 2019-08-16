@@ -625,7 +625,7 @@ $(viewer.contentWindow).on("load", function(){
 
 <script>
 
-(function(){
+$(viewer.contentWindow).on("load", function(){
     
     var collection;
 
@@ -680,6 +680,8 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function count(){
+        debugMode && console.log(socket);
+        return; // debugging!
         socket.emit("mongo count", {
             selectors: selectors,
             collection: collection,
@@ -725,7 +727,7 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function get_items(){
-
+        return; // debugging!
         socket.emit("mongo find", {
             selectors: selectors,
             collection: collection,
