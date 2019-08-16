@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" contents="Real-time Multiplayer 3D Social Web Spaces Network">
+
+    <title>outfits (admin v3.5)</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
+    <link rel="stylesheet" href="/css/side-panels.css">
+    <link rel="stylesheet" href="/css/meter.css">
+    <link rel="stylesheet" href="/css/messg.css" >
+    <link rel="stylesheet" href="/css/spectrum.css">
+    <link rel="stylesheet" href="/css/colorpicker.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/alerts.css">
+    <link rel="stylesheet" href="/css/panel-ui.css">
+    <link rel="stylesheet" href="/css/anywhere3d.css">
+    <link rel="stylesheet" href="/css/jquery.Jcrop.css">
+    <link rel="stylesheet" href="/css/menu-menubar.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="/socketcluster.js"></script>
+    <script src="/sc-codec-min-bin.js"></script>
+
+    <script src="/js/hammer.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/loadjs.min.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
+
+</head>
+
+<body>
+
+<style>
+
+    #content div ul li {
+        cursor: pointer;
+        margin-left:15px;
+    }
+
+    #right-side-content {
+        position:absolute; left:25px; top:60px; right:10px; bottom:40px; 
+        padding: 0px 20px 0px 20px; overflow:auto; 
+    }
+
+    a.none-deco:focus,
+    a.none-deco:hover, 
+    a.none-deco:active, 
+    a.none-deco:visited {
+        color:#55a5ec;
+        text-decoration:none;
+    }
+
+</style>
+
+<div id="panel" class="collapsed">
+    <h1><a href="/" class="none-deco">Sloothes</a></h1>
+    <a id="expandButton" href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+    <div class="filterBlock" >
+        <input type="text" id="filterInput" placeholder="Type to filter"/>
+        <a href="#" id="clearFilterButton" >x</a>
+    </div>
+    <div id="content"></div>
+</div>
+
+<section class="mbr-section" id="body-section">
+
+    <iframe id="viewer" src="/scene/"></iframe>
+
+    <div class="side-panel" id="right-side" style="top:0;">
+        <div id="right-side-pinbtn" title="click this to pin/unpin panel"></div>
+
+        <div id="right-side-content" style="overflow-x:hidden;">
+
+            <div id="rightside-navpill-bar" class="side-holder" style="margin-bottom:20px;">
+
+                    <ul id="nav-pill-tabs" class="nav nav-tabs nav-pills" style="overflow-y:hidden;max-width:300px;">
+
+                        <li class role="presentation"><a href="#admin-tab"    data-toggle="pill" class="pills right-pill right-pill-admin">Admin</a></li>
+                        <li class role="presentation"><a href="#control-tab"  data-toggle="pill" class="pills right-pill right-pill-control">Control</a></li>
+
+                        <!-- li class role="presentation"><a href="#outfit-tab"   data-toggle="pill" class="pills right-pill right-pill-outfit">Outfit</a></li -->
+                        <!-- li class role="presentation"><a href="#material-tab" data-toggle="pill" class="pills right-pill right-pill-material">Material</a></li -->
+                        <!-- li class role="presentation"><a href="#texture-tab"  data-toggle="pill" class="pills right-pill right-pill-texture">Texture</a></li -->
+                        <!-- li class role="presentation"><a href="#product-tab"  data-toggle="pill" class="pills right-pill right-pill-product">Product</a></li -->
+                        <!-- li class role="presentation"><a href="#download-uv"  data-toggle="pill" class="pills right-pill right-pill-uvs">UVs</a></li -->
+
+                        <!-- li class role="presentation"><a href="#texture-tab" data-toggle="pill" class="pills right-pill right-pill-texture">Texture</a></li -->
+                        <!-- li class role="presentation"><a href="#material-edit-tab" data-toggle="pill" class="pills right-pill right-pill-create">Edit</a></li -->
+                        <!-- li class role="presentation"><a href="#material-select-tab" data-toggle="pill" class="pills right-pill right-pill-select">Select</a></li -->
+                        <!-- li class role="presentation"><a href="#login-tab" data-toggle="pill" class="pills right-pill right-pill-login">Login</a></li -->
+
+                    </ul>
+
+            </div>
+
+            <script>
+
+                (function (){
+
+                    if ( !window.Hammer ) return;
+                    if ( window.isMobile ) return;
+
+                    const element = $("#nav-pill-tabs").get(0);
+                //  Smoother scroll.
+                    element.style["scroll-behavior"] = "smooth";
+
+                    $("#nav-pill-tabs").find("a.pills.right-pill")
+                    .toArray().forEach(function(pill){
+
+                    //  Create a manager to manager the element.
+                        var manager = new Hammer(pill);
+                    //  Subscribe to a desired event.
+                        manager.on("swipe", function(e) {
+                            if ( e.offsetDirection === 4 || e.offsetDirection === 2 ) {
+                                element.scrollLeft -= e.deltaX;
+                            }
+                        });
+
+                    });
+
+                })();
+
+            </script>
+
+            <div id="right-side-panel" class="tab-content">
+
+                <div id="admin-tab"    class="component-pane tab-pane fade in active"></div>
+                <div id="control-tab"  class="component-pane tab-pane fade"></div>
+                <div id="outfit-tab"   class="component-pane tab-pane fade"></div>
+                <div id="material-tab" class="component-pane tab-pane fade"></div>
+                <div id="texture-tab"  class="component-pane tab-pane fade"></div>
+                <div id="product-tab"  class="component-pane tab-pane fade"></div>
+                <div id="download-uv"  class="component-pane tab-pane fade"></div>
+
+                <div id="material-edit-tab" class="component-pane tab-pane fade"></div>
+                <div id="material-select-tab" class="component-pane tab-pane fade"></div>
+                <div id="login-tab" class="component-pane tab-pane fade"></div>
+
+                <div id="product-edit-tab" class="component-pane tab-pane fade"></div>
+                <div id="product-buy-tab" class="component-pane tab-pane fade"></div>
+                <div id="helpers-tab" class="component-pane tab-pane fade"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="middle" id="dialog-panel">
+        <div id="dialog-container" style="max-width:350px;max-height:600px;"></div>
+    </div>
+
+</section>
+
+<script>
+
+    var debugMode = true;
+
+</script>
+
+<script src="/home/menu-list.js"></script>
+<script src="/home/menu-panel.js"></script>
+<script src="/js/rawinflate.js"></script>
+<script src="/js/rawdeflate.js"></script>
+<script src="/js/store2.js"></script>
+<script src="/js/Objectid.js"></script>
+<script src="/js/zangodb.min.js"></script>
+<script src="/js/jquery.Jcrop.js"></script>
+<script src="/js/bootbox.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/MathDecimalAdjustment.js"></script>
+<script src="/js/watermark.js"></script>
+<script src="/js/validator.js"></script>
+<script src="/js/system.min.js"></script>
+<script src="/js/signals.min.js"></script>
+<script src="/js/command.js"></script>
+<script src="/js/spectrum.js"></script>
+<script src="/js/validator.min.js"></script>
+<script src="/js/alerts.js"></script>
+<script src="/js/side-panels.js"></script>
+<script src="/home/index.js"></script>
+
+<script>
+
+//  USER.db.js
+
+    const VERSION = 6;
+    const DB_NAME = "USER";
+
+    db = new zango.Db( DB_NAME, VERSION, {
+        current:    true,
+        settings:   true,
+        animations: true,
+        outfits:    true,
+        materials:  true,
+        textures:   true,
+    //  products:   false,
+    });
+
+    db.open(function(err, database){
+        if (err) console.error(err);
+    }).then( function(){
+        console.log(`${db.name} (v${db.version}) opened.`);
+    }).catch(function(err){
+        console.error(err);
+    });
+
+    function exportUSERCollection( name ){
+
+        db.open(function(err, database){
+            if (err) console.error(err);
+        }).then( function(db){
+
+            debugMode && console.log( 
+            `${db.name} (v${db.version}) ready for export.`);
+
+        //  throws error if collection not exist!
+            db.collection( name );  // important!
+
+            db.collection(name).find()
+            .toArray(function(err, docs){
+                if (err) throw err;
+                if ( !docs.length )  
+                    throw `collection ${name} is empty`;
+            }).then(function(docs){ 
+                return JSON.stringify(docs);
+            }).then(function(data){ 
+                debugMode && console.log( data );
+
+            //  Save to desktop.
+                var a = document.createElement("a");
+                var file = new Blob([data], {type: "text/json"});
+                a.href = URL.createObjectURL(file);
+                a.download = name + "-" + db.name + "v" + db.version + ".json";
+                a.click();
+
+                return a.href;
+
+            }).then(function(objectURL){
+                URL.revokeObjectURL(objectURL);
+
+            }).catch(function(err){
+                console.error(err);
+            });
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    }
+
+</script>
+
+<script>
+
+    $("#control-tab").load("/control-tab/");
+    $("#admin-tab").load("/product-tab/insert.html");
+
+//  $("#download-uv").load("/uvs-tab/");
+//  $("#material-tab").load("/material-tab/create.html");
+//  $("#texture-tab").load("/texture-tab/insert.html");
+//  $("#outfit-tab").load("/outfit-tab/");
+//  $("#material-tab").load("/material-tab/insert.html");
+//  $("#product-tab").load("/product-tab/insert.html");
+
+//  $("#control-tab").load("/control-tab/");
+//  $("#outfits-tab").load("/outfit-tab/");
+//  $("#texture-tab").load("/texture-tab/cached-textures-tab.html");
+//  $("#material-edit-tab").load("/material-tab/edit.html");
+//  $("#material-select-tab").load("/material-tab/select.html");
+//  $("#login-tab").load("/login-tab/");
+
+</script>
+
+</body>
+</html>
+
