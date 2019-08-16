@@ -680,16 +680,12 @@ $(viewer.contentWindow).on("load", function(){
     }
 
     function count(){
-        return new Promise(function(resolve, reject){
-
-            socket.emit("mongo count", {
-                selectors: selectors,
-                collection: collection,
-            }, function(err, result){
-                if (err) throw err;
-                resolve(result);
-            });
-
+        socket.emit("mongo count", {
+            selectors: selectors,
+            collection: collection,
+        }, new Promise(function(err, result){
+            if (err) throw err;
+            resolve(result);
         }).then(function(result){
             return result;
         }).catch(function(err){
