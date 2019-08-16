@@ -356,7 +356,7 @@
         });
 
         $(Back.element).on("click", function (){
-            menuItemClicked.dispatch("/turn/back");
+            menuItemClicked.dispatch("/turn/front"); // danger!
         });
 
         $(Right.element).on("click", function (){
@@ -364,7 +364,7 @@
         });
 
         $(Front.element).on("click", function (){
-            menuItemClicked.dispatch("/turn/front");
+            menuItemClicked.dispatch("/turn/back"); // danger!
         });
 
         $(Hairs.element).on("click", function (){
