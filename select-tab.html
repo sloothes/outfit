@@ -117,6 +117,8 @@
 
 socket.on("connect", function (status) {
 
+    const outfitPreview = $("img#outfit-preview").get(0);
+
     var data = {
         collection:"onsite-outfits",
     };
@@ -124,6 +126,30 @@ socket.on("connect", function (status) {
     socket.emit("mongo find", data, function(err, results){
 
         debugMode && console.log(results);
+
+        results.forEach(function(item){
+
+            var snapshot = document.createElement("li");
+            snapshot.data = item; snapshot.id = item._id;
+
+            snapshot.classList.add(
+                "btn", "btn-default", "btn-white-outline", 
+                "snapshot-item", "outfit-snapshot-item"
+            );
+
+        //  Thumbnail.
+            snapshot.style["background-size"] = "contain";
+            snapshot.style["background-repeat"] = "no-repeat";
+            snapshot.style["background-position"] = "50% 50%";
+            snapshot.style["background-image"] = `url(//i.imgur.com/${item.preview}s.jpg)`;
+
+            $(snapshot).on("click", function(){
+                var url = `//i.imgur.com/${item.preview}.jpg`;
+            //  var objectURL = URL.createObjectURL(url);
+                outfitPreview.src = URL.createObjectURL(url);
+            });
+
+        });
 
     });
 
