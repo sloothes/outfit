@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0 user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" contents="">
+
+    <title>Select outfit (v1.0)</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
+    <link rel="stylesheet" href="/css/meter.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/alerts.css">
+    <link rel="stylesheet" href="/css/anywhere3d.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/fancybox/fancybox/jquery.fancybox-1.3.4.css">
+
+    <script> debugMode = true; </script>
+
+    <script src="/socketcluster.js"></script>
+    <script src="/sc-codec-min-bin.js"></script>
+
+    <script src="/js/hammer.js"></script>
+    <script src="/js/loadjs.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
+
+</head>
+
+<body>
+
+<style>
+
+    body {
+        overflow:auto;
+        background-color:#fff;
+    }
+
+    .snapshot-item {
+        width:85px;
+        height:85px;
+        margin:4px;
+        border:thin solid #ccc;
+        background-size: contain;
+        background-position:50% 50%;
+        background-repeat:no-repeat;
+    }
+
+    .tab-pane {
+        width:100%;
+        min-height:250px;;
+    }
+
+    #product-title {
+        outline:0;
+        color:#999;
+        border: none;
+        background: none;
+        box-shadow: none;
+        font-size: 3rem;
+        font-weight: bold;
+        font-family: sans-serif;
+        text-overflow:ellipsis;
+        cursor:context-menu;
+
+    }
+
+    #product-value {
+        outline:0;
+        color:#fff;
+        border:none;
+        margin:auto;
+        height:5rem;
+        max-width:50%;
+        font-size:3rem;
+        font-weight:bold;
+        font-family:sans-serif;
+        background-color:#6495ed;
+        cursor:context-menu;
+    }
+
+    #product-preview-pane {
+        width:49%;
+        height:600px;
+        min-width:49%;
+        max-width:100%;
+        text-align:center;
+        display:inline-block;
+    /*  border:thin solid #ccc; */
+    }
+
+    #preview-container {
+        max-width:100%;
+        text-align:center;
+        overflow:auto;
+    }
+
+    img#product-preview {
+        width:auto;
+        margin:auto;
+        min-height:350px;
+        max-height:450px;
+    }
+
+    #product-purcashe-pane {
+        width:49%;
+        height:600px;
+        float:right;
+        min-width:49%;
+        max-width:100%;
+        display:inline-block;
+        overflow:auto;
+    /*  border:thin solid #ccc; */
+    }
+
+    #product-purcashe {
+        width:100%;
+        margin:auto;
+        height:600px;
+        min-height:400px;
+        max-height:600px;
+        font-family:sans-serif;
+    }
+
+    @media all and ( max-width: 640px ) {
+
+        #product-preview-pane {
+            width:100%;
+        }
+
+        #product-purcashe-pane {
+            width:100%;
+            float:unset;
+            height:400px;
+            min-height:400px;
+            max-height:unset;
+            overflow:unset;
+
+        }
+
+        #product-purcashe {
+            height:100%;
+        }
+
+        #product-value {
+            max-width:100%;
+        }
+
+    }
+
+    #purcash-button {
+        color:#fff;
+        min-width:50%;
+        font-size:2rem;
+        padding:6px 14px;
+        border:1px solid #ddd;
+        border-radius:20px;
+        background-color:#42bcf9;
+    }
+
+    #description-tab {
+        padding:30px;
+    }
+
+    #product-preview,
+    #product-snapshots {
+        transition:transform 250ms ease-out;
+    }
+
+    #live-test-button {
+        min-width:50%;
+        font-size:2rem;
+        font-weight:bold;
+        border-radius:20px;
+        background-color:#f4b400;
+    }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
