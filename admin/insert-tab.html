@@ -1971,78 +1971,6 @@ $(viewer.contentWindow).on("load", function(){
 
         }
 
-    /*
-        if ( !user || !user.username ) {
-
-            var msg = "Please type an owner for <br>"
-                    + "this product and try again:";
-
-            var title = `<div class="alert-icon icon-warning">`
-                + `</div><h4 style="margin:auto;">${msg}</h4>`;
-            var defaultValue = "your username";
-
-            return bootbox.prompt({
-
-                title: title,
-                size: "small",
-                className: "middle",
-                value: defaultValue,
-                closeButton: false,
-                callback: callback,
-
-            });
-
-            function callback(result){
-                var msg = `Save canceled by the user.`;
-                var err = `Username is required. Save aborted.`;
-                debugMode && console.log({"result":result});
-
-                if ( result == defaultValue ) {
-
-                    $(saveProductButton).click();
-
-                } else if ( result == null ) {
-                    userNotificationDialogMessage(msg);
-
-                } else if ( result.length == 0 ) {
-                    userNotificationDialogMessage(err);
-
-                } else {
-
-                    if ( !user ) user = {};
-                    user.username = result;
-
-                }
-            }
-
-        };
-    */
-
-    /*
-        if ( !outfitDroplist.value ) {
-            var msg = "You don't have any outfit slot selected.<br>";
-            //      + "Please select an outfit slot and try again.";
-            //  bootbox.dialog( cancelDialogOptions(msg) );
-            userNotificationDialogMessage( msg );   // not required.
-        }
-    */
-
-    //  SNAPSHOTS.
-
-    /*
-        var snapshots = [];                      // [ imgur ids ].
-
-        $(snapshotItemSelector).toArray().forEach(function(item){
-            if (item.id) snapshots.push( item.id );
-        });
-
-        if ( snapshots.length == 0 ) {
-            var msg = "You don't have any snapshots uploaded.<br>"
-            + "Please upload at least one snapshot and try again.";
-            return bootbox.dialog( cancelDialogOptions(msg) );
-        }
-    */
-
         if ( !masterSnapshot ) {
 
             var msg = "You don't have define any snapshot as main.<br>"
@@ -2201,8 +2129,8 @@ $(viewer.contentWindow).on("load", function(){
             //  Insert to collection.
 
                 var collection = "snapshots";
-
                 socket.emit("mongo insert", {
+                    documents: entry,
                     collection: collection,
                 }, function(err, results){
                     if (err) console.error(err);
@@ -2418,18 +2346,6 @@ $(viewer.contentWindow).on("load", function(){
 */
 
 /*
-    const LoremIpsum = "Sed ac metus fermentum nisi lacinia sodales. "
-    + "Nullam porta tristique justo et laoreet. Vestibulum pulvinar, "
-    + "purus a finibus commodo, quam lectus imperdiet arcu, "
-    + "vel sollicitudin augue ligula quis lorem. "
-    + "Nunc vehicula lectus nec quam interdum, vitae mattis sapien iaculis. "
-    + "Duis et dui sed lorem hendrerit sollicitudin. "
-    + "Donec ut justo tincidunt, finibus nisi ut, fringilla augue. "
-    + "Donec a nibh nec libero pellentesque semper et vel lacus. Integer quis magna quam";
-
-*/
-
-/*
     function resetProductForm(){
 
         $(productTitle).val("");             // name.
@@ -2448,79 +2364,4 @@ $(viewer.contentWindow).on("load", function(){
     }
 */
 
-/*
-    switch (value) {
-
-        case "outfits":
-            var collection = db.collection(value);
-            break;
-
-        case "textures":
-            var collection = db.collection(value);
-            break;
-
-        case "materials":
-            var collection = db.collection(value);
-            break;
-
-        case "animations":
-            var collection = db.collection(value);
-            break;
-
-    }
-*/
-
-/*
-    outfitDroplistChanged.add(function(value){
-
-    //  if (!value) {;}
-
-        if (!collectionDroplist.value) {
-            selectors = undefined;
-            collection = undefined;
-            return;
-        }
-
-        var name = collectionDroplist.value;
-        collection = db.collection( name );
-
-        if (!collection) {
-            selectors = undefined; return;
-        }
-
-        selectors = {};  // important!
-
-        var slot = value;
-        var gender = contentWindow.localPlayer.outfit.getGender();
-
-        switch ( name ) {
-
-            case "outfits":
-                selectors = {};
-                if (gender) selectors["gender"] = gender;
-                if (slot) selectors[ slot ] = {$exists:true}; // important!
-            break;
-
-            case "textures":
-                selectors = null; // {};
-            break;
-
-            case "materials":
-                selectors = {};
-                if (slot) selectors["meta.slot"] = slot;
-                if (gender) selectors["meta.gender"] = gender;
-            break;
-
-            case "animations":
-                selectors = null; // {};
-            break;
-
-        }
-
-        debugMode && console.log({"selectors":selectors});
-
-        // ... //
-
-    });
-*/
 </script>
