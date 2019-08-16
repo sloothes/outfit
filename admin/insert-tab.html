@@ -2203,7 +2203,7 @@ $(viewer.contentWindow).on("load", function(){
                 var collection = "snapshots"; // PRODUCTS.collection("snapshots");
 
                 socket.emit("mongo insert", {
-                    collection: "snapshots",
+                    collection: "snapshots"
                 }, function(err, results){
                     if (err) console.error(err);
                     debugMode && console.log(results);
