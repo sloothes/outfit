@@ -1962,13 +1962,13 @@ $(viewer.contentWindow).on("load", function(){
         var kind = $(collectionDroplist).val();          // kind.
         var title = $(productTitle).val();               // name.
         var gender = contentWindow.localPlayer.outfit.getGender();
-        var preview = masterSnapshot.id;                 // imgur id.
+    //  var preview = masterSnapshot.id;                 // imgur id.
         var description = $(productDescription).val();   // text.
 
         if (!kind) return;    // required.
         if (!title) return;   // required.
         if (!gender) return;  // required.
-        if (!preview) return; // required.
+    //  if (!preview) return; // required.
 
 
     //  PREVIEW SNAPSHOT.
@@ -2146,7 +2146,7 @@ $(viewer.contentWindow).on("load", function(){
                 entry.kind = kind;
                 entry.name = title;
                 entry.gender = gender;
-                entry.preview = preview;
+                entry.preview = snapshot.id;  // important!
                 entry._id = ObjectId();
                 entry.uuid = generateUUID();
 
