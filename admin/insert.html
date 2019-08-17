@@ -1250,17 +1250,17 @@ $(viewer.contentWindow).on("load", function(){
 
     function resetProductForm(){
 
-        $(productTitle).val("");             // name.
-        $(productValue).val("");             // price.
-        $(productState).val("");             // publish.
-        $(genderDroplist).val("");           // gender.
-        $(outfitDroplist).val("");           // slot.
+        $(productTitle).val("");                 // name.
+        $(productValue).val("");                 // price.
+        $(productState).val("");                 // publish.
+        $(genderDroplist).val("");               // gender.
+        $(outfitDroplist).val("");               // slot.
         masterSnapshot = null;                   // preview.
         productPreviewImage.src = noimage;       // preview.
         $(snapshotItemSelector).remove();        // snapshots.
         $(productSnapshots).children().remove(); // snapshots.
-        $(collectionDroplist).val("").change();  // collection.
-        $(productDescription).val(LoremIpsum);   // description.
+    //  $(collectionDroplist).val("").change();  // collection.
+    //  $(productDescription).val(LoremIpsum);   // description.
 
     }
 
@@ -2070,7 +2070,6 @@ $(viewer.contentWindow).on("load", function(){
                 snapshot.link = data.link; // important!
                 snapshot.uploaded = true;  // important!
                 snapshot.name = data.name; //  optional!
-
                 snapshot.clientID = "1812ad6d78faf36";// product app Client-ID.
                 snapshot.endpoint = "https://api.imgur.com/3/image/" + data.id;         // important!
                 snapshot.delpoint = "https://api.imgur.com/3/image/" + data.deletehash; // important!
@@ -2165,7 +2164,7 @@ $(viewer.contentWindow).on("load", function(){
                 var item_UUID = selected.uuid;
                 var product_UUID = entry.uuid;
 
-                var plexer = {
+                var plexy = {
                     _id: ObjectId(),
                     collection: kind,
                     item_UUID: item_UUID,
@@ -2174,7 +2173,7 @@ $(viewer.contentWindow).on("load", function(){
 
                 debugMode && console.log({
                     "entry":entry,
-                    "plexer":plexer,
+                    "plexy":plexy,
                 });
 
                 return Promise.all([
@@ -2190,7 +2189,7 @@ $(viewer.contentWindow).on("load", function(){
 
                     new Promise(function(resolve, reject){
                         socket.emit("mongo insert", {
-                            documents: plexer,
+                            documents: plexy,
                             collection: "multiplexer",
                         }, function(err, result){
                             if (err) console.error(err);
