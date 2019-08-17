@@ -98,7 +98,7 @@
     #preview-container {
         max-width:100%;
         text-align:center;
-        overflow:auto;
+        overflow-y:hidden;
     }
 
     img#outfit-preview {
@@ -423,14 +423,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
                     //  Set this as selected.
                         $(".outfit-snapshot-item").removeClass("selected");
-                        $(element).addClass("selected");  // important!
+                        $(element).addClass("selected");     // important!
 
                     //  Title.
                         outfitTitle.value = data.name;
 
                     //  Preview.
                         $(outfitPreview).fadeOut(250);
-                        outfitPreview.src = previewURL;
+                        setTimeout(function(){
+                            outfitPreview.src = previewURL;
+                        }, 200);
 
                     //  Description.
                         if (data.description) {
