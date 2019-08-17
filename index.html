@@ -197,7 +197,8 @@
     <div id="outfit-preview-pane">
 
         <div id="preview-container" style="max-width:100%;min-height:466px;text-align:center;">
-            <img id="outfit-preview" src="/img/no-image-avaliable-200x200.png">
+            <!-- src="/img/no-image-avaliable-200x200.png" -->
+            <img id="outfit-preview" src="https://media2.fdncms.com/thecoast/imager/u/original/11038637/feature.spicegirls.jpg"> 
         </div>
 
         <script>
@@ -404,7 +405,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     selectors:{product_UUID:uuid},
                 }, function(err, data){
                     resolve(data);
-                    debugMode && console.log(data);
+                //  debugMode && console.log(data);
                 });
 
             }).then(function(data){
