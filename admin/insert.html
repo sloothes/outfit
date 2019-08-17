@@ -1447,6 +1447,11 @@ $(viewer.contentWindow).on("load", function(){
 
     function uploadSelectedSnapshot(){
 
+        if (true) {
+            var msg = `Upload button is disabled by aministrator.`;
+            return userNotificationDialogMessage(msg); // debugging!
+        }
+
         if ( !navigator.onLine ) {
             var err = `Your connection to the internet is down.`;
             debugMode && console.error(err);
