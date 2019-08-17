@@ -411,6 +411,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                 element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
 
                 $(element).on("click", function(){
+                    if ( $(this).hasClass("selected") ) return;
+
                     clearTimeout(this.interval);
                     this.interval = setTimeout(function(){
 
