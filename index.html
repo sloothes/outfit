@@ -406,17 +406,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     resolve(data);
                     debugMode && console.log(data);
                 });
+
             }).then(function(data){
-                socket.emit("mongo findOne", {
-                    collection:data.collection,
-                    selectors:{uuid:data.item_UUID},
-                }, function(err, data){
-                    resolve(data);
-                    debugMode && console.log(data);
+                return new Promise(function(resolve, reject){
+                    socket.emit("mongo findOne", {
+                        collection:data.collection,
+                        selectors:{uuid:data.item_UUID},
+                    }, function(err, data){
+                        resolve(data);
+                        debugMode && console.log(data);
+                    });
                 });
+
             }).then(function(outfit){
                 store("Avatar", outfit);
                 debugMode && console.log({"outfit":outfit});
+            }).catch(function(err){
+                console.error(err);
             });
         });
 
