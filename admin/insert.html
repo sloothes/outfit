@@ -2150,7 +2150,6 @@ $(viewer.contentWindow).on("load", function(){
                 entry._id = ObjectId();
                 entry.uuid = generateUUID();
 
-                if (outfit) entry.slot = outfit; // important!
                 if (description) entry.description = description;
 
                 debugMode && console.log(entry);
