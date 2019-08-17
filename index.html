@@ -375,8 +375,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
         const outfitPreview = document.getElementById("outfit-preview");
         const outfitSnapshots = document.getElementById("outfit-snapshots");
 
-        $(outfitSnapshots).children().remove(); // important!
-
         new Promise(function(resolve, reject){
 
         //  Count first?
@@ -391,6 +389,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
         }).then(function(docs){
             debugMode && console.log(docs);
+
+            $(outfitSnapshots).children().remove(); // important!
 
             docs.forEach(function(data){
 
