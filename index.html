@@ -359,20 +359,88 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
 </script>
 
+<script>
 
+//  Socketcluster.
 
+    var socket = socketCluster.create({
+        hostname: "anywhere3d.com",
+        codecEngine: scCodecMinBin,
+    });
 
+    socket.on("connect", function(status){
+        debugMode && console.log({"status": status});
 
+        const outfitTitle = document.getElementById("outfit-title");
+        const outfitPreview = document.getElementById("outfit-preview");
+        const outfitSnapshots = document.getElementById("outfit-snapshots");
 
+        $(outfitSnapshots).children().remove(); // important!
 
+        new Promise(function(resolve, reject){
 
+        //  Count first?
 
+            socket.emit("mongo find", {
+                collection:"onsite-avatars",
+                selectors: {"kind":"outfits"},
+            }, function(err, data){
+                if (err) console.error(err);
+                resolve(data);
+            });
 
+        }).then(function(docs){
+            debugMode && console.log(docs);
 
+            docs.forEach(function(data){
 
+                var thumbnail = `//i.imgur.com/${data.preview}s.jpg`;
+                var previewURL = `//i.imgur.com/${data.preview}.jpg`;
 
+            //  Encapsulated data. All these data are not neccesary as
+            //  we will ecapsulate the data inside the "click" handler.
 
+                var element = document.createElement("li");
+                element.id = data.uuid; // important!
+                element.title = data.name; //  element.thumbnail = thumbnail;
+                element.style.cssText = `background-image:url(${thumbnail})`;
+                element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
 
+                $(element).on("click", function(){
+                //  encapsulated data.
+                    debugMode && console.log(data);
+
+                //  Set this as selected.
+                    $(".outfit-snapshot-item").removeClass("selected");
+                    $(element).addClass("selected");  // important!
+
+                 // TODO: CACHE PREVIEW/THUMBNAIL.
+                    outfitTitle.value = data.name;
+                    outfitPreview.src = previewURL;
+
+                });
+
+            });
+
+        }).catch(function(err){
+            console.error(err);
+        });
+
+    });
+
+    socket.on("error", function (err) {
+        console.error( err.stack );
+    });
+
+    socket.on("authStateChange", function( state ){
+        debugMode && console.log({"authStateChange": state});
+    });
+
+    socket.on("subscribe", function( name, object ){
+        debugMode && console.log(`subscribed successfully to "${name}" channel:`, object);
+    });
+
+</script>
 
 </body>
 </html>
