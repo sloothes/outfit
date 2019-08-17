@@ -374,6 +374,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
         const outfitTitle = document.getElementById("outfit-title");
         const outfitPreview = document.getElementById("outfit-preview");
         const outfitSnapshots = document.getElementById("outfit-snapshots");
+        const outfitDescription = document.getElementById("outfit-description");
 
         new Promise(function(resolve, reject){
 
@@ -415,8 +416,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     $(element).addClass("selected");  // important!
 
                  // TODO: CACHE PREVIEW/THUMBNAIL.
+
                     outfitTitle.value = data.name;
                     outfitPreview.src = previewURL;
+
+                    if (data.description) {
+                        outfitDescription.innerText = data.description;
+                    }
 
                 });
 
