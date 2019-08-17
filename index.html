@@ -390,7 +390,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
             if (!selectedOutfit) return;
             clearTimeout(this.interval);
             this.interval = setTimeout(function(){
-                debguMode && console.log(selectedOutfit);
+                debugMode && console.log(selectedOutfit);
                 outfitSelectButtonClicked.dispatch(selectedOutfit.uuid);
             }, 200);
         });
@@ -404,7 +404,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     selectors:{product_UUID:uuid},
                 }, function(err, data){
                     resolve(data);
-                    debguMode && console.log(data);
+                    debugMode && console.log(data);
                 });
             }).then(function(data){
                 socket.emit("mongo findOne", {
@@ -412,11 +412,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     selectors:{uuid:data.item_UUID},
                 }, function(err, data){
                     resolve(data);
-                    debguMode && console.log(data);
+                    debugMode && console.log(data);
                 });
             }).then(function(outfit){
                 store("Avatar", outfit);
-                debguMode && console.log({"outfit":outfit});
+                debugMode && console.log({"outfit":outfit});
             });
         });
 
