@@ -2182,7 +2182,7 @@ $(viewer.contentWindow).on("load", function(){
                     new Promise(function(resolve, reject){
                         socket.emit("mongo insert", {
                             documents: entry,
-                            collection: "onsite-avatars";
+                            collection: "onsite-avatars",
                         }, function(err, result){
                             if (err) console.error(err);
                             resolve(result);
@@ -2192,7 +2192,7 @@ $(viewer.contentWindow).on("load", function(){
                     new Promise(function(resolve, reject){
                         socket.emit("mongo insert", {
                             documents: plexer,
-                            collection: "multiplexer";
+                            collection: "multiplexer",
                         }, function(err, result){
                             if (err) console.error(err);
                             resolve(result);
