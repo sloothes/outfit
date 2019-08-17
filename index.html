@@ -422,6 +422,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
             }).then(function(outfit){
                 store("Avatar", outfit);
+                window.location.pathname = "/demo/";
                 debugMode && console.log({"outfit":outfit});
             }).catch(function(err){
                 console.error(err);
