@@ -13,22 +13,18 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootbox-dialoges.css">
-    <link rel="stylesheet" href="/css/meter.css">
-    <link rel="stylesheet" href="/css/spinner.css">
     <link rel="stylesheet" href="/css/alerts.css">
     <link rel="stylesheet" href="/css/anywhere3d.css">
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/fancybox/fancybox/jquery.fancybox-1.3.4.css">
 
     <script> debugMode = true; </script>
 
-    <script src="/socketcluster.js"></script>
-    <script src="/sc-codec-min-bin.js"></script>
-
+    <script src="/js/store2.js"></script>
     <script src="/js/hammer.js"></script>
-    <script src="/js/loadjs.min.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery-ui.js"></script>
+    <script src="/socketcluster.js"></script>
+    <script src="/sc-codec-min-bin.js"></script>
     <script src="/js/DeviceDetector.js"></script>
 
 </head>
@@ -374,14 +370,52 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
     socket.on("connect", function(status){
         debugMode && console.log({"status": status});
 
+        var selectedOutfit; // important!
+
         const outfitTitle = document.getElementById("outfit-title");
+        const selectButton = document.getElementById("select-button");
         const outfitPreview = document.getElementById("outfit-preview");
         const outfitSnapshots = document.getElementById("outfit-snapshots");
         const outfitDescription = document.getElementById("outfit-description");
 
-        new Promise(function(resolve, reject){
+        var Signal = signals.Signal;
+        var outfitSelectButtonClicked = new Signal();
 
-        //  Count first?
+        $(selectButton).on("click", function(){
+            if (!selectedOutfit) return;
+            clearTimeout(this.interval);
+            this.interval = setTimeout(function(){
+                debguMode && console.log(selectedOutfit);
+                outfitSelectButtonClicked.dispatch(selectedOutfit.uuid);
+            }, 200);
+        });
+
+    //  Prototype.
+
+        outfitSelectButtonClicked.add(function(uuid){
+            new Promise(function(resolve, reject){
+                socket.emit("mongo findOne", {
+                    collection:"multiplexer",
+                    selectors:{product_UUID:uuid},
+                }, function(err, data){
+                    resolve(data);
+                    debguMode && console.log(data);
+                });
+            }).then(function(data){
+                socket.emit("mongo findOne", {
+                    collection:data.collection,
+                    selectors:{uuid:data.item_UUID},
+                }, function(err, data){
+                    resolve(data);
+                    debguMode && console.log(data);
+                });
+            }).then(function(outfit){
+                store("Avatar", outfit);
+                debguMode && console.log({"outfit":outfit});
+            });
+        });
+
+        new Promise(function(resolve, reject){
 
             socket.emit("mongo find", {
                 collection:"onsite-avatars",
@@ -424,7 +458,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                         outfitDescription.innerText = "";
 
                     //  encapsulated data.
-                        debugMode && console.log(data);
+                    //  debugMode && console.log(data);
 
                     //  Set this as selected.
                         $(".outfit-snapshot-item").removeClass("selected");
@@ -444,7 +478,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                             outfitDescription.innerText = data.description;
                         }
 
+                        selectedOutfit = data;
                         debugMode && console.dir(element);
+                        debugMode && console.log(selectedOutfit);
 
                     }, 200);
                 });
