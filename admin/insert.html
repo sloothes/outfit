@@ -1582,10 +1582,10 @@ $(viewer.contentWindow).on("load", function(){
 
             //  Insert to collection.
 
-                var collection = "snapshots"; // PRODUCTS.collection("snapshots");
-
+                var collection = "snapshots";
                 socket.emit("mongo insert", {
-                    collection: "snapshots";
+                    documents: entry,
+                    collection: collection,
                 }, function(err, results){
                     if (err) console.error(err);
                     debugMode && console.log(results);
