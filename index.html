@@ -391,9 +391,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
         }).then(function(docs){
             debugMode && console.log(docs);
 
-            $(outfitSnapshots).children().remove(); // important!
+        //  Remove elements.
+            $(outfitSnapshots).children().remove(); // debugging!
 
             docs.forEach(function(data){
+
+            // TODO: CACHE PREVIEW/THUMBNAIL.
 
                 var thumbnail = `//i.imgur.com/${data.preview}s.jpg`;
                 var previewURL = `//i.imgur.com/${data.preview}.jpg`;
@@ -408,6 +411,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                 element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
 
                 $(element).on("click", function(){
+
+                //  Reset.
+                    outfitTitle.value = "";
+                    outfitDescription.innerText = "";
+
                 //  encapsulated data.
                     debugMode && console.log(data);
 
@@ -415,11 +423,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     $(".outfit-snapshot-item").removeClass("selected");
                     $(element).addClass("selected");  // important!
 
-                 // TODO: CACHE PREVIEW/THUMBNAIL.
-
+                //  Title.
                     outfitTitle.value = data.name;
-                    outfitPreview.src = previewURL;
 
+                //  Preview.
+                    $(outfitPreview).fadeOut(250);
+
+                    setTimeout(function(){
+                        outfitPreview.src = previewURL;
+                    }, 200);
+
+                //  Description.
                     if (data.description) {
                         outfitDescription.innerText = data.description;
                     }
