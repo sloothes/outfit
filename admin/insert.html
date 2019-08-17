@@ -691,9 +691,16 @@ $(viewer.contentWindow).on("load", function(){
             collection: collection,
             options: {skip:skip, limit:limit},
         }, function(err, docs){
+
         //  Callback must return before 
         //  Client pong timed out. // danger!
+
             if (err) console.error(err);
+
+            if ( !docs ) {
+                var err = "Null documents!";
+                console.error(err); return;
+            }
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
@@ -799,9 +806,16 @@ $(viewer.contentWindow).on("load", function(){
             collection: collection,
             options:{skip:0, limit:limit},
         }, function(err, docs){
+
         //  Callback must return before 
         //  Client pong timed out. // danger!
+
             if (err) console.error(err);
+
+            if ( !docs ) {
+                var err = "Null documents!";
+                console.error(err); return;
+            }
 
             $(displayObjects).children().remove();
             debugMode && console.log({"docs":docs});
