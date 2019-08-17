@@ -187,7 +187,7 @@
 
 <div class="container well" style="background-color:#fff;">
 
-    <h1>Select your outfit</h1>
+    <h1 style="text-align:center;">Select your outfit</h1>
 <!--
     <div id="outfit-title-pane" style="margin-bottom:20px;">
         <input type="text" id="outfit-title" class="form-control text-center x-large outfit-title-field" placeholder="outfit title" readOnly>
@@ -411,34 +411,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                 element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
 
                 $(element).on("click", function(){
-                    debugMode && console.dir(element);
+                    clearTimeout(this.interval);
+                    this.interval = setTimeout(function(){
+                        debugMode && console.dir(element);
 
-                //  Reset.
-                    outfitTitle.value = "";
-                    outfitDescription.innerText = "";
+                    //  Reset.
+                        outfitTitle.value = "";
+                        outfitDescription.innerText = "";
 
-                //  encapsulated data.
-                    debugMode && console.log(data);
+                    //  encapsulated data.
+                        debugMode && console.log(data);
 
-                //  Set this as selected.
-                    $(".outfit-snapshot-item").removeClass("selected");
-                    $(element).addClass("selected");  // important!
+                    //  Set this as selected.
+                        $(".outfit-snapshot-item").removeClass("selected");
+                        $(element).addClass("selected");  // important!
 
-                //  Title.
-                    outfitTitle.value = data.name;
+                    //  Title.
+                        outfitTitle.value = data.name;
 
-                //  Preview.
-                    $(outfitPreview).fadeOut(250);
-
-                    setTimeout(function(){
+                    //  Preview.
+                        $(outfitPreview).fadeOut(250);
                         outfitPreview.src = previewURL;
+
+                    //  Description.
+                        if (data.description) {
+                            outfitDescription.innerText = data.description;
+                        }
+
                     }, 200);
-
-                //  Description.
-                    if (data.description) {
-                        outfitDescription.innerText = data.description;
-                    }
-
                 });
 
                 debugMode && console.dir(element);
