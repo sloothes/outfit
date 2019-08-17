@@ -413,6 +413,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                     socket.emit("mongo findOne", {
                         collection:data.collection,
                         selectors:{uuid:data.item_UUID},
+                        options:{fields:{_id:0, uuid:0}},
                     }, function(err, data){
                         resolve(data);
                         debugMode && console.log(data);
@@ -491,13 +492,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                         }
 
                         selectedOutfit = data;
-                        debugMode && console.dir(element);
+                    //  debugMode && console.dir(element);
                         debugMode && console.log(selectedOutfit);
 
                     }, 200);
                 });
 
-                debugMode && console.dir(element);
+            //  debugMode && console.dir(element);
                 $(outfitSnapshots).append(element);
 
             });
