@@ -411,6 +411,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
                 element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
 
                 $(element).on("click", function(){
+                    debugMode && console.dir(element);
 
                 //  Reset.
                     outfitTitle.value = "";
