@@ -1449,6 +1449,7 @@ $(viewer.contentWindow).on("load", function(){
 
         if (true) {
             var msg = `Upload button is disabled by aministrator.`;
+            debugMode && console.error(msg);           // debugging!
             return userNotificationDialogMessage(msg); // debugging!
         }
 
