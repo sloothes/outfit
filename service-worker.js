@@ -127,13 +127,13 @@
     }
 
     function activate(){
-        debugMode && console.log("activating...");
         self.skipWaiting();
+        debugMode && console.log("activated.");
     }
 
     function clientClaim(){
-        debugMode && console.log("claiming...");
         self.clients.claim();
+        debugMode && console.log("claimed");
     }
 
     function unistall(){
@@ -141,7 +141,7 @@
             return self.clients.matchAll();
         }).then(function(clients) {
             clients.forEach(function(client){
-                client.navigate(client.url);
+                client.navigate(client.url); // it will re-install on reload.
                 console.log(`service worker unistalled from client "${client.url}"`);
             });
         });
