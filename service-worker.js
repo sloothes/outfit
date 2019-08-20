@@ -69,7 +69,7 @@
                 socket.emit("mongo find", {
                     collection:"onsite-avatars",
                     selectors: {
-                        "kind":"avatar",
+                        "kind": "avatar",
                         "tags": "onsite",
                     },
                 }, function(err, data){
