@@ -399,7 +399,7 @@ Promise.all([
         "avatars": true,
     });
 
-    var selectedOutfit; // important!
+    var selectedAvatar; // important!
     var collection = db.collection("avatars");
 
     const outfitTitle = document.getElementById("outfit-title");
@@ -412,11 +412,11 @@ Promise.all([
     var outfitSelectButtonClicked = new Signal();
 
     $(selectButton).on("click", function(){
-        if (!selectedOutfit) return;
+        if (!selectedAvatar) return;
         clearTimeout(this.interval);
         this.interval = setTimeout(function(){
-            debugMode && console.log(selectedOutfit);
-            outfitSelectButtonClicked.dispatch(selectedOutfit.uuid);
+            debugMode && console.log(selectedAvatar);
+            outfitSelectButtonClicked.dispatch(selectedAvatar.uuid);
         }, 200);
     });
 
@@ -448,16 +448,16 @@ Promise.all([
     }).then(function(docs){
 
     //  Remove elements.
-        $(outfitSnapshots).children().remove(); // debugging!
+        $(outfitSnapshots).children().remove(); // important!
 
         docs.forEach(function(data){
 
-            var thumbURL = `//i.imgur.com/${data.preview}s.jpg`;
-            var snapsURL = `//i.imgur.com/${data.preview}.jpg`;
+            var thumbURL = `//i.imgur.com/${data.preview[0]}s.jpg`;
+            var snapsURL = `//i.imgur.com/${data.preview[0]}.jpg`;
 
             var element = document.createElement("li");
             element.id = data.uuid; // important!
-            element.title = data.name; //  element.thumbnail = thumbnail;
+            element.title = data.name[0]; // fields are arrays.
             element.classList.add(
                 "btn", "btn-default", "btn-white-outline", 
                 "snapshot-item", "outfit-snapshot-item"
@@ -505,8 +505,8 @@ Promise.all([
                     $(element).addClass("selected");     // important!
 
                 //  Set title.
-                    outfitTitle.value = "";
-                    outfitTitle.value = data.name;
+                    outfitTitle.value = ""; // reset.
+                    outfitTitle.value = data.name[0];
 
                 //  Set preview.
                     $(outfitPreview).fadeOut(250);
@@ -520,13 +520,13 @@ Promise.all([
                     });
 
                 //  Set description.
-                    outfitDescription.innerText = "";
+                    outfitDescription.innerText = ""; // reset.
                     if (data.description) {
                         outfitDescription.innerText = data.description;
                     }
 
-                    selectedOutfit = data;
-                    debugMode && console.log(selectedOutfit);
+                    selectedAvatar = data; // TODO: encapsulate!
+                    debugMode && console.log(selectedAvatar);
 
                 }, 200);
 
