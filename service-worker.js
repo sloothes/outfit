@@ -70,7 +70,7 @@
                     collection:"onsite-avatars",
                     selectors: {
                         "kind": "avatar",
-                        "tags": "onsite",
+                        "flag": "onsite",
                     },
                 }, function(err, data){
                     if (err) console.error(err);

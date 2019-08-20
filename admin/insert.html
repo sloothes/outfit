@@ -499,6 +499,7 @@
             <div class="product-item-textfield" style="display:inline-block;">
                 <select id="product-collection" class="form-control selector-droplist collection-droplist product-collection-droplist" readOnly>
                     <option value="">Select collection:</option>
+                    <option value="outfits">avatar</option>
                     <option value="outfits">outfit</option>
                     <option value="textures">texture</option>
                     <option value="materials">material</option>
@@ -1979,16 +1980,18 @@ $(viewer.contentWindow).on("load", function(){
 
     productSaveButtonClicked.add(function(){
 
-        var kind = $(collectionDroplist).val();          // kind.
+        var flag = "onsite";
+        var kind = $(collectionDroplist).text();         // kind.
         var title = $(productTitle).val();               // name.
         var gender = contentWindow.localPlayer.outfit.getGender();
-    //  var preview = masterSnapshot.id;                 // imgur id.
+        var collection = $(collectionDroplist).val();    // kind.
         var description = $(productDescription).val();   // text.
 
-        if (!kind) return;    // required.
-        if (!title) return;   // required.
-        if (!gender) return;  // required.
-    //  if (!preview) return; // required.
+        if (!flag) return;       // required.
+        if (!kind) return;       // required.
+        if (!title) return;      // required.
+        if (!gender) return;     // required.
+        if (!collection) return; // required.
 
 
     //  PREVIEW SNAPSHOT.
@@ -2162,10 +2165,14 @@ $(viewer.contentWindow).on("load", function(){
                 $(saveProductButton).off();  // important!
 
                 var entry = {};
-                entry.kind = kind;
-                entry.name = title;
-                entry.gender = gender;
-                entry.preview = snapshot.id;  // important!
+
+                entry.kind = [ kind ];
+                entry.flag = [ flag ];
+                entry.name = [ title ];
+                entry.gender = [ gender ];
+                entry.preview = [ snapshot.id ];  // important!
+                entry.collection = [ collection ];
+                entry.tags = [ flag, gender, kind, ];
                 entry._id = ObjectId();
                 entry.uuid = generateUUID();
 
