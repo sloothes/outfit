@@ -388,7 +388,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
 <script>
 
-Promise.add([
+Promise.all([
 
     caches.open("thumbnails").then(function(cache){ return cache; }),
     caches.open("snapshots" ).then(function(cache){ return cache; }),
