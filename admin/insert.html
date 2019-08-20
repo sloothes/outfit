@@ -2197,6 +2197,7 @@ $(viewer.contentWindow).on("load", function(){
                 });
 
                 return Promise.all([
+
                     new Promise(function(resolve, reject){
                         socket.emit("mongo insert", {
                             documents: entry,
@@ -2210,7 +2211,7 @@ $(viewer.contentWindow).on("load", function(){
                     new Promise(function(resolve, reject){
                         socket.emit("mongo insert", {
                             documents: plexy,
-                            collection: "multiplexer",
+                            collection: "multiplex",
                         }, function(err, result){
                             if (err) console.error(err);
                             resolve(result);
