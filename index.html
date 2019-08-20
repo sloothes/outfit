@@ -420,36 +420,23 @@ Promise.add([
         }, 200);
     });
 
-//  Prototype.
-
     outfitSelectButtonClicked.add(function(uuid){
         new Promise(function(resolve, reject){
-
             socket.emit("multiplex findOne", {
-            //  collection:"multiplexer",
+            //  collection:"multiplex",
                 selectors:{product_UUID:uuid},
             }, function(err, data){
                 resolve(data);
             });
-    /*
-        }).then(function(data){
-            return new Promise(function(resolve, reject){
-                socket.emit("mongo findOne", {
-                    collection:data.collection,
-                    selectors:{uuid:data.item_UUID},
-                    options:{fields:{_id:0, uuid:0}},
-                }, function(err, data){
-                    resolve(data);
-                    debugMode && console.log(data);
-                });
-            });
-    */
+
         }).then(function(outfit){
             if (!outfit) throw `Avatar ${uuid} not found!`;
             debugMode && console.log(outfit);
-            return store("Avatar", outfit);
-        }).then(function(outfit){
+            return store( "Avatar", outfit );
+
+        }).then(function(){
             window.location.pathname = "/demo/";
+
         }).catch(function(err){
             console.error(err);
         });
@@ -471,25 +458,35 @@ Promise.add([
             var element = document.createElement("li");
             element.id = data.uuid; // important!
             element.title = data.name; //  element.thumbnail = thumbnail;
-            element.classList.add("btn", "btn-default", "btn-white-outline", "snapshot-item", "outfit-snapshot-item");
+            element.classList.add(
+                "btn", "btn-default", "btn-white-outline", 
+                "snapshot-item", "outfit-snapshot-item"
+            );
 
         //  element.style.cssText = `background-image:url(${thumbObjURL})`;
 
-            thumbCache.match(thumbURL)
-            .then(function(response){
-                if (!response) throw `Thumbnail ${thumbURL} not found!`;
+            thumbCache.match(thumbURL).then(function(response){
+
+                if (!response) 
+                    throw `Thumbnail ${thumbURL} not found!`;
+
                 return response.blob();
+
             }).catch(function(err){
                 console.error(err);
+
                 return thumbCache.add(thumbURL).then(function(){
                     return thumbCache.match(thumbURL).then(function(response){
                         return response.blob();
                     });
                 });
+
             }).then(function(blob){
+
                 var objectURL = URL.createObjectURL(blob);
                 element.style.cssText = `background-image:url(${objectURL})`;
                 return objectURL;
+
             }).then(function(objectURL){
                 URL.revokeObjectURL(objectURL);
             });
@@ -628,6 +625,20 @@ Promise.add([
         console.error(err);
     });
 */
+
+/*
+    return new Promise(function(resolve, reject){
+        socket.emit("mongo findOne", {
+            collection:data.collection,
+            selectors:{uuid:data.item_UUID},
+            options:{fields:{_id:0, uuid:0}},
+        }, function(err, data){
+            resolve(data);
+            debugMode && console.log(data);
+        });
+    });
+*/
+
 </script>
 
 </body>

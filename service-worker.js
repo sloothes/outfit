@@ -68,7 +68,10 @@
             return new Promise(function(resolve, reject){
                 socket.emit("mongo find", {
                     collection:"onsite-avatars",
-                    selectors: {"kind":"outfits"},
+                    selectors: {
+                        "kind":"avatar",
+                        "tags": "onsite",
+                    },
                 }, function(err, data){
                     if (err) console.error(err);
                     resolve(data);
