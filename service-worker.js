@@ -48,13 +48,13 @@
 
     });
 
-    var PUBLIC = new zango.Db( "PUBLIC", {
-        "avatars": true,
-    });
 
     function installAvatars(){
 
-        var DB = PUBLIC;
+        var DB = new zango.Db( "PUBLIC", {
+            "avatars": true,
+        });
+
         var collection = DB.collection("avatars");
 
         return DB.open(function(err, db){
