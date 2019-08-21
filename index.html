@@ -423,25 +423,22 @@ Promise.all([
     });
 
     outfitSelectButtonClicked.add(function(uuid){
-        new Promise(function(resolve, reject){
-            socket.emit("multiplex findOne", {
-            //  collection:"multiplex",
-                selectors:{product_UUID:uuid},
-            }, function(err, data){
-                resolve(data);
-            });
 
-        }).then(function(outfit){
-            if (!outfit) throw `Avatar ${uuid} not found!`;
-            debugMode && console.log(outfit);
-            return store( "Avatar", outfit );
+        socket.emit("multiplex findOne", {
+        //  collection:"multiplex",
+            selectors:{product_UUID:uuid},
+        }, function(err, data){
+            if (!data) throw `Avatar ${uuid} not found!`;
 
-        }).then(function(){
+            debugMode && console.log(
+                JSON.parse(JSON.stringify(data))
+            );
+
+            store( "Avatar", data );
             window.location.pathname = "/demo/";
 
-        }).catch(function(err){
-            console.error(err);
         });
+
     });
 
 
