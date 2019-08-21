@@ -427,11 +427,11 @@ Promise.all([
         socket.emit("multiplex findOne", {
         //  collection:"multiplex",
             selectors:{product_UUID:uuid},
-        }, function(err, results){
-            debugMode && console.log("results:", results);
+        }, function(err, data){
+            debugMode && console.log("data:", data);
 
-            var data = results.data;
-            debugMode && console.log("data:", results);
+            //var data = results.data;
+            //debugMode && console.log("data:", data);
 
             if (!data) throw `Avatar ${uuid} not found!`;
 
