@@ -1,6 +1,6 @@
 //  outfits/service-worker.js
 
-    self.version = 3.5;
+    self.version = 3.6;
     var debugMode = true;
 
     self.importScripts(
