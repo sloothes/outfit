@@ -424,20 +424,10 @@ Promise.all([
 
     outfitSelectButtonClicked.add(function(uuid){
 
-        
+        socket.emit("multiplex findOne", { uuid:uuid },
+        function(err, data){
 
-
-
-
-        socket.emit("multiplex findOne", {
-        //  collection:"multiplex",
-            selectors: {product_UUID:uuid},
-        }, function(err, data){
             debugMode && console.log("data:", data);
-
-            //var data = results.data;
-            //debugMode && console.log("data:", data);
-
             if (!data) throw `Avatar ${uuid} not found!`;
 
             store( "Avatar", data );
