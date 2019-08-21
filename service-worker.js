@@ -44,7 +44,7 @@
     self.addEventListener("activate", function(e){
         debugMode && console.log("service worker activated.");
 
-        clientClaim();
+        self.clients.claim();
 
     });
 

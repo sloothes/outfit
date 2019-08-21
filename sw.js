@@ -1,6 +1,9 @@
 //  outfits/sw.js
 
+(function(){
+
     var debugMode = true;
+
     var serviceWorker = navigator.serviceWorker;
 
     if ( serviceWorker ) {
@@ -45,3 +48,5 @@
             console.error(err);
         });
     }
+
+})();
