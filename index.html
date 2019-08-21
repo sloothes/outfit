@@ -454,8 +454,8 @@ Promise.all([
 
         docs.forEach(function(data){
 
-            var thumbURL = `//i.imgur.com/${data.preview[0]}s.jpg`;
             var snapsURL = `//i.imgur.com/${data.preview[0]}.jpg`;
+            var thumbURL = `//i.imgur.com/${data.preview[0]}s.jpg`;
 
             var element = document.createElement("li");
             element.id = data.uuid; // important!
