@@ -131,8 +131,14 @@
     }
 
     function activate(){
+
         self.skipWaiting();
         debugMode && console.log("activated.");
+
+        self.clients.matchAll().forEach(function(client){
+            client.navigate(client.url); // it will re-install on reload.
+        });
+
     }
 
     function clientClaim(){
