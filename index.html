@@ -424,9 +424,14 @@ Promise.all([
 
     outfitSelectButtonClicked.add(function(uuid){
 
+        
+
+
+
+
         socket.emit("multiplex findOne", {
         //  collection:"multiplex",
-            selectors:{product_UUID:uuid},
+            selectors: {product_UUID:uuid},
         }, function(err, data){
             debugMode && console.log("data:", data);
 
@@ -458,7 +463,7 @@ Promise.all([
 
             var element = document.createElement("li");
             element.id = data.uuid; // important!
-            element.title = data.name[0]; // fields are arrays.
+            element.title = data.name;
             element.classList.add(
                 "btn", "btn-default", "btn-white-outline", 
                 "snapshot-item", "outfit-snapshot-item"
@@ -483,13 +488,14 @@ Promise.all([
                 });
 
             }).then(function(blob){
+                if (!blob) `None blob returned!`;
 
                 var objectURL = URL.createObjectURL(blob);
                 element.style.cssText = `background-image:url(${objectURL})`;
                 return objectURL;
 
             }).then(function(objectURL){
-                URL.revokeObjectURL(objectURL);
+            //  URL.revokeObjectURL(objectURL);
             });
 
             $(element).on("click", function(){
