@@ -427,13 +427,17 @@ Promise.all([
         socket.emit("multiplex findOne", {
         //  collection:"multiplex",
             selectors:{product_UUID:uuid},
-        }, function(err, data){
-            debugMode && console.log("data:", data);
+        }, function(err, results){
+            debugMode && console.log("results:", results);
+
+            var data = results.data;
+            debugMode && console.log("data:", results);
 
             if (!data) throw `Avatar ${uuid} not found!`;
 
             store( "Avatar", data );
-            window.location.pathname = "/demo/";
+
+        //  window.location.pathname = "/demo/";
 
         });
 
