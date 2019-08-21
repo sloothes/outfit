@@ -131,18 +131,17 @@
     }
 
     function activate(){
-
         self.skipWaiting();
         debugMode && console.log("activated.");
-
-        self.clients.matchAll().then(function(clients){
-            clients[0].navigate(clients[0].url);
-        });
     }
 
     function clientClaim(){
-        self.clients.claim();
-        debugMode && console.log("claimed");
+        self.clients.claim().then(function(){
+            debugMode && console.log("claimed.");
+            return self.clients.matchAll();
+        }).then(function(clients){
+            clients[0].navigate(clients[0].url);
+        });
     }
 
     function unistall(){
