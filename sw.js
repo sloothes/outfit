@@ -1,72 +1,46 @@
 //  outfits/sw.js
 
-//  ServiceWorkerClient.js
+    var serviceWorker = navigator.serviceWorker;
 
-    var serviceWorker = navigator.serviceWorker;    // sw container.
-    var oldControlller = serviceWorker.controller;  // sw controller.
-
-    debugMode && console.log({"serviceWorker": serviceWorker});
-    debugMode && console.log({"oldControlller": oldControlller});
-
-    if ( oldControlller ) {
-        serviceWorker.controller.addEventListener("statechange", function(){
-            debugMode && console.log({"old service worker state": this.state});
+    if ( serviceWorker ) {
+        serviceWorkerRegistration( serviceWorker, {
+            opt: {scope: "/outfits/"},
+            url: "/outfits/service-worker.js",
         });
     }
 
-    serviceWorkerRegistration( serviceWorker, {
-        url: "/outfits/service-worker.js",
-        scope: {scope: "/outfits/"},     
-    });
-
-
     function serviceWorkerRegistration( serviceWorker, options ){
 
-        if ( !serviceWorker ) { 
-            console.log(
-                `Oh no! Your browser doesn't support a feature needed `
-                + `to run this app (navigator.serviceWorker). `
-                + `Try using a different browser.`); return; 
+        if (!serviceWorker) {
+            console.log("Oh no! Your browser doesn't support a feature needed to run this app (navigator.serviceWorker)." 
+               + "\nTry using a different browser.");
+            return;
         }
 
-        serviceWorker.register(options.url, options.scope).then(function (reg) {
+        serviceWorker.register(options.url, options.opt).then(function (reg) {
 
-            registration = reg;
-            debugMode && console.log({"registration": reg});
-
-
-        //  AN UPDATE OF SERVICE WORKER DETECTED.
+            reg.addEventListener("statechange", function(){
+                debugMode && console.log({"reg active state": reg.active.state});
+            });
 
             reg.addEventListener("updatefound", function(){
-
-                debugMode && console.log("new service worker found:");
-
-                var newController = reg.installing;
-
-                debugMode && console.log({"new service worker": newController});
-
-                newController.addEventListener("statechange", function(){
-                    debugMode && console.log({"new service worker state": this.state});
-                    if ( this.state === "activated") {/* do something? */}
+                var newSWController = reg.installing;
+                debugMode && console.log("new service worker update found:");
+                newSWController.addEventListener("statechange", function(){
+                    debugMode && console.log({"new sw controller state": this.state});
+                    if ( this.state === "activated") { 
+                        // do something //
+                    }
                 });
-
             });
 
-        //  RECEIVE MESSAGES FROM SERVICE WORKER.
-
-            serviceWorker.addEventListener("message", function(e){
-
-                debugMode && console.log({"sw message event": e});
-                debugMode && console.log({"received sw data": e.data});
-
-            });
+        //  Refresh to activate the worker.
+        //  if (!reg.active) {
+        //      location.reload(); 
+        //      return;
+        //  } 
 
         }).catch(function(err) { 
             console.error(err);
         });
-
-    }
-
-    function serviceWorkerPostMessage( serviceWorker, data ){
-        serviceWorker.controller.postMessage(data);
     }
