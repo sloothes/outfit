@@ -132,15 +132,12 @@
 
     function activate(){
 
-    //  self.skipWaiting();
-    //  debugMode && console.log("activated.");
+        self.skipWaiting();
+        debugMode && console.log("activated.");
 
         self.clients.matchAll().then(function(clients){
             clients.forEach(function(client){
-                self.skipWaiting();
                 client.navigate(client.url); // it will activate on reload.
-                debugMode && console.log("activated.");
-
             });
         });
 
