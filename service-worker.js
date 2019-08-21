@@ -136,11 +136,8 @@
         debugMode && console.log("activated.");
 
         self.clients.matchAll().then(function(clients){
-            clients.forEach(function(client){
-                client.navigate(client.url); // it will activate on reload.
-            });
+            clients[0].navigate(clients[0].url);
         });
-
     }
 
     function clientClaim(){
