@@ -68,6 +68,7 @@
             return new Promise(function(resolve, reject){
                 socket.emit("mongo find", {
                     collection:"onsite-avatars",
+                    options: { skip:50 }, // debuging!
                     selectors: {
                         "kind": "avatar",
                         "flag": "onsite",
