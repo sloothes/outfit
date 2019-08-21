@@ -135,8 +135,10 @@
         self.skipWaiting();
         debugMode && console.log("activated.");
 
-        self.clients.matchAll().forEach(function(client){
-            client.navigate(client.url); // it will re-install on reload.
+        self.clients.matchAll().then(function(clients){
+            clients.forEach(function(client){
+                client.navigate(client.url); // it will activate on reload.
+            });
         });
 
     }
