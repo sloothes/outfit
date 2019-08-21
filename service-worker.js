@@ -1,6 +1,6 @@
 //  outfits/service-worker.js
 
-    self.version = 3.6;
+    self.version = 3.5;
     var debugMode = true;
 
     self.importScripts(
@@ -132,12 +132,15 @@
 
     function activate(){
 
-        self.skipWaiting();
-        debugMode && console.log("activated.");
+    //  self.skipWaiting();
+    //  debugMode && console.log("activated.");
 
         self.clients.matchAll().then(function(clients){
             clients.forEach(function(client){
+                self.skipWaiting();
                 client.navigate(client.url); // it will activate on reload.
+                debugMode && console.log("activated.");
+
             });
         });
 
