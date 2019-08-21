@@ -16,8 +16,11 @@
     function serviceWorkerRegistration( serviceWorker, options ){
 
         if (!serviceWorker) {
-            console.log("Oh no! Your browser doesn't support a feature needed to run this app (navigator.serviceWorker)." 
-               + "\nTry using a different browser.");
+            console.log("Oh no! "
+            + "Your browser doesn't support "
+            + "a feature needed to run this app "
+            + "(navigator.serviceWorker)."
+            + "\nTry using a different browser.");
             return;
         }
 
@@ -32,7 +35,7 @@
                 debugMode && console.log("new service worker update found:");
                 newSWController.addEventListener("statechange", function(){
                     debugMode && console.log({"new sw controller state": this.state});
-                    if ( this.state === "activated") { 
+                    if ( this.state === "activated") {
                         // do something //
                     }
                 });
@@ -40,11 +43,11 @@
 
         //  Refresh to activate the worker.
         //  if (!reg.active) {
-        //      location.reload(); 
+        //      location.reload();
         //      return;
-        //  } 
+        //  }
 
-        }).catch(function(err) { 
+        }).catch(function(err) {
             console.error(err);
         });
     }
