@@ -618,6 +618,36 @@ Promise.all([
 
         });
 
+    //  PhotoSwipe.js
+
+        $(outfitPreview).on("click", function(){
+
+            var pswpElement = $(".pswp").get(0);
+
+            var items = []; // build items array.
+
+            docs.forEach(function(data){
+                items.push({
+                    w: 600, h: 600,
+                    src: `//i.imgur.com/${data.preview[0]}.jpg`,
+                });
+            });
+
+        //  read more: https://photoswipe.com/documentation/options.html
+            var options = {
+                index: 0 // start at first slide.
+            };
+
+            var gallery = new PhotoSwipe( 
+                pswpElement, 
+                PhotoSwipeUI_Default, 
+                items, options
+            );
+
+            gallery.init();
+
+        });
+
     }).catch(function(err){
         console.error(err);
     });
