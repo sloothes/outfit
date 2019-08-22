@@ -404,20 +404,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
 (function(){
 
-    var pswpElement = $(".pswp").get(0);
+//  Initializes and opens PhotoSwipe (demo).
 
-    var items = [
-        { w: 600, h: 400, src: "/demo/index.html" }, // does not have iframe support.
-        { w: 600, h: 600, src: "/outfits/img/young-joyful-teens-430x480.jpg" }
-    ];
-
-    var options = {
-    //  read more: https://photoswipe.com/documentation/options.html
-        index: 0 // start at first slide.
-    };
-
-//  Initializes and opens PhotoSwipe.
     $("#live-test-button").on("click", function(){
+
+        var pswpElement = $(".pswp").get(0);
+
+        var items = [
+            { w: 600, h: 400, src: "/demo/index.html" }, // does not have iframe support.
+            { w: 600, h: 600, src: "/outfits/img/young-joyful-teens-430x480.jpg" }
+        ];
+
+        var options = {
+        //  read more: https://photoswipe.com/documentation/options.html
+            index: 0 // start at first slide.
+        };
+
         var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
         preview.init();
     });
