@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description" contents="">
 
-    <title>Select outfit with PhotoSwipe (v1.2)</title>
+    <title>Select outfit demo with PhotoSwipe (v1.2)</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootbox-dialoges.css">
@@ -320,32 +320,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
             </div>
         </div>
 
-        <script>
-            (function(){
-
-                var pswpElement = $(".pswp").get(0);
-
-                var items = [{
-                    src: "/demo/",
-                    w: 600,
-                    h: 400
-                }];
-
-                var options = {
-                //  read more: https://photoswipe.com/documentation/options.html
-                    index: 0 // start at first slide.
-                };
-
-            //  Initializes and opens PhotoSwipe
-                var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-
-                $("#live-test-button").on("click", function(){
-                    preview.init();
-                });
-
-            })();
-        </script>
-
         <div id="outfit-tabs-pane">
 
             <div style="width:100%;margin-bottom:20px;">
@@ -423,6 +397,38 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
 </script>
 
+
+<script>
+
+//  PhotoSwipe.js
+
+(function(){
+
+    var pswpElement = $(".pswp").get(0);
+
+    var items = [{
+        w: 600, h: 400,
+        src: "/demo/index.html",
+    }, {
+        w: 600, h: 600,
+        src: "/outfits/img/young-joyful-teens-430x480.jpg",
+    }];
+
+    var options = {
+    //  read more: https://photoswipe.com/documentation/options.html
+        index: 0 // start at first slide.
+    };
+
+//  Initializes and opens PhotoSwipe.
+    var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+
+    $("#live-test-button").on("click", function(){
+        preview.init();
+    });
+
+})();
+
+</script>
 
 <script>
 
