@@ -320,6 +320,30 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
             </div>
         </div>
 
+        <script>
+            (function(){
+
+                var pswpElement = $(".pswp").get(0);
+
+                var items = [{
+                    src: "/demo/",
+                    w: 600,
+                    h: 400
+                }];
+
+                var options = {
+                //  read more: https://photoswipe.com/documentation/options.html
+                    index: 0 // start at first slide.
+                };
+
+            //  Initializes and opens PhotoSwipe
+                var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+
+                preview.init();
+
+            })();
+        </script>
+
         <div id="outfit-tabs-pane">
 
             <div style="width:100%;margin-bottom:20px;">
