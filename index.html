@@ -339,7 +339,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
             //  Initializes and opens PhotoSwipe
                 var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
 
-                preview.init();
+                $("#live-test-button").on("click", function(){
+                    preview.init();
+                });
 
             })();
         </script>
