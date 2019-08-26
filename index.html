@@ -397,39 +397,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
 </script>
 
-
-<script>
-
-//  PhotoSwipe.js
-
-(function(){
-
-//  Initializes and opens PhotoSwipe (demo).
-/*
-    $("#live-test-button").on("click", function(){
-
-        var pswpElement = $(".pswp").get(0);
-
-        var items = [
-            { w: 600, h: 400, src: "/demo/index.html" }, // does not have iframe support.
-            { w: 600, h: 600, src: "/outfits/img/young-joyful-teens-430x480.jpg" }
-        ];
-
-        var options = {
-        //  read more: https://photoswipe.com/documentation/options.html
-            index: 0 // start at first slide.
-        };
-
-        var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-        preview.init();
-
-    });
-*/
-
-})();
-
-</script>
-
 <script>
 
 (function(){
@@ -639,21 +606,21 @@ Promise.all([
                 });
             });
 
-        //  read more: https://photoswipe.com/documentation/options.html
-
             var options = {
                 index: selectedIndex, // start at selected index slide.
+            //  read for options: https://photoswipe.com/documentation/options.html
             };
 
             gallery = new PhotoSwipe( 
                 pswpElement, 
                 PhotoSwipeUI_Default, 
                 items, options
-            );
+            ); //  global!
 
             gallery.init();
 
             debugMode && console.log({"gallery": gallery});
+        //  currentIndex = gallery.itemHolders[1].index;
 
         });
 
@@ -664,6 +631,69 @@ Promise.all([
 });
 
 </script>
+
+
+<script>
+
+//  PhotoSwipe.js
+
+(function(){
+
+//  Initializes and opens PhotoSwipe (demo).
+
+    $("#live-test-button").on("click", function(){
+
+        var pswpElement = $(".pswp").get(0);
+
+        var items = [
+            { html: `<iframe id="viewer" src="/demo/index.html"></iframe>` },
+        //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
+        ];
+
+        var options = {
+            index: 0 // start at first slide.
+        //  read more for options: https://photoswipe.com/documentation/options.html
+        };
+
+        var preview = new PhotoSwipe( 
+            pswpElement, 
+            PhotoSwipeUI_Default, 
+            items, options
+        );
+
+        preview.init();
+
+    });
+
+})();
+
+</script>
+
+
+<div id="disqus_thread" style="padding:20px;"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+    var disqus_config = function () {
+        this.page.url = "https://sloothes.com/outfits";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "/outfits"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { 
+    //  DON'T EDIT BELOW THIS LINE.
+        var d = document, s = d.createElement("script");
+        s.src = "https://sloothes-outfits.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", + new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                                        
+<script id="dsq-count-scr" src="//sloothes-outfits.disqus.com/count.js" async></script>
 
 <script>
 /*
@@ -760,31 +790,6 @@ Promise.all([
 */
 
 </script>
-
-<div id="disqus_thread" style="padding:20px;"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-    var disqus_config = function () {
-        this.page.url = "https://sloothes.com/outfits";  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = "/outfits"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-
-    (function() { 
-    //  DON'T EDIT BELOW THIS LINE.
-        var d = document, s = d.createElement("script");
-        s.src = "https://sloothes-outfits.disqus.com/embed.js";
-        s.setAttribute("data-timestamp", + new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                                                        
-<script id="dsq-count-scr" src="//sloothes-outfits.disqus.com/count.js" async></script>
 
 </body>
 </html>
