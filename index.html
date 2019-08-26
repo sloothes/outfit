@@ -645,10 +645,12 @@ Promise.all([
 
         var pswpElement = $(".pswp").get(0);
 
-        var items = [
-            { html: `<div id="viewer"><iframe src="/demo/index.html"></iframe></div>` },
+        var items = [{ 
+            html: `<div id="viewer" class="middle">`
+            + `<iframe src="/demo/index.html" style="width:750px;height:750px"></iframe>`
+            + `</div>`
         //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
-        ];
+        }];
 
         var options = {
             index: 0 // start at first slide.
