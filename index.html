@@ -451,12 +451,16 @@ Promise.all([
 
 ]).then(function([thumbCache, snapsCache]){
 
-    var db = new zango.Db( "PUBLIC", {
+    var dbUSER = new zango.Db( "USER", {
+        "current": true,
+    });
+
+    var dbPUBLIC = new zango.Db( "PUBLIC", {
         "avatars": true,
     });
 
     var selectedAvatar; // important!
-    var collection = db.collection("avatars");
+    var collection = dbPUBLIC.collection("avatars");
 
     const outfitTitle = document.getElementById("outfit-title");
     const selectButton = document.getElementById("select-button");
@@ -499,8 +503,19 @@ Promise.all([
             debugMode && console.log("data:", data);
             if (!data) throw `Avatar ${uuid} not found!`;
 
-            store( "Avatar", data );
-            window.location.pathname = "/demo/";
+            store( "Avatar", data ); // important!
+
+            var selector = {_id:"avatar"};
+            var modifier = { $set: data };
+        //  modifier.$set.data._id = "avatar"; // important!
+            var collection = dbUSER.collection("current");
+            collection.update(selector, modifier, function(err){
+                if (err) throw err;
+            }).then(function(){
+                window.location.pathname = "/demo/";
+            }).catch(function(err){
+                console.error(err);
+            });
 
         });
 
