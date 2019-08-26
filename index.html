@@ -205,11 +205,21 @@
         <div id="outfit-preview-pane">
 
             <div id="preview-container" style="max-width:100%;min-height:466px;text-align:center;">
-                <!-- src="/img/no-image-avaliable-200x200.png" -->
+                <iframe id="preload" scr="scene.html" style="display:none;"></iframe>
                 <img id="outfit-preview" src="/outfits/img/young-joyful-teens-430x480.jpg"> 
             </div>
 
             <script>
+
+    }).then(function(){
+
+            //  Preload iframe.
+                (function (){
+                    $("iframe#preload").on("load", function(){
+                        debugMode && console.log("Iframe preloaded!");
+                        $(this).remove(); // important!
+                    });
+                })();
 
                 (function (){
                     $("img#outfit-preview").on("load", function(){
@@ -633,16 +643,6 @@ Promise.all([
 
     }).catch(function(err){
         console.error(err);
-    }).then(function(){
-
-    //  Preload iframe.
-        var iframe = document.createElement("iframe");
-        iframe.id = "viewer"; iframe.src = "scene.html";
-        $(iframe.contentWindow).on("load", function(){
-            debugMode && console.log("Iframe preloaded!");
-            $(iframe).remove();
-        });
-
     });
 
 });
