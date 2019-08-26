@@ -213,9 +213,10 @@
 
             //  Preload iframe.
                 (function (){
-                    $("iframe#preload").on("load", function(){
-                        debugMode && console.log("Iframe preloaded!");
-                        $(this).remove(); // important!
+                    var iframe = document.getElementById("preload");
+                    $(iframe.contentWindow).on("load", function(){
+                        debugMode && console.log("Iframe preload loaded!");
+                        //  $(this).remove(); // important!
                     });
                 })();
 
