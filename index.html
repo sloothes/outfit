@@ -640,10 +640,19 @@ Promise.all([
             + `</iframe></div>`
         }];
 
-        var options = {
-        //  read more for options: https://photoswipe.com/documentation/options.html
-            index: 0 // start at first slide.
-        };
+    //  read more for options: https://photoswipe.com/documentation/options.html
+        var options = {};
+
+    //  minimal options.
+        options.index = 0; // start at first slide.
+        options.mainClass = "pswp--minimal--dark";
+        options.barsSize = {top:0,bottom:0};
+        options.captionEl = false;
+        options.fullscreenEl = false;
+        options.shareEl = false;
+        options.bgOpacity = 0.85;
+        options.tapToClose = true;
+        options.tapToToggleControls = false;
 
         var preview = new PhotoSwipe( pswp, psui, items, options );
 
