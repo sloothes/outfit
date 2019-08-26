@@ -514,7 +514,8 @@ Promise.all([
                 if (doc) {
 
                     var modifier = { $set: data };
-                    delete modifier.$set.data._id; // important!
+                    debugMode && console.log({"modifier":modifier});
+                    delete modifier.$set._id; // important!
                 //  modifier.$set.data._id = "avatar"; // important!
                     return collection.update(selector, modifier, function(err){
                         if (err) throw err;
