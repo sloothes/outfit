@@ -488,7 +488,6 @@ Promise.all([
         "avatars": true,
     });
 
-    var selectedIndex;  // important!
     var selectedAvatar; // important!
     var collection = db.collection("avatars");
 
@@ -529,6 +528,8 @@ Promise.all([
     collection.find().toArray(function(err){
         if (err) throw err;
     }).then(function(docs){
+
+        var selectedIndex = 0;  // important!
 
     //  Remove elements.
         $(outfitSnapshots).children().remove(); // important!
@@ -640,7 +641,7 @@ Promise.all([
 
         //  read more: https://photoswipe.com/documentation/options.html
             var options = {
-                index: selectedIndex || 0 // start at first slide.
+                index: selectedIndex; // start at selected index slide.
             };
 
             var gallery = new PhotoSwipe( 
