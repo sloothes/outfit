@@ -488,6 +488,7 @@ Promise.all([
         "avatars": true,
     });
 
+    var selectedIndex;  // important!
     var selectedAvatar; // important!
     var collection = db.collection("avatars");
 
@@ -539,6 +540,7 @@ Promise.all([
 
             var element = document.createElement("li");
             element.id = data.uuid; // important!
+            element.index = index;  // important!
             element.title = data.name;
             element.classList.add(
                 "btn", "btn-default", "btn-white-outline", 
@@ -608,6 +610,7 @@ Promise.all([
                         outfitDescription.innerText = data.description;
                     }
 
+                    selectedIndex = element.index;
                     selectedAvatar = data; // TODO: encapsulate!
                     debugMode && console.log(selectedAvatar);
 
@@ -637,7 +640,7 @@ Promise.all([
 
         //  read more: https://photoswipe.com/documentation/options.html
             var options = {
-                index: 0 // start at first slide.
+                index: selectedIndex || 0 // start at first slide.
             };
 
             var gallery = new PhotoSwipe( 
