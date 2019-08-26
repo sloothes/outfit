@@ -129,10 +129,6 @@ var jsfiles = [
 
 var male, female, skeleton;
 
-var dbUSER = new zango.Db( "USER", {
-    "current": true,
-});
-
 loadjs( jsfiles, {
 
     async: false,
@@ -158,12 +154,15 @@ loadjs( jsfiles, {
             });
         });
 
-        localPlayerHandler("/turn/back");
-
-    //  Disable outfit direction visible on startup.
-    //  localPlayer.outfit.direction.visible = false;
-
     //  avatarLoader.js (localStorage only).
+
+        var dbUSER = new zango.Db( "USER", {
+            "current": true,
+        });
+
+        localPlayerHandler("/turn/back");
+        //  Disable outfit direction visible on startup.
+        //  localPlayer.outfit.direction.visible = false;
 
         var json = store.remove("Avatar");
         if (!json) throw "Avatar not found!";
