@@ -665,16 +665,15 @@ Promise.all([
         var psui = PhotoSwipeUI_Default;
 
         var items = [{
-            w: 750, h: 750,
-            html: `<div id="viewer" class="middle">`
+        //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
+            html: `<div id="viewer" class="middle" style="max-height:750px;max-width:750px;">`
             + `<iframe src="/demo/index.html" class="well" style="width:100%;height:100%;"></iframe>`
             + `</div>`
-            //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
         }];
 
         var options = {
+        //  read more for options: https://photoswipe.com/documentation/options.html
             index: 0 // start at first slide.
-            //  read more for options: https://photoswipe.com/documentation/options.html
         };
 
         var preview = new PhotoSwipe( pswp, psui, items, options );
