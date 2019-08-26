@@ -164,7 +164,7 @@ loadjs( jsfiles, {
         //  Disable outfit direction visible on startup.
         //  localPlayer.outfit.direction.visible = false;
 
-        var json = store.remove("Avatar");
+        var json = store("Avatar");
         if (!json) throw "Avatar not found!";
 
         localPlayer.outfit.fromJSON(json).then(function(outfit){
