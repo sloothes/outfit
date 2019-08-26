@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description" contents="">
 
-    <title>Select outfit demo with PhotoSwipe (v1.2)</title>
+    <title>Select outfit demo with PhotoSwipe (v1.3)</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootbox-dialoges.css">
@@ -607,38 +607,6 @@ Promise.all([
 
         });
 
-    //  PhotoSwipe.js
-
-    /*
-        $(outfitPreview).on("click", function(){
-
-            var pswp = $(".pswp").get(0);
-            var psui = PhotoSwipeUI_Default;
-
-            var items = []; // build items array.
-
-            docs.forEach(function(data){
-                items.push({
-                    w: 750, h: 750,
-                    src: `//i.imgur.com/${data.preview[0]}.jpg`,
-                });
-            });
-
-            var options = {
-                index: selectedIndex, // start at selected index slide.
-            //  read for options: https://photoswipe.com/documentation/options.html
-            };
-
-            var gallery = new PhotoSwipe( pswp, psui, items, options );
-
-            gallery.init();
-
-        //  currentIndex = gallery.itemHolders[1].index;
-            debugMode && console.log({"gallery": gallery});
-
-        });
-    */
-
     }).catch(function(err){
         console.error(err);
     });
@@ -684,6 +652,10 @@ Promise.all([
 
     });
 
+})();
+
+//  PhotoSwipe.js
+
 /*
     $("#live-test-button").on("click", function(){
 
@@ -711,7 +683,35 @@ Promise.all([
     });
 */
 
-})();
+/*
+    $(outfitPreview).on("click", function(){
+
+        var pswp = $(".pswp").get(0);
+        var psui = PhotoSwipeUI_Default;
+
+        var items = []; // build items array.
+
+        docs.forEach(function(data){
+            items.push({
+                w: 750, h: 750,
+                src: `//i.imgur.com/${data.preview[0]}.jpg`,
+            });
+        });
+
+        var options = {
+            index: selectedIndex, // start at selected index slide.
+            //  read for options: https://photoswipe.com/documentation/options.html
+        };
+
+        var gallery = new PhotoSwipe( pswp, psui, items, options );
+
+        gallery.init();
+
+        //  currentIndex = gallery.itemHolders[1].index;
+        debugMode && console.log({"gallery": gallery});
+
+    });
+*/
 
 </script>
 
