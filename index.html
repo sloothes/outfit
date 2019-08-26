@@ -405,7 +405,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 (function(){
 
 //  Initializes and opens PhotoSwipe (demo).
-
+/*
     $("#live-test-button").on("click", function(){
 
         var pswpElement = $(".pswp").get(0);
@@ -422,7 +422,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis mi eu elit t
 
         var preview = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
         preview.init();
+
     });
+*/
 
 })();
 
@@ -530,7 +532,7 @@ Promise.all([
     //  Remove elements.
         $(outfitSnapshots).children().remove(); // important!
 
-        docs.forEach(function(data){
+        docs.forEach(function(data, index){
 
             var snapsURL = `//i.imgur.com/${data.preview[0]}.jpg`;
             var thumbURL = `//i.imgur.com/${data.preview[0]}s.jpg`;
@@ -538,6 +540,7 @@ Promise.all([
             var element = document.createElement("li");
             element.id = data.uuid; // important!
             element.title = data.name;
+            element.data.index = index;
             element.classList.add(
                 "btn", "btn-default", "btn-white-outline", 
                 "snapshot-item", "outfit-snapshot-item"
