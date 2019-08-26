@@ -465,6 +465,7 @@ Promise.all([
     const outfitDescription = document.getElementById("outfit-description");
 
     var Signal = signals.Signal;
+    var outfitPreviewClicked = new Signal();
     var outfitSelectButtonClicked = new Signal();
 
     $(selectButton).on("click", function(){
@@ -474,6 +475,20 @@ Promise.all([
             debugMode && console.log(selectedAvatar);
             outfitSelectButtonClicked.dispatch(selectedAvatar.uuid);
         }, 200);
+    });
+
+    outfitPreviewClicked.add(function(uuid){
+
+        socket.emit("multiplex findOne", { uuid:uuid },
+        function(err, data){
+
+            debugMode && console.log("data:", data);
+            if (!data) throw `Avatar ${uuid} not found!`;
+
+            store( "Avatar", data );
+
+        });
+
     });
 
     outfitSelectButtonClicked.add(function(uuid){
@@ -580,8 +595,8 @@ Promise.all([
 
                     selectedIndex = element.index;
                     selectedAvatar = data; // TODO: encapsulate!
+                    outfitPreviewClicked.dispatch(data.uuid);
                     debugMode && console.log(selectedAvatar);
-                    outfitSelectButtonClicked.dispatch(data.uuid);
 
                 }, 200);
 
@@ -594,6 +609,7 @@ Promise.all([
 
     //  PhotoSwipe.js
 
+    /*
         $(outfitPreview).on("click", function(){
 
             var pswp = $(".pswp").get(0);
@@ -621,6 +637,7 @@ Promise.all([
             debugMode && console.log({"gallery": gallery});
 
         });
+    */
 
     }).catch(function(err){
         console.error(err);
@@ -639,6 +656,35 @@ Promise.all([
 
 //  Initializes and opens PhotoSwipe (demo).
 
+    const outfitPrevewSelector = "#outfit-preview";
+    const livetestbuttonSelector = "#live-test-button";
+
+    $("#outfit-preview, #live-test-button").on("click", function(){
+
+        var pswp = $(".pswp").get(0);
+        var psui = PhotoSwipeUI_Default;
+
+        var items = [{ 
+            html: `<div id="viewer" class="middle">`
+            + `<iframe src="/demo/index.html" style="width:750px;height:750px"></iframe>`
+            + `</div>`
+            //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
+        }];
+
+        var options = {
+            index: 0 // start at first slide.
+            //  read more for options: https://photoswipe.com/documentation/options.html
+        };
+
+        var preview = new PhotoSwipe( pswp, psui, items, options );
+
+        preview.init();
+
+        debugMode && console.log({"preview": preview});
+
+    });
+
+/*
     $("#live-test-button").on("click", function(){
 
         var pswp = $(".pswp").get(0);
@@ -663,6 +709,7 @@ Promise.all([
         debugMode && console.log({"preview": preview});
 
     });
+*/
 
 })();
 
