@@ -581,6 +581,7 @@ Promise.all([
                     selectedIndex = element.index;
                     selectedAvatar = data; // TODO: encapsulate!
                     debugMode && console.log(selectedAvatar);
+                    outfitSelectButtonClicked.dispatch(data.uuid);
 
                 }, 200);
 
@@ -595,7 +596,8 @@ Promise.all([
 
         $(outfitPreview).on("click", function(){
 
-            var pswpElement = $(".pswp").get(0);
+            var pswp = $(".pswp").get(0);
+            var psui = PhotoSwipeUI_Default;
 
             var items = []; // build items array.
 
@@ -611,16 +613,12 @@ Promise.all([
             //  read for options: https://photoswipe.com/documentation/options.html
             };
 
-            gallery = new PhotoSwipe( 
-                pswpElement, 
-                PhotoSwipeUI_Default, 
-                items, options
-            ); //  global!
+            var gallery = new PhotoSwipe( pswp, psui, items, options );
 
             gallery.init();
 
-            debugMode && console.log({"gallery": gallery});
         //  currentIndex = gallery.itemHolders[1].index;
+            debugMode && console.log({"gallery": gallery});
 
         });
 
@@ -643,7 +641,8 @@ Promise.all([
 
     $("#live-test-button").on("click", function(){
 
-        var pswpElement = $(".pswp").get(0);
+        var pswp = $(".pswp").get(0);
+        var psui = PhotoSwipeUI_Default;
 
         var items = [{ 
             html: `<div id="viewer" class="middle">`
@@ -657,13 +656,11 @@ Promise.all([
         //  read more for options: https://photoswipe.com/documentation/options.html
         };
 
-        var preview = new PhotoSwipe( 
-            pswpElement, 
-            PhotoSwipeUI_Default, 
-            items, options
-        );
+        var preview = new PhotoSwipe( pswp, psui, items, options );
 
         preview.init();
+
+        debugMode && console.log({"preview": preview});
 
     });
 
