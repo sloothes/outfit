@@ -507,40 +507,19 @@ Promise.all([
 
             var selector = {_id:"avatar"};
             var collection = dbUSER.collection("current");
-            collection.findOne(selector, function(err){
+            collection.remove(selector, function(err){
                 if (err) throw err;
-            }).then(function(doc){
+            }).then(function(){
 
-                if (doc) {
-
-                    var modifier = { $set: data };
-                    debugMode && console.log({"modifier":modifier});
-                    delete modifier.$set._id; // important!
-                //  modifier.$set.data._id = "avatar"; // important!
-                    return collection.update(selector, modifier, function(err){
-                        if (err) throw err;
-                    }).then(function(){
-                        return "/demo/";
-                    //  window.location.pathname = "/demo/";
-                    }).catch(function(err){
-                        console.error(err);
-                        throw err; // important!
-                    });
-
-                } else {
-
-                    data._id = "avatar"; // important!
-                    return collection.insert(data, function(err){
-                        if (err) throw err;
-                    }).then(function(){
-                        return "/demo/";
-                    //  window.location.pathname = "/demo/";
-                    }).catch(function(err){
-                        console.error(err);
-                        throw err; // important!
-                    });
-
-                }
+                data._id = "avatar"; // important!
+                return collection.insert(data, function(err){
+                    if (err) throw err;
+                }).then(function(){
+                    return "/demo/";
+                }).catch(function(err){
+                    console.error(err);
+                    throw err; // important!
+                });
 
             }).then(function( pathname ){
                 window.location.pathname = pathname; ;
@@ -552,6 +531,48 @@ Promise.all([
 
     });
 
+/*
+    collection.findOne(selector, function(err){
+        if (err) throw err;
+    }).then(function(doc){
+
+        if (doc) {
+
+            var modifier = { $set: data };
+            debugMode && console.log({"modifier":modifier});
+            delete modifier.$set._id; // important!
+            //  modifier.$set.data._id = "avatar"; // important!
+            return collection.update(selector, modifier, function(err){
+                if (err) throw err;
+            }).then(function(){
+                return "/demo/";
+                //  window.location.pathname = "/demo/";
+            }).catch(function(err){
+                console.error(err);
+                throw err; // important!
+            });
+
+        } else {
+
+            data._id = "avatar"; // important!
+            return collection.insert(data, function(err){
+                if (err) throw err;
+            }).then(function(){
+                return "/demo/";
+                //  window.location.pathname = "/demo/";
+            }).catch(function(err){
+                console.error(err);
+                throw err; // important!
+            });
+
+        }
+
+    }).then(function( pathname ){
+        window.location.pathname = pathname; ;
+    }).catch(function(err){
+        console.error(err);
+    });
+*/
 
     collection.find().toArray(function(err){
         if (err) throw err;
