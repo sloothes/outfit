@@ -506,13 +506,43 @@ Promise.all([
             store( "Avatar", data ); // important!
 
             var selector = {_id:"avatar"};
-            var modifier = { $set: data };
-        //  modifier.$set.data._id = "avatar"; // important!
             var collection = dbUSER.collection("current");
-            collection.update(selector, modifier, function(err){
+            collection.findOne(selector, function(err){
                 if (err) throw err;
-            }).then(function(){
-                window.location.pathname = "/demo/";
+            }).then(function(doc){
+
+                if (doc) {
+
+                    var modifier = { $set: data };
+                    delete modifier.$set.data._id; // important!
+                //  modifier.$set.data._id = "avatar"; // important!
+                    return collection.update(selector, modifier, function(err){
+                        if (err) throw err;
+                    }).then(function(){
+                        return "/demo/";
+                    //  window.location.pathname = "/demo/";
+                    }).catch(function(err){
+                        console.error(err);
+                        throw err; // important!
+                    });
+
+                } else {
+
+                    data._id = "avatar"; // important!
+                    return collection.insert(data, function(err){
+                        if (err) throw err;
+                    }).then(function(){
+                        return "/demo/";
+                    //  window.location.pathname = "/demo/";
+                    }).catch(function(err){
+                        console.error(err);
+                        throw err; // important!
+                    });
+
+                }
+
+            }).then(function( pathname ){
+                window.location.pathname = pathname; ;
             }).catch(function(err){
                 console.error(err);
             });
