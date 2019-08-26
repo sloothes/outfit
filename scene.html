@@ -72,8 +72,127 @@
 <div class="joystick-controls" id="joystick-controls-1"></div>
 <div class="joystick-controls" id="joystick-controls-2"></div>
 
-<script>
+<script src="/js/w3.js"></script>
+<script src="/js/rawinflate.js"></script>
+<script src="/js/rawdeflate.js"></script>
+<script src="/js/store2.js"></script>
+<script src="/js/Objectid.js"></script>
+<script src="/js/zangodb.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.Jcrop.js"></script>
+<script src="/js/bootbox.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/DeviceDetector.js"></script>
+<script src="/js/MathDecimalAdjustment.js"></script>
+<script src="/js/watermark.js"></script>
+<script src="/js/validator.js"></script>
+<script src="/js/system.min.js"></script>
+<script src="/js/signals.min.js"></script>
+<script src="/js/command.js"></script>
+<script src="/js/AW3D.db.js"></script>
+<script src="/three/three.js"></script>
+<script src="/three/EditorControls.js"></script>
+<script src="/three/Detector.js"></script>
+<script src="/three/Projector.js"></script>
+<script src="/three/Animation.js"></script>
+<script src="/three/AnimationHandler.js"></script>
+<script src="/three/KeyFrameAnimation.js"></script>
+<script src="/three/SubdivisionModifier.js"></script>
+<script src="/three/UVsDebug.js"></script>
+<script src="/three/shader.js"></script>
+<script src="/js/MW.js"></script>
+<script src="/js/MWtps.js"></script>
+<script src="/js/VirtualInput.js"></script>
+<script src="/js/scene-helpers.js"></script>
+<script src="/js/edges-helpers.js"></script>
+<script src="/scene/index.js"></script>
+<script src="/scene/world.js"></script>
+<script src="/AW3D/AW3D-dev0.3.9.js"></script>
+<script src="/js/PlayerController.js"></script>
+<script src="/js/cameraControl.js"></script>
+<script src="/js/KeyInputControls.js"></script>
+<script src="/js/JoystickControls.js"></script>
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="/scene/runtime.js"></script>
+<script src="/js/animationsLoader.js"></script>
+<script src="/scene/action-helpers.js"></script>
+<script src="/scene/sceneHandler.js"></script>
+<script src="/scene/localPlayerHandler.js"></script>
 
+<script>
+(function(){
+
+//  Loading bar.
+
+    var dialog = window.bootbox.dialog({
+        message: `<div class="text-center meter orange">`
+        + `<span style="width:fit-content;padding-left:20px;padding-right:20px;">Loading...</span></div>`,
+        buttons: false,
+        closeButton: false,
+        className: "middle",
+    });
+
+    dialog.init(function(){
+        //  $( dialog.modal() ).find(".modal-body").css({"width":300});
+        $( dialog.modal() ).find(".modal-content").css({
+            "border"    : "none",
+            "box-shadow": "none",
+            "background": "none",
+        });
+    });
+
+})();
+</script>
+
+<script>
+(function(){
+
+    var male, female, skeleton;
+
+    var dbUSER = new zango.Db( "USER", {
+        "current": true,
+    });
+
+    localPlayerHandler("/turn/back");
+    //  Disable outfit direction visible on startup.
+    //  localPlayer.outfit.direction.visible = false;
+
+    var json = store("Avatar");
+    if (!json) throw "Avatar not found!";
+
+    localPlayer.outfit.fromJSON(json).then(function(outfit){
+
+        if ( localPlayer.outfit.getGender("male") ) {
+            male = outfit;  debugMode && console.log({"male":male});
+
+        } else if ( localPlayer.outfit.getGender("female") ) {
+            female = outfit;  debugMode && console.log({"female":female});
+        }
+
+    }).then(function(){
+
+    //  Startup.
+
+    //  Enable outfit direction visible.
+        localPlayer.outfit.direction.visible = true;
+
+    }).catch(function(err){
+        console.error(err);
+    }).then(function(){
+
+    //  Hide loading bar.
+        if (window.bootbox) window.bootbox.hideAll();
+
+    });
+
+})();
+</script>
+
+
+<script>
+/*
 var jsfiles = [
 
     "/js/w3.js",
@@ -202,8 +321,7 @@ loadjs( jsfiles, {
     }
 
 });
-
-
+*/
 </script>
 
 
