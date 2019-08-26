@@ -214,21 +214,10 @@
             //  Preload iframe.
                 (function (){
                     var iframe = document.getElementById("preload");
-                    $(iframe).on("load", function(){
-                        debugMode && console.log("Iframe preloaded!");
-                        //  $(this).remove(); // important!
-                    });
-
-                    $(iframe.contentWindow).on("load", function(){
-                        debugMode && console.log("Iframe window loaded!");
-                        //  $(this).remove(); // important!
-                    });
-
                     $(iframe.contentDocument).ready(function(){
                         debugMode && console.log("Iframe document is ready!");
-                        //  $(this).remove(); // important!
+                        //  $(iframe).remove(); // important!
                     });
-
                 })();
 
                 (function (){
