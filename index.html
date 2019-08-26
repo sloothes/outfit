@@ -215,8 +215,7 @@
                 (function (){
                     var iframe = document.getElementById("preload");
                     $(iframe.contentDocument).ready(function(){
-                        debugMode && console.log(iframe.contentDocument);
-                        $(iframe).remove(); // important!
+                        //  $(iframe).remove(); // important!
                         debugMode && console.log("Iframe document preloaded!");
                     });
                 })();
