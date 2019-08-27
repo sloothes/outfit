@@ -182,6 +182,12 @@
         transition:transform 250ms ease-out;
     }
 
+    #preview-scene {
+        width:100%;
+        border:none;
+        min-height:465px;
+    }
+
     #live-test-button {
         min-width:50%;
         font-size:2rem;
@@ -205,7 +211,7 @@
         <div id="outfit-preview-pane">
 
             <div id="preview-container" style="max-width:100%;min-height:466px;text-align:center;">
-                <iframe id="scene-preload" src="scene.html" style="width:100%;min-height:465px;border:none;"></iframe>
+                <iframe id="preview-scene" src="scene.html"></iframe>
                 <!-- img id="outfit-preview" src="/outfits/img/young-joyful-teens-430x480.jpg" --> 
             </div>
 
@@ -463,6 +469,7 @@ Promise.all([
     var collection = dbPUBLIC.collection("avatars");
 
     const outfitTitle = document.getElementById("outfit-title");
+    const previewScene = document.getElementById("preview-scene");
     const selectButton = document.getElementById("select-button");
     const outfitPreview = document.getElementById("outfit-preview");
     const outfitSnapshots = document.getElementById("outfit-snapshots");
@@ -482,11 +489,12 @@ Promise.all([
     });
 
     outfitPreviewClicked.add(function(uuid){
-        socket.emit("multiplex findOne", { uuid:uuid },
-        function(err, data){
+        socket.emit("multiplex findOne", { uuid:uuid }, function(err, data){
             debugMode && console.log("data:", data);
             if (!data) throw `Avatar ${uuid} not found!`;
             store( "Avatar", data );
+            var contentWindow = previewScene.contentWindow;
+            contentWindow.localPlayer.outfit.fromJSON(data);
         });
     });
 
