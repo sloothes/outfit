@@ -59,7 +59,7 @@
         display:none; 
     }
 
-    .load-meter {
+    span.loading {
         width:fit-content;
         padding-left:20px;
         padding-right:20px;
@@ -139,8 +139,8 @@
 //  Loading bar.
 
     var dialog = window.bootbox.dialog({
-        message: `<div class="text-center meter orange load-meter">`
-               + `<span>Loading...</span></div>`,
+        message: `<div class="text-center meter orange">`
+        + `<span class="loading">Loading...</span></div>`,
         buttons: false,
         closeButton: false,
         className: "middle",
