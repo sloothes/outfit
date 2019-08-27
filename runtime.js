@@ -31,7 +31,7 @@
 //  Settings.
 
     keyInputControls.On();
-    cameraControls.radius = 54;
+    cameraControls.radius = 42;
     cameraControls.offset.y = 15;
     cameraControls.minRadius = 18;
     cameraControls.maxRadius = 54;
