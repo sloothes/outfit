@@ -188,6 +188,13 @@
         min-height:465px;
     }
 
+    #viewer {
+        width:750px;
+        height:750px;
+        max-width:90%;
+        max-height:90%;
+    }
+
     #live-test-button {
         min-width:50%;
         font-size:2rem;
@@ -499,7 +506,6 @@ Promise.all([
     });
 
     outfitSelectButtonClicked.add(function(uuid){
-
         socket.emit("multiplex findOne", { uuid:uuid },
         function(err, data){
 
@@ -580,8 +586,8 @@ Promise.all([
 
                 var objectURL = URL.createObjectURL(blob);
                 element.style.cssText = `background-image:url(${objectURL})`;
-                return objectURL;
 
+                return objectURL;
             }).then(function(objectURL){
             //  URL.revokeObjectURL(objectURL);
             });
@@ -621,7 +627,7 @@ Promise.all([
                     }
 
                     selectedIndex = element.index;
-                    selectedAvatar = data; // TODO: encapsulate!
+                    selectedAvatar = data; // to encapsulate!
                     outfitPreviewClicked.dispatch(data.uuid);
                     debugMode && console.log(selectedAvatar);
 
@@ -630,7 +636,7 @@ Promise.all([
             });
 
         //  debugMode && console.dir(element);
-            $(outfitSnapshots).append(element);
+            $(outfitSnapshots).append(element); // important!
 
         });
 
@@ -641,7 +647,6 @@ Promise.all([
 });
 
 </script>
-
 
 <script>
 
@@ -662,8 +667,7 @@ Promise.all([
         var items = [{
         //  HTML support: https://photoswipe.com/documentation/custom-html-in-slides.html
             html: `<div class="middle">`
-            + `<iframe  id="viewer" class="thumbnail" src="scene.html" `
-            + `style="max-width:100%;max-height:100%;width:750px;height:750px;">`
+            + `<iframe id="viewer" class="thumbnail" src="scene.html">`
             + `</iframe></div>`
         }];
 
@@ -673,7 +677,7 @@ Promise.all([
     //  minimal options.
         options.index = 0; // start at first slide.
         options.mainClass = "pswp--minimal--dark";
-        options.barsSize = {top:0,bottom:0};
+        options.barsSize = {top:0, bottom:0};
         options.captionEl = false;
         options.fullscreenEl = false;
         options.shareEl = false;
@@ -694,16 +698,23 @@ Promise.all([
 </script>
 
 
-<div id="disqus_thread" style="padding:20px;"></div>
-<script>
+<!-- DISQUS -->
 
+<div id="disqus_thread" style="padding:20px;"></div>
+
+<script>
 /**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*  RECOMMENDED CONFIGURATION VARIABLES: 
+*  EDIT AND UNCOMMENT THE SECTION BELOW 
+*  TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
+*  https://disqus.com/admin/universalcode/#configuration-variables
 */
     var disqus_config = function () {
-        this.page.url = "https://sloothes.com/outfits";  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = "/outfits"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    //  Replace PAGE_URL with your page's canonical URL variable.
+        this.page.url = "https://sloothes.com/outfits";  
+    //  Replace PAGE_IDENTIFIER with your page's unique identifier variable.
+        this.page.identifier = "/outfits"; 
     };
 
     (function() { 
