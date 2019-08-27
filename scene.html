@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description" contents="Slutty Ladies Observing Outgoing Trying Have Expressive Sex">
 
-    <title>select outfit scene (scc v4.2)</title>
+    <title>outfits scene (v4.2)</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootbox-dialoges.css">
@@ -47,11 +47,22 @@
 
     .middle > * {
         margin:auto;
-        position:absolute;
         top:0; bottom:0;
         left:0; right:0;
+        position:absolute;
         height:fit-content;
         width:fit-content;
+    }
+
+    #joystick-controls-1,
+    #joystick-controls-2 {
+        display:none; 
+    }
+
+    .load-meter {
+        width:fit-content;
+        padding-left:20px;
+        padding-right:20px;
     }
 
     #crop-button {
@@ -115,7 +126,7 @@
 <script src="/js/JoystickControls.js"></script>
 <script src="/js/jquery-update-engine.js"></script>
 <script src="/js/jquery-render-engine.js"></script>
-<script src="/scene/runtime.js"></script>
+<script src="/outfits/runtime.js"></script>
 <script src="/js/animationsLoader.js"></script>
 <script src="/scene/action-helpers.js"></script>
 <script src="/scene/sceneHandler.js"></script>
@@ -124,22 +135,12 @@
 
 <script>
 (function(){
-//  Change scene background.
-    scene.background = new THREE.Color(1,1,1);
-//  Hide joystick controls.
-    $(".joystick-controls").addClass("hidden");
-})();
-</script>
-
-
-<script>
-(function(){
 
 //  Loading bar.
 
     var dialog = window.bootbox.dialog({
-        message: `<div class="text-center meter orange">`
-        + `<span style="width:fit-content;padding-left:20px;padding-right:20px;">Loading...</span></div>`,
+        message: `<div class="text-center meter orange load-meter">`
+               + `<span>Loading...</span></div>`,
         buttons: false,
         closeButton: false,
         className: "middle",
