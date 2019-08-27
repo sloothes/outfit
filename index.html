@@ -206,11 +206,11 @@
 
             <div id="preview-container" style="max-width:100%;min-height:466px;text-align:center;">
                 <iframe id="scene-preload" src="scene.html" style="width:100%;min-height:465px;border:none;"></iframe>
-                <img id="outfit-preview" src="/outfits/img/young-joyful-teens-430x480.jpg" style="display:none;"> 
+                <!-- img id="outfit-preview" src="/outfits/img/young-joyful-teens-430x480.jpg" --> 
             </div>
 
             <script>
-
+            /*
                 (function (){
                     $("img#outfit-preview").on("load", function(){
                         $(this).fadeIn(500);
@@ -233,7 +233,7 @@
                         }
                     });
                 })();
-
+            */
             </script>
 
             <div id="outfit-title-pane">
@@ -482,17 +482,12 @@ Promise.all([
     });
 
     outfitPreviewClicked.add(function(uuid){
-
         socket.emit("multiplex findOne", { uuid:uuid },
         function(err, data){
-
             debugMode && console.log("data:", data);
             if (!data) throw `Avatar ${uuid} not found!`;
-
             store( "Avatar", data );
-
         });
-
     });
 
     outfitSelectButtonClicked.add(function(uuid){
@@ -599,7 +594,7 @@ Promise.all([
                 //  Set title.
                     outfitTitle.value = ""; // reset.
                     outfitTitle.value = data.name;
-
+            /*
                 //  Set preview.
                     $(outfitPreview).fadeOut(250);
                     snapsCache.match(snapsURL)
@@ -610,7 +605,7 @@ Promise.all([
                             outfitPreview.src = URL.createObjectURL(blob);
                         }, 200);
                     });
-
+            */
                 //  Set description.
                     outfitDescription.innerText = ""; // reset.
                     if (data.description) {
