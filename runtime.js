@@ -31,7 +31,7 @@
 //  Settings.
 
     keyInputControls.On();
-    cameraControls.radius = 12;
+    cameraControls.radius = 42;
     cameraControls.offset.y = 15;
 
 //  Runtime.
