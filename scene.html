@@ -205,7 +205,7 @@
 
 <script>
 /*
-var jsfiles = [
+var files = [
 
     "/js/w3.js",
     "/js/rawinflate.js",
@@ -241,8 +241,8 @@ var jsfiles = [
     "/js/VirtualInput.js",
     "/js/scene-helpers.js",
     "/js/edges-helpers.js",
-    "/scene/index.js",
-    "/scene/world.js",
+    "/outfits/index.js",
+    "/outfits/world.js",
     "/AW3D/AW3D-dev0.3.9.js",
     "/js/PlayerController.js",
     "/js/cameraControl.js",
@@ -250,7 +250,7 @@ var jsfiles = [
     "/js/JoystickControls.js",
     "/js/jquery-update-engine.js",
     "/js/jquery-render-engine.js",
-    "/scene/runtime.js",
+    "/outfits/runtime.js",
     "/js/animationsLoader.js",
     "/scene/action-helpers.js",
     "/scene/sceneHandler.js",
@@ -260,76 +260,16 @@ var jsfiles = [
 
 var male, female, skeleton;
 
-loadjs( jsfiles, {
+loadjs( files, {
 
     async: false,
 
     success: function(){
-        debugMode && console.log(document);
         debugMode && console.log("scripts loaded successfully!");
-
-    //  Loading bar.
-
-        var dialog = window.bootbox.dialog({
-            message: `<div class="text-center meter orange">`
-            + `<span style="width:fit-content;padding-left:20px;padding-right:20px;">Loading...</span></div>`,
-            buttons: false,
-            closeButton: false,
-            className: "middle",
-        });
-
-        dialog.init(function(){
-        //  $( dialog.modal() ).find(".modal-body").css({"width":300});
-            $( dialog.modal() ).find(".modal-content").css({
-                "border"    : "none",
-                "box-shadow": "none",
-                "background": "none",
-            });
-        });
-
-    //  avatarLoader.js (localStorage only).
-
-        var dbUSER = new zango.Db( "USER", {
-            "current": true,
-        });
-
-        localPlayerHandler("/turn/back");
-        //  Disable outfit direction visible on startup.
-        //  localPlayer.outfit.direction.visible = false;
-
-        var json = store("Avatar");
-        if (!json) throw "Avatar not found!";
-
-        localPlayer.outfit.fromJSON(json).then(function(outfit){
-
-            if ( localPlayer.outfit.getGender("male") ) {
-                male = outfit;  debugMode && console.log({"male":male});
-
-            } else if ( localPlayer.outfit.getGender("female") ) {
-                female = outfit;  debugMode && console.log({"female":female});
-            }
-
-        }).then(function(){
-
-        //  Startup.
-
-        //  Enable outfit direction visible.
-            localPlayer.outfit.direction.visible = true;
-
-        //  Hide loading bar.
-            if (window.bootbox) window.bootbox.hideAll();
-
-        }).catch(function(err){
-            console.error(err);
-        });
-
     },
 
     error: function(notfoundPaths){
-
-        if (window.bootbox) window.bootbox.hideAll();
         console.error("These files not found:", notfoundPaths);
-
     }
 
 });
