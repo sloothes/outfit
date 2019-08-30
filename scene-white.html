@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" contents="Slutty Ladies Observing Outgoing Trying Have Expressive Sex">
+
+    <title>outfits scene (v4.2)</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
+    <link rel="stylesheet" href="/css/jquery.Jcrop.css">
+    <link rel="stylesheet" href="/css/joystick.css">
+    <link rel="stylesheet" href="/css/meter.css">
+
+    <script src="/js/loadjs.min.js"></script>
+
+    <script>
+
+        debugMode = true;
+
+        console.log({
+            "debug": debugMode,
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<style>
+
+    body {
+        margin: 0px;
+        overflow: hidden;
+        background-color: #ffffff; /*#b1c8e8;*/
+    }
+
+    #scene-container {
+        height:100vh;
+    }
+
+    .middle > * {
+        margin:auto;
+        top:0; bottom:0;
+        left:0; right:0;
+        position:absolute;
+        height:fit-content;
+        width:fit-content;
+    }
+
+    #joystick-controls-1,
+    #joystick-controls-2 {
+        display:none; 
+    }
+
+    span.loading {
+        width:fit-content;
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    #crop-button {
+        position:absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+
+    #exit-button {
+        position:absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+
+</style>
+
+<div id="scene-container"></div>
+<div class="joystick-controls" id="joystick-controls-1"></div>
+<div class="joystick-controls" id="joystick-controls-2"></div>
+
+<script src="/js/w3.js"></script>
+<script src="/js/rawinflate.js"></script>
+<script src="/js/rawdeflate.js"></script>
+<script src="/js/store2.js"></script>
+<script src="/js/Objectid.js"></script>
+<script src="/js/zangodb.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.Jcrop.js"></script>
+<script src="/js/bootbox.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/DeviceDetector.js"></script>
+<script src="/js/MathDecimalAdjustment.js"></script>
+<script src="/js/watermark.js"></script>
+<script src="/js/validator.js"></script>
+<script src="/js/system.min.js"></script>
+<script src="/js/signals.min.js"></script>
+<script src="/js/command.js"></script>
+<script src="/js/AW3D.db.js"></script>
+<script src="/three/three.js"></script>
+<script src="/three/EditorControls.js"></script>
+<script src="/three/Detector.js"></script>
+<script src="/three/Projector.js"></script>
+<script src="/three/Animation.js"></script>
+<script src="/three/AnimationHandler.js"></script>
+<script src="/three/KeyFrameAnimation.js"></script>
+<script src="/three/SubdivisionModifier.js"></script>
+<script src="/three/UVsDebug.js"></script>
+<script src="/three/shader.js"></script>
+<script src="/js/MW.js"></script>
+<script src="/js/MWtps.js"></script>
+<script src="/js/VirtualInput.js"></script>
+<script src="/js/scene-helpers.js"></script>
+<script src="/js/edges-helpers.js"></script>
+<script src="/outfits/scene-white.js"></script>
+<script src="/outfits/world.js"></script>
+<script src="/AW3D/AW3D-dev0.3.9.js"></script>
+<script src="/js/PlayerController.js"></script>
+<script src="/js/cameraControl.js"></script>
+<script src="/js/KeyInputControls.js"></script>
+<script src="/js/JoystickControls.js"></script>
+<script src="/js/jquery-update-engine.js"></script>
+<script src="/js/jquery-render-engine.js"></script>
+<script src="/outfits/runtime.js"></script>
+<script src="/js/animationsLoader.js"></script>
+<script src="/scene/action-helpers.js"></script>
+<script src="/scene/sceneHandler.js"></script>
+<script src="/scene/localPlayerHandler.js"></script>
+
+
+<script>
+/*
+(function(){
+
+//  Loading bar.
+
+    var dialog = window.bootbox.dialog({
+        message: `<div class="text-center meter orange">`
+        + `<span class="loading">Loading...</span></div>`,
+        buttons: false,
+        closeButton: false,
+        className: "middle",
+    });
+
+    dialog.init(function(){
+        //  $( dialog.modal() ).find(".modal-body").css({"width":300});
+        $( dialog.modal() ).find(".modal-content").css({
+            "border"    : "none",
+            "box-shadow": "none",
+            "background": "none",
+        });
+    });
+
+})();
+*/
+</script>
+
+<script>
+(function(){
+
+    var male, female, skeleton;
+
+    var dbUSER = new zango.Db( "USER", {
+        "current": true,
+    });
+
+    localPlayerHandler("/turn/back");
+    //  Disable outfit direction visible on startup.
+    //  localPlayer.outfit.direction.visible = false;
+
+    var json = store("Avatar");
+    if (!json) throw "Avatar not found!";
+
+    localPlayer.outfit.fromJSON(json).then(function(outfit){
+
+        if ( localPlayer.outfit.getGender("male") ) {
+            male = outfit;  debugMode && console.log({"male":male});
+
+        } else if ( localPlayer.outfit.getGender("female") ) {
+            female = outfit;  debugMode && console.log({"female":female});
+        }
+
+    }).then(function(){
+
+    //  Startup.
+
+    //  Enable outfit direction visible.
+        localPlayer.outfit.direction.visible = true;
+
+    }).catch(function(err){
+        console.error(err);
+    }).then(function(){
+
+    //  Hide loading bar.
+        if (window.bootbox) window.bootbox.hideAll();
+
+    });
+
+})();
+</script>
+
+
+<script>
+/*
+var files = [
+
+    "/js/w3.js",
+    "/js/rawinflate.js",
+    "/js/rawdeflate.js",
+    "/js/store2.js",
+    "/js/Objectid.js",
+    "/js/zangodb.min.js",
+    "/js/jquery.min.js",
+    "/js/jquery-ui.js",
+    "/js/jquery.Jcrop.js",
+    "/js/bootbox.min.js",
+    "/js/bootstrap.min.js",
+    "/js/DeviceDetector.js",
+    "/js/MathDecimalAdjustment.js",
+    "/js/watermark.js",
+    "/js/validator.js",
+    "/js/system.min.js",
+    "/js/signals.min.js",
+    "/js/command.js",
+    "/js/AW3D.db.js",
+    "/three/three.js",
+    "/three/EditorControls.js",
+    "/three/Detector.js",
+    "/three/Projector.js",
+    "/three/Animation.js",
+    "/three/AnimationHandler.js",
+    "/three/KeyFrameAnimation.js",
+    "/three/SubdivisionModifier.js",
+    "/three/UVsDebug.js",
+    "/three/shader.js",
+    "/js/MW.js",
+    "/js/MWtps.js",
+    "/js/VirtualInput.js",
+    "/js/scene-helpers.js",
+    "/js/edges-helpers.js",
+    "/outfits/index.js",
+    "/outfits/world.js",
+    "/AW3D/AW3D-dev0.3.9.js",
+    "/js/PlayerController.js",
+    "/js/cameraControl.js",
+    "/js/KeyInputControls.js",
+    "/js/JoystickControls.js",
+    "/js/jquery-update-engine.js",
+    "/js/jquery-render-engine.js",
+    "/outfits/runtime.js",
+    "/js/animationsLoader.js",
+    "/scene/action-helpers.js",
+    "/scene/sceneHandler.js",
+    "/scene/localPlayerHandler.js",
+];
+
+
+var male, female, skeleton;
+
+loadjs( files, {
+
+    async: false,
+
+    success: function(){
+        debugMode && console.log("scripts loaded successfully!");
+    },
+
+    error: function(notfoundPaths){
+        console.error("These files not found:", notfoundPaths);
+    }
+
+});
+*/
+</script>
+
+
+</body>
+</html>
