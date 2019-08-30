@@ -49,7 +49,7 @@
     camera = new FpsCamera(50, 1, 10000);
 
 //  Background.
-    scene.background = new THREE.Color(1,1,1);
+    scene.background = new THREE.Color(0,0,0);
 /*
     sceneBackground([
         "https://i.imgur.com/v6bjQLb.jpg", // "posx.jpg",
