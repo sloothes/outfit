@@ -1,6 +1,6 @@
 //  outfits/service-worker.js
 
-    self.version = 3.5;
+    self.version = 4.0;
     var debugMode = true;
 
     self.importScripts(
@@ -51,19 +51,20 @@
 
     function installAvatars(){
 
-        var DB = new zango.Db( "PUBLIC", {
+        var db = new zango.Db( "PUBLIC", {
             "avatars": true,
         });
 
         var collection = DB.collection("avatars");
 
-        return DB.open(function(err, db){
+        return DB.open(function(err, database){
             if (err) console.error(err);
-        }).then( function(db){
-            debugMode && console.log(
-                `Database ${db.name} (v${db.version}) ready for install.`);
+        }).then( function(){
+            debugMode && console.log("Database " + db.name + " (v" + db.version + ") ready for install.");
             return db;
-        }).then(function(db){
+        }).then(function(){
+
+            debugMode && console.log("Fetching data...");
 
             return new Promise(function(resolve, reject){
                 socket.emit("mongo find", {
@@ -80,6 +81,7 @@
             });
 
         }).then(function(data){
+
             if ( !data ) throw "Null data returned!";
 
             return collection.find()
@@ -96,6 +98,8 @@
             });
 
         }).then(function(data){
+
+            debugMode && console.log("Instaling database " + db.name + " (v" + db.version + ") ...");
 
             return collection.insert(data, function(err){
                 if (err) throw err;
@@ -118,8 +122,8 @@
             ]).then(function([snapshots, thumbnails]){
                 data.forEach(function(doc){
                     if (!doc || !doc.preview) return;
-                    var snapsURL = `https://i.imgur.com/${doc.preview}.jpg`;
-                    var thumbURL = `https://i.imgur.com/${doc.preview}s.jpg`;
+                    var snapsURL = "https://i.imgur.com/" + doc.preview + ".jpg";
+                    var thumbURL = "https://i.imgur.com/" + doc.preview + "s.jpg";
                     snapshots.add(snapsURL);
                     thumbnails.add(snapsURL);
                 });
@@ -149,8 +153,8 @@
             return self.clients.matchAll();
         }).then(function(clients) {
             clients.forEach(function(client){
-                client.navigate(client.url); // it will re-install on reload!
-                console.log(`service worker unistalled from client "${client.url}"`);
+                client.navigate(client.url);  // will be re-installed on reload!
+                console.log("service worker unistalled from client " + client.url);
             });
         });
     }
